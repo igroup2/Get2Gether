@@ -1,0 +1,346 @@
+/* עיצוב כללי */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #f5f5f5; /* אפור בהיר */
+  color: #000000; /* שחור */
+  direction: rtl;
+  margin: 0;
+  padding: 0;
+}
+
+/* קונטיינר ראשי */
+.container {
+  background: #ffffff; /* לבן */
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* צל עדין */
+  max-width: 400px;
+  margin: 50px auto;
+  border: 2px solid #cccccc; /* מסגרת אפורה */
+  margin-top: 7%;
+  position: relative;
+}
+
+/* כותרות */
+h2 {
+  color: #000000; /* שחור */
+  font-size: 24px;
+  border-bottom: 2px solid #cccccc; /* קו תחתון אפור */
+  padding-bottom: 5px;
+  display: inline-block;
+}
+
+/* תוויות ושדות קלט */
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #b0b0b0; /* מסגרת אפורה */
+  border-radius: 5px;
+  background-color: #f9f9f9; /* רקע אפור בהיר */
+  color: #000000;
+}
+
+/* כפתורים */
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  background-color: #000000; /* שחור */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #333333; /* אפור כהה */
+}
+
+/* כפתור התחברות עם גוגל */
+.google-btn {
+  background-color: #b0b0b0; /* אפור בהיר */
+  color: #000000;
+  font-weight: bold;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.google-btn:hover {
+  background-color: #999999; /* אפור כהה יותר */
+}
+
+/* לינקים */
+a {
+  color: #000000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  color: #666666;
+}
+
+/* עיצוב הפוטר */
+footer {
+  margin-top: 20px;
+  padding: 10px;
+  background: #000000; /* שחור */
+  color: white;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+  font-weight: bold;
+}
+
+footer a {
+  text-decoration: none;
+  color: #cccccc; /* אפור בהיר */
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+footer a:hover {
+  color: #aaaaaa; /* אפור כהה */
+}
+
+/* קונטיינר לזיקוקים */
+.firework-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* חלקיקי הזיקוקים */
+.firework-spark {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #c0c0c0; /* צבע כסף נוצץ */
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffffff, 0 0 20px #c0c0c0, 0 0 30px #ffffff; /* אפקט נצנוץ */
+  animation: sparkle 1.5s ease-out forwards;
+  opacity: 0;
+}
+
+/* אנימציה לניצוץ */
+@keyframes sparkle {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+/* HEADER */
+header {
+  position: fixed;
+  height: 5%;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8); /* רקע שקוף */
+  backdrop-filter: blur(10px);
+  padding: 15px 40px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.logo img {
+  height: 50px;
+}
+
+nav ul {
+  display: flex;
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  left: 10%;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #000000;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover {
+  color: #666666;
+}
+
+/* עיצוב עמוד הנחיתה */
+.hero {
+  margin-top: 100px;
+  padding: 60px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 18px;
+  color: #555;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #000000;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 10px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #333333;
+}
+
+/* אודות הפרויקט */
+.about {
+  margin-top: 50px;
+  padding: 40px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about h2 {
+  font-size: 28px;
+}
+
+.about p {
+  font-size: 16px;
+  color: #666;
+}
+
+/* פוטר */
+footer {
+  margin-top: 20px;
+  padding: 10px;
+  background: #000000;
+  color: white;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+  font-weight: bold;
+}
+
+footer a {
+  text-decoration: none;
+  color: #cccccc;
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+footer a:hover {
+  color: #aaaaaa;
+}
+
+#myLogo {
+  display: flex;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  top: 8px;
+}
+
+/* קופסת הפיצ'ר המגניב */
+.feature-box {
+  background: #f5f5f5; /* רקע אפור בהיר */
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.feature-box h2 {
+  font-size: 24px;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.feature-box p {
+  font-size: 16px;
+  color: #666;
+}
+
+/* כפתורים */
+.buttons {
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #000000;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 10px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #333333;
+}
+
+
