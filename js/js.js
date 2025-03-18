@@ -132,3 +132,10 @@ document.addEventListener("DOMContentLoaded", function () {
   setInterval(createFirework, 2000); // יצירת זיקוקים כל 2 שניות
   animate();
 });
+
+
+
+
+
+
+
