@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="he">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>מפת ישראל</title>
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/mapStyle.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../js/js.js"></script>
+    <script src="../js/ajaxcalls.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">
+        <img src="../images/logo.png" alt="הלוגו שלך" id="myLogo" />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">בית</a></li>
+          <li><a href="login.html">התחברות</a></li>
+          <li><a href="register.html">הרשמה</a></li>
+          <li><a href="select.html">בחירה</a></li>
+          <li><a href="map.html">מפה</a></li>
+          <li><a href="Events.html">אירועים</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- MAP + BUTTONS -->
+   </section> <section class="map-container">
+      <h1 style="text-align: center">מפת ישראל</h1>
+
+      <!-- 🔵🔵 כפתורי בחירת סוג פין 🔵🔵 -->
+      <div class="marker-buttons">
+        <button class="green" onclick="selectMarkerType('rideRequest')">
+          פין ירוק (נוסע)
+        </button>
+        <button class="blue" onclick="selectMarkerType('giveRideRequest')">
+          פין כחול (נהג)
+        </button>
+        <button class="orange" onclick="selectMarkerType('eventLocation')">
+          פין כתום (אירוע)
+        </button>
+      </div>
+
+      <div class="algoButton" onclick="filterAlgo()">
+        <button>הפעלת אלגוריתם</button>
+      </div>
+
+<div id="c" style="display: flex; flex-direction: row;">
+      <div id="map"></div>
+      <div>
+        <div class="tabs-wrapper">
+          <button onclick="showTab('initial')" class="tab-button active">סינון ראשוני</button>
+          <button onclick="showTab('final')" class="tab-button">שיבוץ סופי</button>
+        </div>
+        
+      
+        <div id="initialTab" class="tab-content">
+          <div id="initialResultsContainer"></div>
+        </div>
+      
+        <div id="finalTab" class="tab-content" style="display: none;">
+          <div id="matchResultsContainer"></div>
+        </div>
+      </div>
+      
+      </div>
+    </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>צור קשר:</p>
+      <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
+      <a href="https://wa.me/" target="_blank">ווצטאפ</a> |
+      <a href="mailto:igroup2project@gmail.com">אימייל</a>
+    </footer>
+
+    <!-- Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!--Google Maps API--> 
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBFdD8Vs_1-B79Fuv1Wn0eKsImtYRBv9k&libraries=places"
+    async
+    defer
+  ></script>
+
+
+  <script src="../js/map.js"></script>
+  </body>
+</html>

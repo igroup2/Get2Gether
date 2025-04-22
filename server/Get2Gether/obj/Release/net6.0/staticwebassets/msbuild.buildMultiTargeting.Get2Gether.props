@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Get2Gether.props" />
+</Project>

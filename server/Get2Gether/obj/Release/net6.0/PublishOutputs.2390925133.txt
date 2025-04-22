@@ -1,0 +1,17 @@
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\Get2Gether.exe
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\appsettings.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\Get2Gether.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\Get2Gether.deps.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\Get2Gether.runtimeconfig.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\Get2Gether.pdb
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\Microsoft.OpenApi.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\System.Data.SqlClient.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\runtimes\win-arm64\native\sni.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\runtimes\win-x64\native\sni.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\runtimes\win-x86\native\sni.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\runtimes\unix\lib\net6.0\System.Data.SqlClient.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Data.SqlClient.dll

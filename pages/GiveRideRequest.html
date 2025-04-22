@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enter Give Ride Request</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../js/js.js"></script>
+    <script src="../js/ajaxcalls.js"></script>
+    <script src="../js/map.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+
+    <style>
+      .radio-questions-box {
+        border: 2px solid #000;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 8px;
+      }
+      .radio-questions-box h3 {
+        margin-top: 0;
+        font-weight: bold;
+      }
+      .radio-line {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .radio-line label {
+        font-weight: bold;
+        margin-left: 10px;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="logo">
+        <img src="../images/logo.png" alt="הלוגו שלך" id="myLogo" />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">בית</a></li>
+          <li><a href="login.html">התחברות</a></li>
+          <li><a href="register.html">הרשמה</a></li>
+          <li><a href="select.html">בחירה</a></li>
+          <li><a href="map.html"> מפה </a></li>
+          <li><a href="Events.html"> Events </a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- AJAX Load Cities -->
+    <script>
+      const api = `https://proj.ruppin.ac.il/igroup2/test1/server/api/`;
+      $(document).ready(function () {
+        ajaxCall(
+          "GET",
+          "https://proj.ruppin.ac.il/igroup2/prod/api/RideMatchers/cities",
+          null,
+          function (cities) {
+            cities.forEach(function (city) {
+              $("#rideExitPoint").append(
+                `<option value="${city}">${city}</option>`
+              );
+            });
+            console.log("✅ Success loading cities");
+          },
+          function (error) {
+            console.log("❌ Error loading cities", error);
+          }
+        );
+      });
+    </script>
+
+    <section class="hero">
+      <h1></h1>
+      <h2
+        style="
+          font-weight: bold;
+          color: #000;
+          font-size: 2em;
+          text-align: center;
+          margin-bottom: 20px;
+        "
+      >
+        להקים טרמף בקלות!
+      </h2>
+      <h2
+        style="
+          font-weight: bold;
+          color: #000;
+          font-size: 1em;
+          text-align: center;
+          margin-bottom: 20px;
+        "
+      >
+        כמה פרטים קטנים , כדי שנוכל לחבר אותך לטרמפיסט שהכי מתאים לך
+      </h2>
+
+      <form action="/submit-give-ride-request" method="POST">
+        <!-- Ride Exit Point Dropdown -->
+        <label for="rideExitPoint">נקודת יציאה:</label>
+        <select id="rideExitPoint" name="rideExitPoint" required></select>
+
+        <!-- Car Capacity Dropdown -->
+        <label for="carCapacity">כמה מקומות ברכב:</label>
+        <select id="carCapacity" name="carCapacity" required>
+          <option value="">בחר</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+
+        <!-- Radio Questions -->
+        <div class="radio-questions-box">
+          <h3>קצת עליך:</h3>
+
+          <div class="radio-line">
+            <label>המגדר שלי:</label>
+            <input type="radio" name="gender" value="M" required /> גבר
+            <input type="radio" name="gender" value="F" /> אישה
+          </div>
+
+          <div class="radio-line">
+            <label>האם אתה מעשן?</label>
+            <input type="radio" name="smoke" value="1" required /> כן
+            <input type="radio" name="smoke" value="0" /> לא
+          </div>
+
+          <div class="radio-line">
+            <label>מעדיף לנסוע עם:</label>
+            <input type="radio" name="preferredGender" value="M" required /> גבר
+            <input type="radio" name="preferredGender" value="F" /> אישה
+          </div>
+
+          <div class="radio-line">
+            <label>מפריע לי עישון:</label>
+            <input type="radio" name="preferNoSmoking" value="1" required /> כן
+            <input type="radio" name="preferNoSmoking" value="0" /> לא
+          </div>
+        </div>
+
+        <!-- Open Text Area -->
+        <label for="notes">הערות נוספות:</label><br />
+        <textarea
+          name="notes"
+          id="notes"
+          rows="4"
+          cols="50"
+          placeholder="כתוב כאן כל דבר שחשוב לדעת..."
+        ></textarea>
+
+        <!-- Submit Button -->
+        <br /><br />
+        <button type="submit">שלח הצעת טרמפ</button>
+      </form>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>צור קשר:</p>
+      <a href="https://www.instagram.com" target="_blank">
+        <img
+          src="../images/instagram-icon.png"
+          alt="Instagram"
+          width="24"
+          height="24"
+        />
+      </a>
+      <a href="https://www.facebook.com" target="_blank">
+        <img
+          src="../images/facebook-icon.png"
+          alt="Facebook"
+          width="24"
+          height="24"
+        />
+      </a>
+      <a href="mailto:igroup2project@gmail.com">
+        <img
+          src="../images/google-icon.png"
+          alt="Google"
+          width="24"
+          height="24"
+        />
+      </a>
+    </footer>
+
+    <!-- Submit Form Script -->
+    <script>
+      $("form").on("submit", function (event) {
+        event.preventDefault(); // Prevent default submission
+
+        const giveRideRequest = {
+          EventID: 15,
+          PersonID: 10,
+          CarCapacity: parseInt($("#carCapacity").val()),
+          RideExitPoint: $("#rideExitPoint").val(),
+          PreferredGender: $("input[name='preferredGender']:checked").val(),
+          PreferredSmoker:
+            $("input[name='preferNoSmoking']:checked").val() == "0"
+              ? false
+              : true,
+        };
+
+        ajaxCall(
+          "POST",
+          "https://proj.ruppin.ac.il/igroup2/prod/api/GiveRideRequests",
+          JSON.stringify(giveRideRequest),
+          (response) => {
+            console.log("✅ Success submitting give ride request", response);
+            alert("הבקשה נשלחה בהצלחה!");
+          },
+          (error) => {
+            console.log("❌ Error submitting give ride request", error);
+            alert("שגיאה בשליחת הבקשה.");
+          }
+        );
+      });
+    </script>
+  </body>
+</html>

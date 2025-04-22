@@ -12,20 +12,69 @@
     <script src="../js/js.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
+    <script>
+      const api = `https://proj.ruppin.ac.il/igroup2/test1/server/api/`;
+      $(document).ready(function () {
+        console.log("Document ready!");
+        $("#loginForm").submit((event) => {
+          event.preventDefault();
+          console.log("Form login submitted!"); // בדוק אם הפונקציה פועלת
+          Login(); // קריאה לפונקציה
+        });
+      });
+      function Login() {
+        console.log("submit");
+        let user = {
+          phone: $("#phone").val(),
+          password: $("#password").val(),
+        };
+
+        console.log(user);
+        ajaxCall(
+          "POST",
+          "https://proj.ruppin.ac.il/igroup2/prod/api/Person/login",
+          JSON.stringify(user),
+          () => {
+            console.log("Login successful");
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Login successful",
+              showConfirmButton: false,
+              timer: 3000,
+            }).then(() => {
+              window.location.href = "index.html"; // Redirect to index.html
+            });
+          },
+          (error) => {
+            console.error("Login failed", error);
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Login failed",
+              text: "Please check your credentials and try again.",
+              showConfirmButton: true,
+            });
+          }
+        );
+        return false;
+      }
+    </script>
   </head>
 
   <body>
-    <!-- HEADER -->
     <header>
       <div class="logo">
         <img src="../images/logo.png" alt="הלוגו שלך" id="myLogo" />
       </div>
       <nav>
         <ul>
-          <li><a href="#">בית</a></li>
-          <li><a href="#">אודות</a></li>
-          <li><a href="#">שירותים</a></li>
-          <li><a href="#">צור קשר</a></li>
+          <li><a href="index.html">בית</a></li>
+          <li><a href="login.html">התחברות</a></li>
+          <li><a href="register.html">הרשמה</a></li>
+          <li><a href="select.html">בחירה</a></li>
+          <li><a href="map.html"> מפה </a></li>
+          <li><a href="Events.html"> Events </a></li>
         </ul>
       </nav>
     </header>
@@ -33,8 +82,8 @@
     <div class="container">
       <h2>התחברות</h2>
       <form id="loginForm">
-        <label for="email">אימייל:</label>
-        <input type="email" id="email" required />
+        <label for="phone">פלאפון:</label>
+        <input type="phone" id="phone" required />
 
         <label for="password">סיסמה:</label>
         <input type="password" id="password" required />

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>הרשמה לאתר</title>
     <script
       src="https://code.jquery.com/jquery-3.7.1.min.js"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
@@ -23,10 +23,12 @@
       </div>
       <nav>
         <ul>
-          <li><a href="#">בית</a></li>
-          <li><a href="#">אודות</a></li>
-          <li><a href="#">שירותים</a></li>
-          <li><a href="#">צור קשר</a></li>
+          <li><a href="index.html">בית</a></li>
+          <li><a href="login.html">התחברות</a></li>
+          <li><a href="register.html">הרשמה</a></li>
+          <li><a href="select.html">בחירה</a></li>
+          <li><a href="map.html"> מפה </a></li>
+          <li><a href="Events.html"> Events </a></li>
         </ul>
       </nav>
     </header>
@@ -37,8 +39,8 @@
       <form id="multiStepForm">
         <!-- שלב 1: אימייל וסיסמה -->
         <div class="form-step active">
-          <label for="email">אימייל:</label>
-          <input type="email" id="email" required />
+          <label for="phone">פלאפון:</label>
+          <input type="phone" id="phone" required />
 
           <label for="password">סיסמה:</label>
           <input type="password" id="password" required />
@@ -62,7 +64,7 @@
               <input type="text" id="partner1" required />
 
               <label for="phone1">פלאפון - בן/בת זוג 1:</label>
-              <input type="tel" id="phone1" required />
+              <input type="phoneNumber" id="phoneNumber" required />
               <label for="gender1">מגדר:</label>
               <select
                 id="gender1"
@@ -70,8 +72,8 @@
                 onchange="updateImage('gender1', 'partner1-preview')"
               >
                 <option value="">בחר מגדר</option>
-                <option value="male">זכר</option>
-                <option value="female">נקבה</option>
+                <option value="M">זכר</option>
+                <option value="F">נקבה</option>
               </select>
             </div>
 
@@ -96,8 +98,8 @@
                 onchange="updateImage('gender2', 'partner2-preview')"
               >
                 <option value="">בחר מגדר</option>
-                <option value="male">זכר</option>
-                <option value="female">נקבה</option>
+                <option value="M">זכר</option>
+                <option value="F">נקבה</option>
               </select>
             </div>
           </div>

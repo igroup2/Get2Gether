@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events Page</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../js/js.js"></script>
+    <script src="../js/ajaxcalls.js"></script>
+    <script src="../js/map.js"></script>
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+      /* עיצוב מותאם לרשימת אירועים בשורות של 2 */
+      .events-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 30px;
+        padding: 0 20px;
+      }
+
+      .event-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        flex: 0 0 48%; /* שני כרטיסים בשורה */
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        transition: transform 0.2s;
+        cursor: pointer;
+      }
+
+      .event-card:hover {
+        transform: scale(1.02);
+      }
+
+      .event-card h3 {
+        margin-bottom: 10px;
+        font-size: 1.5em;
+        color: #333;
+      }
+
+      .event-card p {
+        margin: 5px 0;
+        color: #666;
+      }
+
+      /* התאמה רספונסיבית לניידים */
+      @media (max-width: 768px) {
+        .event-card {
+          flex: 0 0 100%; /* כרטיס אחד בשורה במסכים קטנים */
+        }
+      }
+    </style>
+  </head>
+  <script>
+    const api = `https://proj.ruppin.ac.il/igroup2/test1/server/api/`;
+    $(document).ready(function () {
+      ajaxCall(
+        "GET",
+        "https://proj.ruppin.ac.il/igroup2/prod/api/Events/4",
+        null,
+        function (events) {
+          console.log("✅ Events loaded");
+          const container = $("#eventsContainer");
+          container.empty(); // נקה אם יש משהו
+
+          events.forEach((event) => {
+            const date = new Date(event.eventDate).toLocaleDateString("he-IL");
+
+            const status = event.numOfGuest > 30 ? "אושר" : "ממתין לאישור";
+
+            const cardHtml = `
+            <div class="event-card">
+              <h3>${event.eventDesc}</h3>
+              <p><strong>תאריך:</strong> ${date}</p>
+              <p><strong>מיקום:</strong> ${event.eventLocation}</p>
+
+            </div>
+          `;
+
+            container.append(cardHtml);
+          });
+        },
+        function (err) {
+          console.error("❌ Error loading events", err);
+          $("#eventsContainer").html("<p>אירעה שגיאה בטעינת האירועים</p>");
+        }
+      );
+    });
+  </script>
+
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="logo">
+        <img src="../images/logo.png" alt="הלוגו שלך" id="myLogo" />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">בית</a></li>
+          <li><a href="#">אודות</a></li>
+          <li><a href="#">שירותים</a></li>
+          <li><a href="#">צור קשר</a></li>
+          <li><a href="map.html">מפה</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- HERO BANNER -->
+    <section class="hero">
+      <h1>ברוכים הבאים לעמוד האירועים!</h1>
+      <p>בחרו את האירוע שתרצו להשתתף בו והתחילו לארגן טרמפ חכם בקלות!</p>
+    </section>
+
+    <!-- רשימת האירועים -->
+    <section class="about">
+      <h2>אירועים קרובים:</h2>
+      <div class="events-list" id="eventsContainer">
+        <!-- כאן נרנדר דינאמית את האירועים -->
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>צור קשר:</p>
+      <a href="https://www.instagram.com" target="_blank">
+        <img
+          src="../images/instagram-icon.png"
+          alt="Instagram"
+          width="24"
+          height="24"
+        />
+      </a>
+      <a href="https://www.facebook.com" target="_blank">
+        <img
+          src="../images/facebook-icon.png"
+          alt="Facebook"
+          width="24"
+          height="24"
+        />
+      </a>
+      <a href="mailto:igroup2project@gmail.com">
+        <img
+          src="../images/google-icon.png"
+          alt="Google"
+          width="24"
+          height="24"
+        />
+      </a>
+    </footer>
+
+    <script>
+      $(document).ready(function () {
+        const PersonID = 4;
+        const api = `https://proj.ruppin.ac.il/igroup2/test1/server/api/`;
+
+        ajaxCall(
+          "GET",
+          `https://proj.ruppin.ac.il/igroup2/prod/api/Events/${PersonID}`,
+          null,
+          function (events) {
+            console.log("✅ Events loaded");
+            const container = $("#eventsContainer");
+            container.empty(); // נקה אם יש משהו
+
+            events.forEach((event) => {
+              const date = new Date(event.eventDate).toLocaleDateString(
+                "he-IL"
+              );
+
+              const status = event.numOfGuest > 30 ? "אושר" : "ממתין לאישור";
+
+              const cardHtml = `
+                <div class="event-card">
+                  <h3>${event.eventDesc}</h3>
+                  <p><strong>תאריך:</strong> ${date}</p>
+                  <p><strong>מיקום:</strong> ${event.eventLocation}</p>
+            
+                </div>
+              `;
+
+              container.append(cardHtml);
+            });
+          },
+          function (err) {
+            console.error("❌ Error loading events", err);
+            $("#eventsContainer").html("<p>אירעה שגיאה בטעינת האירועים</p>");
+          }
+        );
+      });
+      //
+    </script>
+  </body>
+</html>

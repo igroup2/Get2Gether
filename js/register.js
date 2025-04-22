@@ -28,6 +28,26 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("multiStepForm")
     .addEventListener("submit", function (event) {
       event.preventDefault();
+      const data = {
+        fullName: document.getElementById("fullName").value,
+        phoneNumber: document.getElementById("phoneNUmber").value,
+        password: document.getElemnetById("password").value,
+        gender: document.getElementById("gender1").value,
+      };
+
+    
+      ajaxCall(
+        "POST",
+        "https://proj.ruppin.ac.il/igroup2/prod/api/Persons/register",
+        data,
+        function () {
+          console.log("Registration successful");
+        },
+        function (error) {
+          console.error("Error during registration:", error);
+        }
+      );
+
       alert("ההרשמה הושלמה בהצלחה!");
     });
 });
