@@ -1,4 +1,4 @@
-var NumOfEvents = 2;
+var NumOfEvents = 0;
 
 // ✅ קריאה ל-Google Directions API לחישוב זמן סטייה עבור כל צמד (נהג, נוסע)
 
