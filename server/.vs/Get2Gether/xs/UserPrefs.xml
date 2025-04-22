@@ -1,36 +1,26 @@
 ﻿<Properties StartupConfiguration="{1A132A19-CDDF-45B3-B697-17ECB3CD244D}|Default">
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Get2Gether PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Get2Gether/Models/Algo.cs">
-    <Files>
-      <File FileName="Get2Gether/Models/MatchResult.cs" />
-      <File FileName="Get2Gether/Models/Algo.cs" Line="280" Column="22" />
-      <File FileName="Get2Gether/Controllers/AlgosController.cs" Line="34" Column="31" />
-      <File FileName="Get2Gether/Models/RideMatcher.cs" Line="92" Column="40" />
-      <File FileName="Get2Gether/Models/GiveRideRequest.cs" />
-      <File FileName="Get2Gether/Program.cs" />
-      <File FileName="Get2Gether/Models/RideRequest.cs" />
-      <File FileName="Get2Gether/Models/FinalMatch.cs" Line="13" Column="3" />
-    </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="Get2Gether" expanded="True">
-            <Node name="Get2Gether">
-              <Node name="Controllers" expanded="True" />
-              <Node name="DAL" expanded="True" />
-              <Node name="Models" expanded="True">
-                <Node name="Algo.cs" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
-  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Get2Gether/Models/Algo.cs">
+    <Files>
+      <File FileName="Get2Gether/Models/MatchResult.cs" />
+      <File FileName="Get2Gether/Models/Algo.cs" Line="281" Column="33" />
+      <File FileName="Get2Gether/Controllers/AlgosController.cs" />
+      <File FileName="Get2Gether/Models/RideMatcher.cs" />
+      <File FileName="Get2Gether/Models/GiveRideRequest.cs" />
+      <File FileName="Get2Gether/Program.cs" />
+      <File FileName="Get2Gether/Models/RideRequest.cs" />
+      <File FileName="Get2Gether/Models/FinalMatch.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Get2Gether PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
