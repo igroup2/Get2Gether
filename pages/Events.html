@@ -59,11 +59,11 @@
     </style>
   </head>
   <script>
-    const api = `https://proj.ruppin.ac.il/igroup2/test1/server/api/`;
     $(document).ready(function () {
+      const api = "https://localhost:7035/api/";
       ajaxCall(
         "GET",
-        "https://proj.ruppin.ac.il/igroup2/prod/api/Events/4",
+        api + "Events/4",
         null,
         function (events) {
           console.log("✅ Events loaded");
@@ -158,11 +158,10 @@
     <script>
       $(document).ready(function () {
         const PersonID = 4;
-        const api = `https://proj.ruppin.ac.il/igroup2/test1/server/api/`;
 
         ajaxCall(
           "GET",
-          `https://proj.ruppin.ac.il/igroup2/prod/api/Events/${PersonID}`,
+          api + `Events/${PersonID}`,
           null,
           function (events) {
             console.log("✅ Events loaded");

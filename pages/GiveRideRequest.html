@@ -55,11 +55,12 @@
 
     <!-- AJAX Load Cities -->
     <script>
-      const api = `https://proj.ruppin.ac.il/igroup2/test1/server/api/`;
+      const api = "https://localhost:7035/api/";
+
       $(document).ready(function () {
         ajaxCall(
           "GET",
-          "https://proj.ruppin.ac.il/igroup2/prod/api/RideMatchers/cities",
+          api + "RideMatchers/cities",
           null,
           function (cities) {
             cities.forEach(function (city) {
@@ -209,7 +210,7 @@
 
         ajaxCall(
           "POST",
-          "https://proj.ruppin.ac.il/igroup2/prod/api/GiveRideRequests",
+          api + "GiveRideRequests",
           JSON.stringify(giveRideRequest),
           (response) => {
             console.log("✅ Success submitting give ride request", response);
