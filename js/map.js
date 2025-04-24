@@ -1,6 +1,7 @@
 var NumOfEvents = 0;
 
 // ✅ קריאה ל-Google Directions API לחישוב זמן סטייה עבור כל צמד (נהג, נוסע)
+const api = "https://localhost:7035/api/";
 
 function calculateDelayMinutes(
   driverCoords,
@@ -103,7 +104,7 @@ function enrichMatchResultsWithDelays(data, eventCoords, callback) {
 function sendToRunAlgo(matchResultsWithDelays) {
   ajaxCall(
     "POST",
-    "https://proj.ruppin.ac.il/igroup2/prod/api/RideMatchers/RunAlgo",
+    api + "RunAlgo",
     JSON.stringify(matchResultsWithDelays),
     (result) => {
       console.log("✅ תוצאות שיבוץ סופי מהשרת:", result);
@@ -165,7 +166,7 @@ function sendDetourResultsToServer(results) {
   const num = 10;
   ajaxCall(
     "POST",
-    `https://proj.ruppin.ac.il/igroup2/prod/api/Algos?maxS=${num}`,
+    api + `Algos?maxS=${num}`,
     JSON.stringify(results),
     (data) => {
       console.log("✅   שיבוצים סופיים :", data);
@@ -255,7 +256,7 @@ function addEventMarker(eventCoordinates, eventLocation) {
 function loadRideData(eventID) {
   ajaxCall(
     "POST",
-    `https://proj.ruppin.ac.il/igroup2/prod/api/RideMatchers?id=${eventID}`,
+    api + `RideMatchers?id=${eventID}`,
     null,
     (data) => {
       console.log("✅ Success loading data", data);
@@ -391,7 +392,7 @@ function sendToServer() {
   // והפונקציה ajaxCall לשליחה לשרת
   ajaxCall(
     "POST",
-    "https://proj.ruppin.ac.il/igroup2/prod/api/RideMatchers/Filter",
+    api + "RideMatchers/Filter",
     JSON.stringify(rideMatcher),
     (data) => {
       console.log("🎯 תוצאה לאחר סינון ראשוני:", data);

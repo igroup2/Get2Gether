@@ -1,3 +1,4 @@
+const api = "https://localhost:7035/api/";
 document.addEventListener("DOMContentLoaded", function () {
   let currentStep = 0;
   const steps = document.querySelectorAll(".form-step");
@@ -35,10 +36,9 @@ document.addEventListener("DOMContentLoaded", function () {
         gender: document.getElementById("gender1").value,
       };
 
-    
       ajaxCall(
         "POST",
-        "https://proj.ruppin.ac.il/igroup2/prod/api/Persons/register",
+        api + "Persons/register",
         data,
         function () {
           console.log("Registration successful");

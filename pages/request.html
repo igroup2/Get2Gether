@@ -54,11 +54,12 @@
       </nav>
     </header>
     <script>
-      const api = `https://proj.ruppin.ac.il/igroup2/test1/server/api/`;
+      const api = "https://localhost:7035/api/";
+
       $(document).ready(function () {
         ajaxCall(
           "GET",
-          "https://proj.ruppin.ac.il/igroup2/prod/api/RideMatchers/cities",
+          api + "RideMatchers/cities",
           null,
           function (cities) {
             cities.forEach(function (city) {
@@ -207,7 +208,7 @@
 
         ajaxCall(
           "POST",
-          "https://proj.ruppin.ac.il/igroup2/prod/api/RideRequests",
+          api + "RideRequests",
           JSON.stringify(rideRequest),
           (response) => {
             console.log("✅ Success submitting ride request", response);
