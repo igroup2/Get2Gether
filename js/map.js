@@ -65,7 +65,7 @@ function enrichMatchResultsWithDelays(data, eventCoords, callback) {
     0
   );
   let completed = 0;
-
+  //dekel
   data.forEach((match) => {
     let driver = match.driver;
     let riders = match.potentialRiders;
