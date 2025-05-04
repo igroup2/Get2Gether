@@ -28,11 +28,11 @@ namespace Get2Gether.Controllers
 
         // POST api/values
         // 
-        [HttpPost]
-        public List<FinalMatch> RunAlgo([FromBody]List<FinalMatch> match, [FromQuery] double maxS)
+        [HttpPost("RunAlgo")]
+        public List<FinalMatch> RunAlgo([FromBody]List<FinalMatch> match,int Eventid)
         {
             Algo algo = new Algo();
-            return algo.CalculateDistanceScore(match,maxS);
+            return algo.RunAlgorithm(match, Eventid);
         }
 
         // PUT api/values/5

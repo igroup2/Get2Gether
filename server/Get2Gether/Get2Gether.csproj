@@ -20,4 +20,7 @@
     <Folder Include="Controllers\" />
     <Folder Include="DAL\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig" />
+  </ItemGroup>
 </Project>
