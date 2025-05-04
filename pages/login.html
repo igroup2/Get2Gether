@@ -13,7 +13,8 @@
     <script src="../js/ajaxcalls.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
     <script>
-      const api = `https://proj.ruppin.ac.il/igroup2/test1/server/api/`;
+      const api = "https://localhost:7035/api/";
+
       $(document).ready(function () {
         console.log("Document ready!");
         $("#loginForm").submit((event) => {
@@ -32,7 +33,7 @@
         console.log(user);
         ajaxCall(
           "POST",
-          "https://proj.ruppin.ac.il/igroup2/prod/api/Person/login",
+          api + "Person/login",
           JSON.stringify(user),
           () => {
             console.log("Login successful");
