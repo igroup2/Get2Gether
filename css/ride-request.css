@@ -1,0 +1,24 @@
+.radio-questions-box {
+    border: 2px solid #000;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+  }
+  
+  .radio-questions-box h3 {
+    margin-top: 0;
+    font-weight: bold;
+  }
+  
+  .radio-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .radio-line label {
+    font-weight: bold;
+    margin-left: 10px;
+    white-space: nowrap;
+  }
+  

@@ -21,13 +21,6 @@ namespace Get2Gether.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        [HttpGet("cities")]
-        public List<string> GetCities()
-
-        {
-            RideMatcher matcher = new RideMatcher();    
-            return matcher.GetCities(); 
-        }
         // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)

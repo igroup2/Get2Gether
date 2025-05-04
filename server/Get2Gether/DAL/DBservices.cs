@@ -490,45 +490,7 @@ public class DBservices
     }
 
 
-    public List<string> GetCities()
-    {
-        SqlConnection con;
-        SqlCommand cmd;
-
-        try
-        {
-            con = connect("myProjDB");
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-
-        Dictionary<string, object> paramDic = new Dictionary<string, object>();
-
-
-        cmd = CreateCommandWithStoredProcedureGENERAL("SP_GetCities", con, paramDic);
-        SqlParameter returnValue = new SqlParameter
-        {
-            Direction = ParameterDirection.ReturnValue
-        };
-        cmd.Parameters.Add(returnValue);
-
-        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-
-        List<string> cities = new List<string>();
-
-
-
-        while (reader.Read())
-        {
-            string city = Convert.ToString(reader["CityName"]);
-
-            cities.Add(city);
-        }
-        return cities;
-
-    }
+   
 
     public void CreateNewRequest(RideRequest request)
     {

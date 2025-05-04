@@ -4,6 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Enter Ride Request</title>
+
+    <!-- Google Maps API -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places"
+      async
+      defer
+    ></script>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/ride-request.css" />
+
+    <!-- Scripts -->
     <script
       src="https://code.jquery.com/jquery-3.7.1.min.js"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
@@ -12,30 +25,8 @@
     <script src="../js/js.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <script src="../js/map.js"></script>
-    <link rel="stylesheet" href="../css/style.css" />
-    <style>
-      .radio-questions-box {
-        border: 2px solid #000;
-        padding: 20px;
-        margin-top: 20px;
-        border-radius: 8px;
-      }
-      .radio-questions-box h3 {
-        margin-top: 0;
-        font-weight: bold;
-      }
-      .radio-line {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-      }
-      .radio-line label {
-        font-weight: bold;
-        margin-left: 10px;
-        white-space: nowrap;
-      }
-    </style>
   </head>
+
   <body>
     <!-- HEADER -->
     <header>
@@ -48,62 +39,29 @@
           <li><a href="login.html">התחברות</a></li>
           <li><a href="register.html">הרשמה</a></li>
           <li><a href="select.html">בחירה</a></li>
-          <li><a href="map.html"> מפה </a></li>
-          <li><a href="Events.html"> Events </a></li>
+          <li><a href="map.html">מפה</a></li>
+          <li><a href="Events.html">Events</a></li>
         </ul>
       </nav>
     </header>
-    <script>
-      $(document).ready(function () {
-        const api = "https://localhost:7035/api/";
 
-        ajaxCall(
-          "GET",
-          api + "RideMatchers/cities",
-          null,
-          function (cities) {
-            cities.forEach(function (city) {
-              $("#location").append(`<option value="${city}">${city}</option>`);
-            });
-            console.log("✅ Success loading cities");
-          },
-          function (error) {
-            console.log("❌ Error loading cities", error);
-          }
-        );
-      });
-    </script>
+    <!-- MAIN SECTION -->
     <section class="hero">
-      <h1></h1>
-      <h2
-        style="
-          font-weight: bold;
-          color: #000;
-          font-size: 2em;
-          text-align: center;
-          margin-bottom: 20px;
-        "
-      >
-        מקימים לך טרמפ בכיף!
-      </h2>
-      <h2
-        style="
-          font-weight: bold;
-          color: #000;
-          font-size: 1em;
-          text-align: center;
-          margin-bottom: 20px;
-        "
-      >
-        כמה פרטים קטנים , כדי שנוכל לחבר אותך לטרמפ שהכי מתאים לך
-      </h2>
+      <h2>מקימים לך טרמפ בכיף!</h2>
+      <h2>כמה פרטים קטנים , כדי שנוכל לחבר אותך לטרמפ שהכי מתאים לך</h2>
 
       <form action="/submit-request" method="POST">
-        <!-- Location Dropdown -->
+        <!-- Location Input -->
         <label for="location">נקודת איסוף:</label>
-        <select id="location" name="location" required></select>
+        <input
+          type="text"
+          id="location"
+          name="location"
+          placeholder="עיר, רחוב, מספר"
+          required
+        />
 
-        <!-- Guest Number Dropdown -->
+        <!-- Guest Number -->
         <label for="guestNumber">מספר אורחים:</label>
         <select id="guestNumber" name="guestNumber" required>
           <option value="">בחר</option>
@@ -142,7 +100,7 @@
           </div>
         </div>
 
-        <!-- Open Text Area -->
+        <!-- Notes -->
         <label for="notes">הערות נוספות:</label><br />
         <textarea
           name="notes"
@@ -152,73 +110,83 @@
           placeholder="כתוב כאן כל דבר שחשוב לדעת..."
         ></textarea>
 
-        <!-- Submit Button -->
+        <!-- Submit -->
         <br /><br />
         <button type="submit">שלח בקשה</button>
       </form>
     </section>
 
-    <!-- פוטר -->
+    <!-- FOOTER -->
     <footer>
       <p>צור קשר:</p>
       <a href="https://www.instagram.com" target="_blank">
-        <img
-          src="../images/instagram-icon.png"
-          alt="Instagram"
-          width="24"
-          height="24"
-        />
+        <img src="../images/instagram-icon.png" alt="Instagram" width="24" height="24" />
       </a>
       <a href="https://www.facebook.com" target="_blank">
-        <img
-          src="../images/facebook-icon.png"
-          alt="Facebook"
-          width="24"
-          height="24"
-        />
+        <img src="../images/facebook-icon.png" alt="Facebook" width="24" height="24" />
       </a>
       <a href="mailto:igroup2project@gmail.com">
-        <img
-          src="../images/google-icon.png"
-          alt="Google"
-          width="24"
-          height="24"
-        />
+        <img src="../images/google-icon.png" alt="Google" width="24" height="24" />
       </a>
     </footer>
+
+    <!-- SCRIPT -->
     <script>
-      $("form").on("submit", function (event) {
-        event.preventDefault();
+      let selectedCoordinates = { latitude: 0, longitude: 0 };
 
-        const rideRequest = {
-          EventID: 15,
-          PersonID: 10,
-          NumOfGuest: parseInt($("#guestNumber").val()),
-          PickUpLocation: $("#location").val(),
-          PreferredGender: $("input[name='preferredGender']:checked").val(),
-          PreferredSmoker:
-            $("input[name='preferNoSmoking']:checked").val() == "0"
-              ? false
-              : true,
-          pickUpCoordinates: {
-            latitude: 0,
-            longitude: 0,
-          },
-        };
+      $(document).ready(function () {
+        const api = "https://localhost:7035/api/";
 
-        ajaxCall(
-          "POST",
-          api + "RideRequests",
-          JSON.stringify(rideRequest),
-          (response) => {
-            console.log("✅ Success submitting ride request", response);
-            // Optionally, redirect or show a success message
-          },
-          (error) => {
-            console.log("❌ Error submitting ride request", error);
-            // Optionally, show an error message
+        const input = document.getElementById("location");
+        const autocomplete = new google.maps.places.Autocomplete(input, {
+          types: ["geocode"],
+          componentRestrictions: { country: "il" }
+        });
+
+        autocomplete.addListener("place_changed", function () {
+          const place = autocomplete.getPlace();
+          if (place.geometry && place.geometry.location) {
+            selectedCoordinates.latitude = place.geometry.location.lat();
+            selectedCoordinates.longitude = place.geometry.location.lng();
+            console.log("📍 Location selected:", selectedCoordinates);
+          } else {
+            console.warn("⚠️ כתובת לא תקינה או לא נבחרה מרשימה");
           }
-        );
+        });
+
+        $("form").on("submit", function (event) {
+          event.preventDefault();
+
+          if (selectedCoordinates.latitude === 0 && selectedCoordinates.longitude === 0) {
+            alert("אנא בחר כתובת מתוך ההשלמה של גוגל");
+            return;
+          }
+
+          const rideRequest = {
+            EventID: 15,
+            PersonID: 10,
+            NumOfGuest: parseInt($("#guestNumber").val()),
+            PickUpLocation: $("#location").val(),
+            PreferredGender: $("input[name='preferredGender']:checked").val(),
+            PreferredSmoker:
+              $("input[name='preferNoSmoking']:checked").val() === "0" ? false : true,
+            pickUpCoordinates: selectedCoordinates,
+          };
+
+          ajaxCall(
+            "POST",
+            api + "RideRequests",
+            JSON.stringify(rideRequest),
+            (response) => {
+              console.log("✅ Success submitting ride request", response);
+              alert("הבקשה נשלחה בהצלחה!");
+            },
+            (error) => {
+              console.log("❌ Error submitting ride request", error);
+              alert("אירעה שגיאה בשליחה");
+            }
+          );
+        });
       });
     </script>
   </body>

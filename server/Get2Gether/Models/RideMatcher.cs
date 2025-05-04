@@ -241,10 +241,6 @@ public class RideMatcher
         DBservices db = new DBservices();
         return db.GetALLRequests(EventID);
     }
-    public List<string> GetCities()
-    {
-        DBservices db = new DBservices();
-        return db.GetCities();
-    }
+    
 
 }
