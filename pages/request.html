@@ -7,10 +7,12 @@
 
     <!-- Google Maps API -->
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places"
-      async
-      defer
-    ></script>
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places&callback=initAutocomplete"
+    async
+    defer
+  ></script>
+  
+  
 
     <!-- External CSS -->
     <link rel="stylesheet" href="../css/style.css" />
@@ -24,7 +26,6 @@
     ></script>
     <script src="../js/js.js"></script>
     <script src="../js/ajaxcalls.js"></script>
-    <script src="../js/map.js"></script>
   </head>
 
   <body>
@@ -133,16 +134,14 @@
     <!-- SCRIPT -->
     <script>
       let selectedCoordinates = { latitude: 0, longitude: 0 };
-
-      $(document).ready(function () {
-        const api = "https://localhost:7035/api/";
-
+    
+      function initAutocomplete() {
         const input = document.getElementById("location");
         const autocomplete = new google.maps.places.Autocomplete(input, {
           types: ["geocode"],
           componentRestrictions: { country: "il" }
         });
-
+    
         autocomplete.addListener("place_changed", function () {
           const place = autocomplete.getPlace();
           if (place.geometry && place.geometry.location) {
@@ -153,15 +152,19 @@
             console.warn("⚠️ כתובת לא תקינה או לא נבחרה מרשימה");
           }
         });
-
+      }
+    
+      $(document).ready(function () {
+        const api = "https://localhost:7035/api/";
+    
         $("form").on("submit", function (event) {
           event.preventDefault();
-
+    
           if (selectedCoordinates.latitude === 0 && selectedCoordinates.longitude === 0) {
             alert("אנא בחר כתובת מתוך ההשלמה של גוגל");
             return;
           }
-
+    
           const rideRequest = {
             EventID: 15,
             PersonID: 10,
@@ -172,7 +175,7 @@
               $("input[name='preferNoSmoking']:checked").val() === "0" ? false : true,
             pickUpCoordinates: selectedCoordinates,
           };
-
+    
           ajaxCall(
             "POST",
             api + "RideRequests",
@@ -189,5 +192,6 @@
         });
       });
     </script>
+    
   </body>
 </html>
