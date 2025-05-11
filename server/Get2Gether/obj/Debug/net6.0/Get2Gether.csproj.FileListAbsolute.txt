@@ -203,46 +203,89 @@ C:/Users/kxhyd/OneDrive - Ruppin Students and Teachers/שולחן העבודה/�
 C:/Users/kxhyd/OneDrive - Ruppin Students and Teachers/שולחן העבודה/שנה ד/פרוייקט/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.csproj.Up2Date
 C:/Users/kxhyd/OneDrive - Ruppin Students and Teachers/שולחן העבודה/שנה ד/פרוייקט/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.genruntimeconfig.cache
 C:/Users/kxhyd/OneDrive - Ruppin Students and Teachers/שולחן העבודה/שנה ד/פרוייקט/Get2Gether/server/Get2Gether/obj/Debug/net6.0/ref/Get2Gether.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/appsettings.Development.json
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/appsettings.json
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/Get2Gether.staticwebassets.endpoints.json
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/Get2Gether.exe
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/Get2Gether.deps.json
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/Get2Gether.runtimeconfig.json
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/Get2Gether.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/Get2Gether.pdb
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/Microsoft.OpenApi.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/Swashbuckle.AspNetCore.Swagger.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/System.Data.SqlClient.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/runtimes/win-arm64/native/sni.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/runtimes/win-x64/native/sni.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/runtimes/win-x86/native/sni.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/runtimes/unix/lib/net6.0/System.Data.SqlClient.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/bin/Debug/net6.0/runtimes/win/lib/net6.0/System.Data.SqlClient.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.csproj.AssemblyReference.cache
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.GeneratedMSBuildEditorConfig.editorconfig
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.AssemblyInfoInputs.cache
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.AssemblyInfo.cs
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.csproj.CoreCompileInputs.cache
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.MvcApplicationPartsAssemblyInfo.cs
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.MvcApplicationPartsAssemblyInfo.cache
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.sourcelink.json
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/scopedcss/bundle/Get2Gether.styles.css
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/staticwebassets.build.json
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/staticwebassets.development.json
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/staticwebassets.build.endpoints.json
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/staticwebassets/msbuild.Get2Gether.Microsoft.AspNetCore.StaticWebAssets.props
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/staticwebassets/msbuild.Get2Gether.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/staticwebassets/msbuild.build.Get2Gether.props
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/staticwebassets/msbuild.buildMultiTargeting.Get2Gether.props
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/staticwebassets/msbuild.buildTransitive.Get2Gether.props
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/staticwebassets.pack.json
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.csproj.Up2Date
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/refint/Get2Gether.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.pdb
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/Get2Gether.genruntimeconfig.cache
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/ref/Get2Gether.dll
-C:/Users/yuval/OneDrive/שולחן העבודה/Get2Gether/Get2Gether/server/Get2Gether/obj/Debug/net6.0/staticwebassets.upToDateCheck.txt
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\appsettings.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Get2Gether.staticwebassets.endpoints.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Get2Gether.exe
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Get2Gether.deps.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Get2Gether.runtimeconfig.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Get2Gether.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Get2Gether.pdb
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\System.Data.SqlClient.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Data.SqlClient.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Data.SqlClient.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.csproj.AssemblyReference.cache
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.AssemblyInfoInputs.cache
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.AssemblyInfo.cs
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.csproj.CoreCompileInputs.cache
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.sourcelink.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\scopedcss\bundle\Get2Gether.styles.css
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets.build.endpoints.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets\msbuild.Get2Gether.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets\msbuild.Get2Gether.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets\msbuild.build.Get2Gether.props
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Get2Gether.props
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.Get2Gether.props
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.csproj.Up2Date
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\refint\Get2Gether.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.pdb
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.genruntimeconfig.cache
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\ref\Get2Gether.dll
+C:\Users\yuval\OneDrive\שולחן העבודה\Get2Gether\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets.upToDateCheck.txt
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\appsettings.json
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Get2Gether.staticwebassets.endpoints.json
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Get2Gether.exe
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Get2Gether.deps.json
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Get2Gether.runtimeconfig.json
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Get2Gether.dll
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Get2Gether.pdb
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\System.Data.SqlClient.dll
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Data.SqlClient.dll
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Data.SqlClient.dll
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.csproj.AssemblyReference.cache
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.AssemblyInfoInputs.cache
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.AssemblyInfo.cs
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.csproj.CoreCompileInputs.cache
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.sourcelink.json
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\scopedcss\bundle\Get2Gether.styles.css
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets.build.endpoints.json
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets\msbuild.Get2Gether.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets\msbuild.Get2Gether.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets\msbuild.build.Get2Gether.props
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Get2Gether.props
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.Get2Gether.props
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\staticwebassets.upToDateCheck.txt
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.csproj.Up2Date
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.dll
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\refint\Get2Gether.dll
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.pdb
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\Get2Gether.genruntimeconfig.cache
+C:\Users\kxhyd\OneDrive - Ruppin Students and Teachers\שולחן העבודה\Get2Gether\server\Get2Gether\obj\Debug\net6.0\ref\Get2Gether.dll

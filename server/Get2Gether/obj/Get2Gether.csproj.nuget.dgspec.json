@@ -1,27 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/Users/dekelkartel/Desktop/Get2Gether/server/Get2Gether/Get2Gether.csproj": {}
+    "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\שולחן העבודה\\Get2Gether\\server\\Get2Gether\\Get2Gether.csproj": {}
   },
   "projects": {
-    "/Users/dekelkartel/Desktop/Get2Gether/server/Get2Gether/Get2Gether.csproj": {
+    "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\שולחן העבודה\\Get2Gether\\server\\Get2Gether\\Get2Gether.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/dekelkartel/Desktop/Get2Gether/server/Get2Gether/Get2Gether.csproj",
+        "projectUniqueName": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\שולחן העבודה\\Get2Gether\\server\\Get2Gether\\Get2Gether.csproj",
         "projectName": "Get2Gether",
-        "projectPath": "/Users/dekelkartel/Desktop/Get2Gether/server/Get2Gether/Get2Gether.csproj",
-        "packagesPath": "/Users/dekelkartel/.nuget/packages/",
-        "outputPath": "/Users/dekelkartel/Desktop/Get2Gether/server/Get2Gether/obj/",
+        "projectPath": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\שולחן העבודה\\Get2Gether\\server\\Get2Gether\\Get2Gether.csproj",
+        "packagesPath": "C:\\Users\\kxhyd\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\שולחן העבודה\\Get2Gether\\server\\Get2Gether\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/dekelkartel/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\kxhyd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/library-packs": {},
-          "/usr/local/share/dotnet/sdk/7.0.317/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -34,7 +39,13 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net6.0": {
@@ -60,20 +71,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.31, 6.0.31]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.osx-arm64",
-              "version": "[6.0.31, 6.0.31]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.31, 6.0.31]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -82,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.317/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -47,53 +47,90 @@ public class DBservices
         return CreateCommandWithStoredProcedureGENERAL(spName, con, paramDic);
     }
 
-    public Event CreateNewEvent(Event NewEvent)
+    public void CreateNewEvent(Event e)
     {
         using (SqlConnection con = connect("myProjDB"))
         {
             Dictionary<string, object> paramDic = new Dictionary<string, object>
-            {
-                { "@PartnerID1", NewEvent.PartnerID1 },
-                { "@PartnerID2", NewEvent.PartnerID2 }
-            };
+         {
+             { "@PartnerID1", e.PartnerID1 },
+             { "@PartnerID2", e.PartnerID2 },
+             { "@EventDesc", e.EventDesc },
+             {"@NumOfGuest" , e.NumOfGuest },
+             {"@EventDate" , e.EventDate },
+             {"@EventLocation" , e.EventLocation },
+             {"@EventLatitude" , e.EventLatitude },
+             {"@EventLongitude" , e.EventLongitude },
+         };
 
             using (SqlCommand cmd = CreateCommandWithStoredProcedureCreateNewEvent("SP_CreateNewEvent", con, paramDic))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    // אין צורך לקרוא תוצאה כאן
+                    if (reader.Read())
+                    {
+                        e.EventID = Convert.ToInt32(reader["EventID"]);
+                    }
                 }
             }
-            return NewEvent;
+
         }
     }
 
+
+
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure 
+    //---------------------------------------------------------------------------------
     private SqlCommand CreateCommandWithStoredProcedureCreateNewPerson(String spName, SqlConnection con, Dictionary<string, object> paramDic)
     {
         return CreateCommandWithStoredProcedureGENERAL(spName, con, paramDic);
     }
 
-    public void CreateNewPerson(string fullName, string phoneNumber, char gender, string password)
+    //--------------------------------------------------------------------------------------------------
+    // This method insert a Person to the Person table 
+    //--------------------------------------------------------------------------------------------------
+    //
+    public void CreateNewPerson(Person person)
+
+
+
     {
         using (SqlConnection con = connect("myProjDB"))
         {
             Dictionary<string, object> paramDic = new Dictionary<string, object>
-            {
-                { "@FullName", fullName },
-                { "@Password", password },
-                { "@PhoneNumber", phoneNumber },
-                { "@Gender", gender }
-            };
+
+        {
+            { "@FullName", person.FullName },
+            { "@Password", person.Password },
+            { "@PhoneNumber", person.PhoneNumber },
+            { "@Gender", person.Gender },
+            { "@Smoke", person.Smoke }
+        };
+
 
             using (SqlCommand cmd = CreateCommandWithStoredProcedureCreateNewPerson("SP_CreateNewPerson", con, paramDic))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    // No output expected
+
+                    if (reader.Read())
+                    {
+                        person.PersonID = Convert.ToInt32(reader["PersonID"]);
+                    }
                 }
             }
         }
     }
+
+
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand using a stored procedure  -- Coordinate
+    //---------------------------------------------------------------------------------
+
+
 
     private SqlCommand CreateCommandWithStoredProcedureGetCoordinates(String spName, SqlConnection con, Dictionary<string, object> paramDic)
     {
@@ -345,8 +382,7 @@ public class DBservices
                             PhoneNumber = reader["PhoneNumber"].ToString(),
                             Smoke = Convert.ToBoolean(reader["Smoke"]),
                             Gender = reader["Gender"].ToString(),
-                            SideInWedding = reader["SideInWedding"].ToString(),
-                            RelationToCouple = reader["RelationToCouple"].ToString()
+                         
                         };
                     }
                     else
@@ -442,5 +478,19 @@ public class DBservices
                 con.Close();
         }
     }
+
+
+    //--------------------------------------------------------------------------------------------------
+    // This method return a person 
+    //--------------------------------------------------------------------------------------------------
+    //
+   
+    //
+
+    //---------------------------------------------------------------------------------
+    // Create the SqlCommand
+   
+
+
 
 }

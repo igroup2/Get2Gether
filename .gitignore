@@ -14,3 +14,12 @@ obj/
 # קבצי לוגים / זמניים
 *.log
 *.tmp
+server/Get2Gether/obj/Debug/net6.0/refint/Get2Gether.dll
+server/Get2Gether/obj/Debug/net6.0/refint/Get2Gether.dll
+server/Get2Gether/obj/Debug/net6.0/refint/Get2Gether.dll
+server/Get2Gether/obj/Debug/net6.0/ref/Get2Gether.dll
+server/Get2Gether/obj/Debug/net6.0/Get2Gether.pdb
+server/Get2Gether/obj/Release/net6.0/Get2Gether.csproj.AssemblyReference.cache
+/server/Get2Gether/obj
+server/Get2Gether/obj/Debug/net6.0/Get2Gether.pdb
+server/Get2Gether/obj/Debug/net6.0/refint/Get2Gether.dll

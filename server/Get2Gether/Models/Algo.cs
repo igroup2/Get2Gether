@@ -120,14 +120,14 @@ namespace Get2Gether.Models
             // חישוב שאר הציונים
             int smokingScore = CalculateSmokingScore(driver, TheDriver, rider, TheRider);
             int genderScore = CalculateGenderScore(driver, TheDriver, rider, TheRider);
-            int proximityScore = CalculateProximityScore(TheDriver, TheRider);
+            //int proximityScore = CalculateProximityScore(TheDriver, TheRider);
 
             // חישוב ניקוד סופי עם משקלים
             double finalScore = 0;
             finalScore += distanceScore * (settings.DistanceWeight / 100.0);
             finalScore += smokingScore * (settings.SmokingPreferenceWeight / 100.0);
             finalScore += genderScore * (settings.GenderPreferenceWeight / 100.0);
-            finalScore += proximityScore * (settings.FamilyRelationWeight / 100.0);
+            //finalScore += proximityScore * (settings.FamilyRelationWeight / 100.0);
 
             return finalScore;
         }
@@ -250,7 +250,7 @@ namespace Get2Gether.Models
             return 100;
         }
 
-
+        /*
         private int CalculateProximityScore(Person driverPerson, Person riderPerson)
         {
             if (driverPerson.SideInWedding != riderPerson.SideInWedding && driverPerson.RelationToCouple != riderPerson.RelationToCouple)
@@ -261,7 +261,7 @@ namespace Get2Gether.Models
 
             return 100;
         }
-
+        */
 
 
         // נמצא את הטרמפיסטים המסכנים
