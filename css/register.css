@@ -74,6 +74,9 @@ button:hover {
   margin-top: 10px;
   font-weight: bold;
 }
+.card {
+  flex: 1 0 auto;
+}
 
 .partner-box input,
 .partner-box select {
