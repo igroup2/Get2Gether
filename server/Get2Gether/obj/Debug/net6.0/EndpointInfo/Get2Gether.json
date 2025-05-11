@@ -297,17 +297,20 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Event"
+                  "type": "integer",
+                  "format": "int32"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Event"
+                  "type": "integer",
+                  "format": "int32"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Event"
+                  "type": "integer",
+                  "format": "int32"
                 }
               }
             }
@@ -925,39 +928,48 @@
         "tags": [
           "Persons"
         ],
-        "parameters": [
-          {
-            "name": "fullName",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "phoneNumber",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "gender",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "schema": {
-              "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
           }
         }
       }
@@ -1802,6 +1814,35 @@
             "items": {
               "$ref": "#/components/schemas/RideRequest"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "personID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "smoke": {
+            "type": "boolean"
+          },
+          "gender": {
+            "type": "string",
             "nullable": true
           }
         },

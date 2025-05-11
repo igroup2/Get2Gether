@@ -92,7 +92,7 @@ public class DBservices
     // This method insert a User to the User table 
     //--------------------------------------------------------------------------------------------------
     //
-    public Event CreateNewEvent(Event NewEvent)
+    public void CreateNewEvent(Event NewEvent)
     {
 
         SqlConnection con;
@@ -111,25 +111,29 @@ public class DBservices
         Dictionary<string, object> paramDic = new Dictionary<string, object>();
         paramDic.Add("@PartnerID1", NewEvent.PartnerID1);
         paramDic.Add("@PartnerID2", NewEvent.PartnerID2);
+        paramDic.Add("@EventDesc", NewEvent.EventDesc);
+        paramDic.Add("@NumOfGuest", NewEvent.NumOfGuest);
+        paramDic.Add("@EventDate", NewEvent.EventDate);
+        paramDic.Add("@EventLocation", NewEvent.EventLocation);
+        paramDic.Add("@EventLatitude", NewEvent.EventLatitude); 
+        paramDic.Add("@EventLongitude", NewEvent.EventLongitude);
 
-
-        cmd = CreateCommandWithStoredProcedureCreateNewEvent("SP_CreateNewEvent", con, paramDic);          // create the command
-        SqlParameter returnValue = new SqlParameter
+        using (cmd = CreateCommandWithStoredProcedureCreateNewEvent("SP_CreateNewEvent", con, paramDic)) 
         {
-            Direction = ParameterDirection.ReturnValue
-        };
-        cmd.Parameters.Add(returnValue);
-        SqlDataReader TheUser = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            if(reader.Read()) 
+                {
 
-        if (con != null)
-        {
-            // close the db connection
-            con.Close();
+   
+                NewEvent.EventID = Convert.ToInt32(reader["EventID"]);
+            }
         }
 
-
-        return NewEvent;
     }
+
+
+
+
     //---------------------------------------------------------------------------------
     // Create the SqlCommand using a stored procedure 
     //---------------------------------------------------------------------------------
@@ -162,45 +166,32 @@ public class DBservices
     // This method insert a Person to the Person table 
     //--------------------------------------------------------------------------------------------------
     //
-    public void CreateNewPerson(string fullName, string phoneNumber, char gender, string password)
+    public void CreateNewPerson(Person person)
     {
-
-        SqlConnection con;
-        SqlCommand cmd;
-
-        try
+        using (SqlConnection con = connect("myProjDB"))
         {
-            con = connect("myProjDB"); // create the connection
-        }
-        catch (Exception ex)
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
         {
-            // write to log
-            throw (ex);
-        }
-
-        Dictionary<string, object> paramDic = new Dictionary<string, object>();
-        paramDic.Add("@FullName", fullName);
-        paramDic.Add("@Password", password);
-        paramDic.Add("@PhoneNumber", phoneNumber);
-        paramDic.Add("@Gender", gender);
-
-        cmd = CreateCommandWithStoredProcedureCreateNewPerson("SP_CreateNewPerson", con, paramDic);          // create the command
-        SqlParameter returnValue = new SqlParameter
-        {
-            Direction = ParameterDirection.ReturnValue
+            { "@FullName", person.FullName },
+            { "@Password", person.Password },
+            { "@PhoneNumber", person.PhoneNumber },
+            { "@Gender", person.Gender },
+            { "@Smoke", person.Smoke }
         };
-        cmd.Parameters.Add(returnValue);
-        SqlDataReader TheUser = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 
-
-        if (con != null)
-        {
-            // close the db connection
-            con.Close();
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureCreateNewPerson("SP_CreateNewPerson", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        person.PersonID = Convert.ToInt32(reader["PersonID"]);
+                    }
+                }
+            }
         }
-
-
     }
+
 
     //---------------------------------------------------------------------------------
     // Create the SqlCommand using a stored procedure  -- Coordinate
@@ -701,8 +692,8 @@ public class DBservices
         ThePerson.PhoneNumber = PersonSql["PhoneNumber"].ToString();
         ThePerson.Smoke = Convert.ToBoolean(PersonSql["Smoke"]);
         ThePerson.Gender = PersonSql["Gender"].ToString();
-        ThePerson.SideInWedding = PersonSql["SideInWedding"].ToString();
-        ThePerson.RelationToCouple = PersonSql["RelationToCouple"].ToString();
+        //ThePerson.SideInWedding = PersonSql["SideInWedding"].ToString();
+        //ThePerson.RelationToCouple = PersonSql["RelationToCouple"].ToString();
 
 
         // create the command

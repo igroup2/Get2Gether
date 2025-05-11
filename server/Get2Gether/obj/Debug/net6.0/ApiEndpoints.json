@@ -141,7 +141,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Get2Gether.Models.Event",
+        "Type": "System.Int32",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -686,30 +686,19 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "fullName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "phoneNumber",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "gender",
-        "Type": "System.Char",
-        "IsRequired": false
-      },
-      {
-        "Name": "password",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "p",
+        "Type": "Get2Gether.Models.Person",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "System.Int32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       }
     ]

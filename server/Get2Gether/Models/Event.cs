@@ -42,10 +42,10 @@ namespace Get2Gether.Models
         public double EventLongitude { get => eventLongitude; set => eventLongitude = value; }
 
 
-        static public Event createNewEvent(Event NewEvent)
+        static public void createNewEvent(Event NewEvent)
         {
             DBservices dbs = new DBservices();
-            return dbs.CreateNewEvent(NewEvent);
+             dbs.CreateNewEvent(NewEvent);
         }
         static public List<Event> GetEvents(int PersonID)
         {

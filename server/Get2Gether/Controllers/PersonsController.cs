@@ -16,9 +16,18 @@ namespace Get2Gether.Controllers
             return new string[] { "value1", "value2" };
         }
         [HttpPost("register")]
-        public void register(string fullName, string phoneNumber, char gender, string password)
+        public int register([FromBody] Person p)
         {
-            Models.Person.createNewPerson(fullName, phoneNumber, gender, password);
+            try
+            {
+               Models.Person.createNewPerson(p);
+                return p.PersonID; // תחזיר את ה-ID שנוצר אם הצליח
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+
         }
 
 

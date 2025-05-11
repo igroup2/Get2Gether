@@ -180,7 +180,7 @@ namespace Get2Gether.Models
             return 100;
         }
 
-
+        /*
         private int CalculateProximityScore(Person driverPerson, Person riderPerson)
         {
             if (driverPerson.SideInWedding != riderPerson.SideInWedding && driverPerson.RelationToCouple != riderPerson.RelationToCouple)
@@ -191,7 +191,7 @@ namespace Get2Gether.Models
 
             return 100;
         }
-
+        */
 
 
         // נמצא את הטרמפיסטים המסכנים
