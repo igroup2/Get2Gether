@@ -1,89 +1,159 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 using static Get2Gether.Models.RideMatcher;
 
 namespace Get2Gether.Models
 {
     public class Algo
     {
-       // private DBservices db = new DBservices();
+       private DBservices db = new DBservices();
 
 
-        private readonly Dictionary<string, int> weights = new Dictionary<string, int>
+        public List<FinalMatch> RunAlgorithm(List<FinalMatch> allMatches, int eventId)
         {
-            { "distance", 40 },
-            { "smoking", 20 },
-            { "gender", 20 },
-            { "proximity", 20 }
-        };
-        // בני: מעשן , גבר , צד כלה, מרחק: סטייה 7%
-        //public List<MatchResult> RunAlgorithm(List<MatchResult> filterResult)
-        //{
-        //    var finalMatches = new List<MatchResult>();
+            EventSetting settings = db.GetEventSettings(eventId);
 
-        //    foreach (var match in filterResult)
-        //    {
-        //        GiveRideRequest driver = match.Driver;
-        //        var bestRiders = new List<(RideRequest Rider, double score)>();
+            // סינון מוקדם לפי סטייה
+            List<FinalMatch> filteredMatches = FilterMatchesByDetour(allMatches, settings.DetourTime);
 
-        //        foreach (var Rider in match.PotentialRiders)
-        //        {
-        //            double score = CalculateOverallScore(driver, Rider);
-        //            if (score != -1)
-        //            {
-        //                bestRiders.Add((Rider, score));
-        //            }
-        //        }
+            // רשימת תוצאות סופית – לכל נהג נגדיר את שלושת הצימודים הכי טובים שלו
+            List<FinalMatch> finalMatches = new List<FinalMatch>();
 
-        //        var topRiders = bestRiders.OrderByDescending(p => p.score).Take(3).Select(p => p.Rider)
-        //            .ToList();
+            // איסוף כל הנהגים הייחודיים
+            List<GiveRideRequest> drivers = new List<GiveRideRequest>();
+            for (int i = 0; i < filteredMatches.Count; i++)
+            {
+                GiveRideRequest currentDriver = filteredMatches[i].GiveRideRequests;
+                bool exists = false;
+                for (int j = 0; j < drivers.Count; j++)
+                {
+                    if (drivers[j].Id == currentDriver.Id)
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
 
-        //        finalMatches.Add(new MatchResult
-        //        {
-        //            Driver = driver,
-        //            PotentialRiders = topRiders
-        //        });
-        //    }
+                if (!exists)
+                {
+                    drivers.Add(currentDriver);
+                }
+            }
 
-        //    return finalMatches;
-        //}
+            // לכל נהג נחפש את שלושת הצימודים עם הציון הכי גבוה
+            for (int i = 0; i < drivers.Count; i++)
+            {
+                GiveRideRequest driver = drivers[i];
+                List<(FinalMatch match, double score)> bestMatches = new List<(FinalMatch, double)>();
 
-        //private double CalculateOverallScore(List<FinalMatch> matches)
-        //{
-        //    List<FinalMatch> distanceScore = CalculateDistanceScore(matches, 10);
+                for (int j = 0; j < filteredMatches.Count; j++)
+                {
+                    FinalMatch match = filteredMatches[j];
+                    if (match.GiveRideRequests.Id == driver.Id)
+                    {
+                        RideRequest rider = match.RideRequests;
+                        double score = CalculateOverallScore(driver, rider, settings, filteredMatches);
 
-        //    ///// צריך לעשות שרוול שישלוף את האנשים
-        //    //Person TheDriver = db.GetPerson(driver.PersonID);
-        //    //Person TheRider = db.GetPerson(rider.PersonID);
+                        if (score != -1)
+                        {
+                            bestMatches.Add((match, score));
+                        }
+                    }
+                }
+
+                // מיון לפי ציון
+                for (int x = 0; x < bestMatches.Count - 1; x++)
+                {
+                    for (int y = x + 1; y < bestMatches.Count; y++)
+                    {
+                        if (bestMatches[x].score < bestMatches[y].score)
+                        {
+                            var temp = bestMatches[x];
+                            bestMatches[x] = bestMatches[y];
+                            bestMatches[y] = temp;
+                        }
+                    }
+                }
+
+                // הוספת שלושת ההתאמות הכי טובות לרשימת התוצאה
+                int count = 0;
+                for (int k = 0; k < bestMatches.Count && count < 3; k++)
+                {
+                    finalMatches.Add(bestMatches[k].match);
+                    count++;
+                }
+            }
+
+            return finalMatches;
+        }
 
 
-
-        //    //int smokingScore = CalculateSmokingScore(driver, TheDriver, rider, TheRider);
-        //    //int genderScore = CalculateGenderScore(driver, TheDriver, rider, TheRider);
-        //    //int proximityScore = CalculateProximityScore(TheDriver, TheRider);
-
-        //    //return distanceScore * (weights["distance"] / 100.0);
-        //    //distanceScore * (weights["distance"] / 100.0) +
-        //    //smokingScore * (weights["smoking"] / 100.0) +
-        //    //genderScore * (weights["gender"] / 100.0) +
-        //    //proximityScore * (weights["proximity"] / 100.0);
-        //}
-
-
-        // מתבצע סינון: רק צמדים שבהם זמן הסטייה קטן מהמותר נכנסים להמשך שיקול.
-        public List<FinalMatch> CalculateDistanceScore(List<FinalMatch> matches, double maxAllowedDeviation)
+        public List<FinalMatch> FilterMatchesByDetour(List<FinalMatch> matches, double maxAllowedDeviation)
         {
             List<FinalMatch> finalMatch = new List<FinalMatch>();
-            foreach (var match in matches)
+            for (int i = 0; i < matches.Count; i++)
             {
-                if (match.detourMinutes < maxAllowedDeviation)
+                if (matches[i].detourMinutes <= maxAllowedDeviation)
                 {
-                    finalMatch.Add(match);
+                    finalMatch.Add(matches[i]);
                 }
             }
 
             return ProtectTheLonely(finalMatch);
+        }
+
+
+        private double CalculateOverallScore(GiveRideRequest driver, RideRequest rider, EventSetting settings, List<FinalMatch> filteredMatches)
+        {
+            Person TheDriver = db.GetPerson(driver.PersonID);
+            Person TheRider = db.GetPerson(rider.PersonID);
+
+            // חישוב ציון מרחק
+            int distanceScore = CalculateDistanceScore(driver, rider, filteredMatches, settings.DetourTime);
+            if (distanceScore == -1)
+            {
+                return -1; // סטייה גדולה מדי – פסילה
+            }
+
+            // חישוב שאר הציונים
+            int smokingScore = CalculateSmokingScore(driver, TheDriver, rider, TheRider);
+            int genderScore = CalculateGenderScore(driver, TheDriver, rider, TheRider);
+            //int proximityScore = CalculateProximityScore(TheDriver, TheRider);
+
+            // חישוב ניקוד סופי עם משקלים
+            double finalScore = 0;
+            finalScore += distanceScore * (settings.DistanceWeight / 100.0);
+            finalScore += smokingScore * (settings.SmokingPreferenceWeight / 100.0);
+            finalScore += genderScore * (settings.GenderPreferenceWeight / 100.0);
+            //finalScore += proximityScore * (settings.FamilyRelationWeight / 100.0);
+
+            return finalScore;
+        }
+
+
+
+        private int CalculateDistanceScore(GiveRideRequest driver, RideRequest rider, List<FinalMatch> matches, double maxAllowedDeviation)
+        {
+            for (int i = 0; i < matches.Count; i++)
+            {
+                FinalMatch match = matches[i];
+                if (match.GiveRideRequests.Id == driver.Id && match.RideRequests.Id == rider.Id)
+                {
+                    if (match.detourMinutes > maxAllowedDeviation)
+                    {
+                        return -1; // חורגים מהסטייה
+                    }
+
+                    double diff = maxAllowedDeviation - match.detourMinutes;
+                    double ratio = diff / maxAllowedDeviation;
+                    int score = (int)(ratio * 100);
+                    return score;
+                }
+            }
+
+            return -1; // צימוד לא נמצא
         }
 
 

@@ -7,6 +7,7 @@ body {
   direction: rtl;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 /* קונטיינר ראשי */
@@ -123,6 +124,26 @@ footer a:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+footer {
+  margin-top: auto;
+}
+.card-upPage {
+  flex: 1 0 auto;
 }
 
 /* חלקיקי הזיקוקים */
@@ -342,5 +363,3 @@ footer a:hover {
 .btn:hover {
   background-color: #333333;
 }
-
-

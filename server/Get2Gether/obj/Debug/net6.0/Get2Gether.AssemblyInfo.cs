@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Get2Gether")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d5326faf71b4bec144110f4207fef9e5d914d7f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e58476fdf5f678867f16960b622fb7160592d902")]
 [assembly: System.Reflection.AssemblyProductAttribute("Get2Gether")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Get2Gether")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
