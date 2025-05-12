@@ -170,21 +170,27 @@ public class DBservices
         return CreateCommandWithStoredProcedureGENERAL(spName, con, paramDic);
     }
 
-    public int logInUser(string password, string phoneNum)
+    public int logInUser(string phone, string password)
     {
         using (SqlConnection con = connect("myProjDB"))
         {
             Dictionary<string, object> paramDic = new Dictionary<string, object>
             {
-                { "@password", password },
-                { "@phoneNumber", phoneNum }
+                { "@password", phone },
+                { "@phoneNumber", password }
             };
 
             using (SqlCommand cmd = CreateCommandWithStoredProcedure("SP_logInUser", con, paramDic))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    return reader.Read() ? 1 : 0;
+                    int newID = 0;  
+                    if (reader.Read())
+                    {
+                         newID = Convert.ToInt32(reader["PersonID"]);
+                        
+                    }
+                    return newID; 
                 }
             }
         }
