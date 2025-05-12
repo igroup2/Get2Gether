@@ -3,6 +3,7 @@ let selectedCoordinates = { latitude: 0, longitude: 0 };
 
 document.addEventListener("DOMContentLoaded", function () {
   // עמוד שלב 1: שומר טלפון וסיסמה ב-localStorage
+  // לנקות את ה-localStorage בכל טעינה
   const firstSubmitBtn = document.getElementById("firstSubmit");
   if (firstSubmitBtn) {
     firstSubmitBtn.addEventListener("click", function (e) {
@@ -17,8 +18,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
       localStorage.setItem("phoneNumber", phone);
       localStorage.setItem("password", pass);
+
       window.location.href = "register-step2.html";
     });
+    x;
   }
 
   // עמוד שלב 2: כפתור "הצטרפות"
@@ -102,8 +105,9 @@ function registerPerson() {
     function (response) {
       const personID = response;
       console.log("✅ Person ID:", personID);
-      localStorage.setItem("personID", personID);
+      localStorage.setItem("pratner1ID", personID);
       alert("✅ ההצטרפות הושלמה בהצלחה!");
+      registerPartner2();
       window.location.href = "register-step3.html";
     },
     function (error) {
@@ -111,20 +115,56 @@ function registerPerson() {
       alert("שגיאה בהרשמה");
     }
   );
+  function registerPartner2() {
+    const fullName = document.getElementById("partner2")?.value;
+    const password = localStorage.getItem("password");
+    const phone = document.getElementById("phone2")?.value;
+    const gender = document.getElementById("gender2")?.value;
+
+    if (!fullName || !password || !phone || !gender) {
+      alert("יש למלא את כל השדות לפני ההצטרפות");
+      return;
+    }
+
+    const partner2 = {
+      fullName: fullName,
+      password: password,
+      phoneNumber: phone,
+      smoke: false,
+      gender: gender,
+    };
+    ajaxCall(
+      "POST",
+      api + "Persons/register",
+      JSON.stringify(partner2),
+      function (response) {
+        const partner2ID = response;
+        console.log("✅ Partner 2 ID:", partner2ID);
+        localStorage.setItem("partner2ID", partner2ID);
+        alert("צורף בת/בת הזוג בהצלחה!");
+      },
+      function (error) {
+        console.error("❌ Registration failed:", error);
+        alert("שגיאה בהרשמה");
+      }
+    );
+  }
 }
 
 // שלב 3: יצירת אירוע
 function submitFinalStep() {
-  const personId = localStorage.getItem("personID");
-  console.log("📋 Person ID from localStorage:", personId);
-  if (!personId) {
+  const partner1ID = localStorage.getItem("personID");
+  const partner2ID = localStorage.getItem("partner2ID");
+  console.log("📋 Person ID from localStorage:", partner1ID);
+  console.log("📋 Partner 2 ID from localStorage:", partner2ID);
+  if (!partner1ID && !partner2ID) {
     alert("שגיאה: לא נמצא משתמש מזוהה");
     return;
   }
 
   const newEvent = {
-    partnerID1: parseInt(personId),
-    partnerID2: 7, // אם יש שותף נוסף – שים כאן דינמית
+    partnerID1: parseInt(partner1ID),
+    partnerID2: parseInt(partner2ID), // אם יש שותף נוסף – שים כאן דינמית
     eventDesc: document.getElementById("description")?.value,
     numOfGuest: parseInt(document.getElementById("guestNumber")?.value),
     eventDate: document.getElementById("date")?.value,
@@ -141,6 +181,7 @@ function submitFinalStep() {
     function (response) {
       const eventID = response;
       localStorage.setItem("eventID", eventID);
+
       alert("🎉 שמחה רבה שמחה רבה אביב הגיע חתונה נוצרה!");
     },
     function (error) {
