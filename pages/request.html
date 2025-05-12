@@ -190,9 +190,12 @@
               $("input[name='preferNoSmoking']:checked").val() === "0"
                 ? false
                 : true,
-            pickUpCoordinates: selectedCoordinates,
+            //pickUpCoordinates: selectedCoordinates,
+            latitude: selectedCoordinates.latitude,
+            longitude: selectedCoordinates.longitude,
           };
 
+          console.log("📩 Ride request data:", rideRequest);
           ajaxCall(
             "POST",
             api + "RideRequests",

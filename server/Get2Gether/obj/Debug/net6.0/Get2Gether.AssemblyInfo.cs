@@ -13,7 +13,15 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Get2Gether")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< Updated upstream
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+=======
+<<<<<<< HEAD
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5bf004e0a09c5a836e68d4e88ac08c1b6df37590")]
+>>>>>>> 1522b70b9faa38c22af90d98ba6b60bfb6a9ff87
+>>>>>>> Stashed changes
 [assembly: System.Reflection.AssemblyProductAttribute("Get2Gether")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Get2Gether")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

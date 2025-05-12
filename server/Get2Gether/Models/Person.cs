@@ -42,10 +42,15 @@ namespace Get2Gether.Models
             DBservices dbs = new DBservices();
              dbs.CreateNewPerson(fullName, phoneNumber, gender, password);
         }
+<<<<<<< Updated upstream
         public int logInUser(string password, string phoneNum)
+=======
+
+        public  int logInUser(string phone, string password)
+>>>>>>> Stashed changes
         {
             DBservices dbs = new DBservices();
-            return dbs.logInUser(password, phoneNum);
+            return dbs.logInUser(phone,password);
         }
 
     }
