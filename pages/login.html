@@ -12,6 +12,8 @@
     <script src="../js/js.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
       const api = "https://localhost:7035/api/";
 
@@ -33,8 +35,8 @@
         console.log(user);
         ajaxCall(
           "POST",
-          api + "Person/login",
-          JSON.stringify(user),
+          api + `Persons/login?phone=${user.phone}&password=${user.password}`,
+          null,
           () => {
             console.log("Login successful");
             Swal.fire({
