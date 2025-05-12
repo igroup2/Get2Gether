@@ -27,10 +27,10 @@
             dbs.CreateNewPerson(p);
         }
 
-        public int logInUser(string password, string phoneNum)
+        public  int logInUser(string phone, string password)
         {
             DBservices dbs = new DBservices();
-            return dbs.logInUser(password, phoneNum);
+            return dbs.logInUser(phone,password);
         }
     }
 }

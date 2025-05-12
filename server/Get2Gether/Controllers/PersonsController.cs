@@ -36,8 +36,8 @@ namespace Get2Gether.Controllers
         public int Login(string phone, string password)
         {
             Person p = new Person();
-            int result = p.logInUser(password, phone);
-            return (result);
+            int id = p.logInUser(password, phone);
+            return id; 
 
         }
 

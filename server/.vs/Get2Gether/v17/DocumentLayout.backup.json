@@ -7,24 +7,12 @@
       "RelativeMoniker": "D:0:0:{1A132A19-CDDF-45B3-B697-17ECB3CD244D}|Get2Gether\\Get2Gether.csproj|solutionrelative:get2gether\\dal\\dbservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A132A19-CDDF-45B3-B697-17ECB3CD244D}|Get2Gether\\Get2Gether.csproj|c:\\users\\kxhyd\\onedrive - ruppin students and teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\get2gether\\server\\get2gether\\models\\algo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1A132A19-CDDF-45B3-B697-17ECB3CD244D}|Get2Gether\\Get2Gether.csproj|solutionrelative:get2gether\\models\\algo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1A132A19-CDDF-45B3-B697-17ECB3CD244D}|Get2Gether\\Get2Gether.csproj|c:\\users\\kxhyd\\onedrive - ruppin students and teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\get2gether\\server\\get2gether\\controllers\\personscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1A132A19-CDDF-45B3-B697-17ECB3CD244D}|Get2Gether\\Get2Gether.csproj|solutionrelative:get2gether\\controllers\\personscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A132A19-CDDF-45B3-B697-17ECB3CD244D}|Get2Gether\\Get2Gether.csproj|c:\\users\\kxhyd\\onedrive - ruppin students and teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\get2gether\\server\\get2gether\\controllers\\eventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1A132A19-CDDF-45B3-B697-17ECB3CD244D}|Get2Gether\\Get2Gether.csproj|solutionrelative:get2gether\\controllers\\eventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1A132A19-CDDF-45B3-B697-17ECB3CD244D}|Get2Gether\\Get2Gether.csproj|c:\\users\\kxhyd\\onedrive - ruppin students and teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\get2gether\\server\\get2gether\\models\\person.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1A132A19-CDDF-45B3-B697-17ECB3CD244D}|Get2Gether\\Get2Gether.csproj|solutionrelative:get2gether\\models\\person.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1A132A19-CDDF-45B3-B697-17ECB3CD244D}|Get2Gether\\Get2Gether.csproj|c:\\users\\kxhyd\\onedrive - ruppin students and teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\get2gether\\server\\get2gether\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1A132A19-CDDF-45B3-B697-17ECB3CD244D}|Get2Gether\\Get2Gether.csproj|solutionrelative:get2gether\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,7 +21,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 654,
+          "DockedHeight": 540,
           "SelectedChildIndex": 0,
           "Children": [
             {
@@ -44,7 +32,7 @@
               "RelativeDocumentMoniker": "Get2Gether\\DAL\\DBservices.cs",
               "ToolTip": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\Get2Gether\\server\\Get2Gether\\DAL\\DBservices.cs",
               "RelativeToolTip": "Get2Gether\\DAL\\DBservices.cs",
-              "ViewState": "AgIAAD0BAAAAAAAAAAAqwIABAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAALEAAAAAAAAAAAAewLoAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-07T17:58:40.924Z",
               "IsPinned": true,
@@ -56,69 +44,34 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Algo.cs",
-              "DocumentMoniker": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\Get2Gether\\server\\Get2Gether\\Models\\Algo.cs",
-              "RelativeDocumentMoniker": "Get2Gether\\Models\\Algo.cs",
-              "ToolTip": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\Get2Gether\\server\\Get2Gether\\Models\\Algo.cs",
-              "RelativeToolTip": "Get2Gether\\Models\\Algo.cs",
-              "ViewState": "AgIAAGYAAAAAAAAAAAAAwGoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-11T09:45:09.094Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Event.cs",
-              "DocumentMoniker": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\Get2Gether\\server\\Get2Gether\\Models\\Event.cs",
-              "RelativeDocumentMoniker": "Get2Gether\\Models\\Event.cs",
-              "ToolTip": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\Get2Gether\\server\\Get2Gether\\Models\\Event.cs",
-              "RelativeToolTip": "Get2Gether\\Models\\Event.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAiwDEAAAA5AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T09:14:39.029Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "Person.cs",
               "DocumentMoniker": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\Get2Gether\\server\\Get2Gether\\Models\\Person.cs",
               "RelativeDocumentMoniker": "Get2Gether\\Models\\Person.cs",
               "ToolTip": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\Get2Gether\\server\\Get2Gether\\Models\\Person.cs",
               "RelativeToolTip": "Get2Gether\\Models\\Person.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAA4wCQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAADwvx0AAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T13:02:15.074Z"
+              "WhenOpened": "2025-05-06T13:02:15.074Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "EventsController.cs",
-              "DocumentMoniker": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\Get2Gether\\server\\Get2Gether\\Controllers\\EventsController.cs",
-              "RelativeDocumentMoniker": "Get2Gether\\Controllers\\EventsController.cs",
-              "ToolTip": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\Get2Gether\\server\\Get2Gether\\Controllers\\EventsController.cs",
-              "RelativeToolTip": "Get2Gether\\Controllers\\EventsController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABgAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T09:14:30.931Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "PersonsController.cs",
               "DocumentMoniker": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\Get2Gether\\server\\Get2Gether\\Controllers\\PersonsController.cs",
               "RelativeDocumentMoniker": "Get2Gether\\Controllers\\PersonsController.cs",
               "ToolTip": "C:\\Users\\kxhyd\\OneDrive - Ruppin Students and Teachers\\\u05E9\u05D5\u05DC\u05D7\u05DF \u05D4\u05E2\u05D1\u05D5\u05D3\u05D4\\Get2Gether\\server\\Get2Gether\\Controllers\\PersonsController.cs",
               "RelativeToolTip": "Get2Gether\\Controllers\\PersonsController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABcAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAWwCcAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T13:28:32.292Z"
+              "WhenOpened": "2025-05-06T13:28:32.292Z",
+              "EditorCaption": ""
             }
           ]
         },
         {
-          "DockedHeight": 214,
+          "DockedHeight": 327,
           "SelectedChildIndex": -1,
           "Children": [
             {
