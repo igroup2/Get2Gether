@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\server"
+    "\\server",
+    "\\server\\Get2Gether",
+    "\\server\\Get2Gether\\Models"
   ],
-  "SelectedNode": "\\server\\Get2Gether.sln",
+  "SelectedNode": "\\server\\Get2Gether\\Models\\RideMatcher.cs",
   "PreviewInSolutionExplorer": false
 }

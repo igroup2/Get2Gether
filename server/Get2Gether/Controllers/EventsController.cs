@@ -19,9 +19,10 @@ namespace Get2Gether.Controllers
 
         // POST api/<EventsController>/createNewEvent
         [HttpPost]
-        public Event post([FromBody] Event NewEvent)
+        public int post([FromBody] Event NewEvent)
         {
-           return Event.createNewEvent(NewEvent);
+            Event.createNewEvent(NewEvent);
+            return NewEvent.EventID; 
         }
 
         // PUT api/<EventsController>/5

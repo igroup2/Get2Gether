@@ -41,80 +41,6 @@
             }
           }
         }
-      },
-      "post": {
-        "tags": [
-          "Algos"
-        ],
-        "parameters": [
-          {
-            "name": "maxS",
-            "in": "query",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/FinalMatch"
-                }
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/FinalMatch"
-                }
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/FinalMatch"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FinalMatch"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FinalMatch"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FinalMatch"
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/api/Algos/{id}": {
@@ -218,6 +144,82 @@
         }
       }
     },
+    "/api/Algos/RunAlgo": {
+      "post": {
+        "tags": [
+          "Algos"
+        ],
+        "parameters": [
+          {
+            "name": "Eventid",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FinalMatch"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FinalMatch"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FinalMatch"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FinalMatch"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FinalMatch"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FinalMatch"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Events/{PersonID}": {
       "get": {
         "tags": [
@@ -297,17 +299,20 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Event"
+                  "type": "integer",
+                  "format": "int32"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Event"
+                  "type": "integer",
+                  "format": "int32"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Event"
+                  "type": "integer",
+                  "format": "int32"
                 }
               }
             }
@@ -359,6 +364,167 @@
       "delete": {
         "tags": [
           "Events"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/EventSettings": {
+      "get": {
+        "tags": [
+          "EventSettings"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "EventSettings"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/EventSettings/{EventID}": {
+      "get": {
+        "tags": [
+          "EventSettings"
+        ],
+        "parameters": [
+          {
+            "name": "EventID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventSetting"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventSetting"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventSetting"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/EventSettings/UpdateEventSettings": {
+      "put": {
+        "tags": [
+          "EventSettings"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventSetting"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventSetting"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventSetting"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/EventSettings/{id}": {
+      "delete": {
+        "tags": [
+          "EventSettings"
         ],
         "parameters": [
           {
@@ -925,39 +1091,48 @@
         "tags": [
           "Persons"
         ],
-        "parameters": [
-          {
-            "name": "fullName",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "phoneNumber",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "gender",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "schema": {
-              "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
           }
         }
       }
@@ -1725,6 +1900,44 @@
         },
         "additionalProperties": false
       },
+      "EventSetting": {
+        "type": "object",
+        "properties": {
+          "eventID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "distanceFirstFilter": {
+            "type": "number",
+            "format": "double"
+          },
+          "detourTime": {
+            "type": "number",
+            "format": "double"
+          },
+          "distanceWeight": {
+            "type": "number",
+            "format": "double"
+          },
+          "smokingPreferenceWeight": {
+            "type": "number",
+            "format": "double"
+          },
+          "genderPreferenceWeight": {
+            "type": "number",
+            "format": "double"
+          },
+          "familyRelationWeight": {
+            "type": "number",
+            "format": "double"
+          },
+          "lonleyWeight": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
       "FinalMatch": {
         "type": "object",
         "properties": {
@@ -1802,6 +2015,35 @@
             "items": {
               "$ref": "#/components/schemas/RideRequest"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "personID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "smoke": {
+            "type": "boolean"
+          },
+          "gender": {
+            "type": "string",
             "nullable": true
           }
         },
