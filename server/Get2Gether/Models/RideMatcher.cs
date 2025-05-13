@@ -28,8 +28,8 @@ public class RideMatcher
     }
 
 
-   // מחשבים את המרחק האנכי בין הטרמפסיט לישר של נהג-אירוע
-   //סינון ראשוני של מרחק פחות מ2500 מטר
+    // מחשבים את המרחק האנכי בין הטרמפסיט לישר של נהג-אירוע
+    //סינון ראשוני של מרחק פחות מ2500 מטר
     public List<MatchResult> FilterRideRequests()
     {
         // שליפת קורדינאטות מיקום
@@ -46,8 +46,13 @@ public class RideMatcher
         //   var eventPoint = db.GetCoordinatesForCity(this.EventLocation);        // מיקום האירוע
 
         GeoPoint EventCoordinate = new GeoPoint(this.EventLatitude, this.EventLongitude);
+<<<<<<< Updated upstream
         
       
+=======
+
+
+>>>>>>> Stashed changes
 
         var results = new List<MatchResult>(); // רשימה סופית
 
@@ -59,7 +64,11 @@ public class RideMatcher
             foreach (var rider in RideRequests)
             {
                 GeoPoint riderCoordinate = new GeoPoint(rider.Latitude, rider.Longitude);
+<<<<<<< Updated upstream
                 double distance = CalculateDistance(driverCoordinate, EventCoordinate,riderCoordinate);
+=======
+                double distance = CalculateDistance(driverCoordinate, EventCoordinate, riderCoordinate);
+>>>>>>> Stashed changes
 
                 if (distance <= 2500)// לבדוק מה מרחק סביר
                 {

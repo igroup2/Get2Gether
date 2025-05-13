@@ -29,6 +29,10 @@ namespace Get2Gether.Controllers
         {
             RideRequest r = new RideRequest();
             r.CreateNewRequest(request);
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             HttpContext.Response.ContentType = "application/json";
             HttpContext.Response.WriteAsync("{}");
         }

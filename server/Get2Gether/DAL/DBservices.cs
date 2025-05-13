@@ -164,6 +164,7 @@ public class DBservices
         return CreateCommandWithStoredProcedureGENERAL(spName, con, paramDic);
     }
 
+
     public RideMatcher GetALLRequests(int EventID)
     {
         using (SqlConnection con = connect("myProjDB"))
@@ -180,8 +181,13 @@ public class DBservices
                     List<GiveRideRequest> giveRideRequests = new List<GiveRideRequest>();
                     List<RideRequest> rideRequests = new List<RideRequest>();
                     string eventLocation = "";
+<<<<<<< Updated upstream
                     double eventLatitude=0;
                     double eventLongitude=0;
+=======
+                    double eventLatitude = 0;
+                    double eventLongitude = 0;
+>>>>>>> Stashed changes
 
                     while (reader.Read())
                     {
@@ -200,7 +206,11 @@ public class DBservices
                         )
                             );
 
+<<<<<<< Updated upstream
                       
+=======
+
+>>>>>>> Stashed changes
                     }
 
                     if (reader.NextResult())
@@ -283,6 +293,7 @@ public class DBservices
             }
         }
     }
+<<<<<<< Updated upstream
 
     public void CreateNewGiveRideRequest(GiveRideRequest giveRide)
     {
@@ -312,6 +323,8 @@ public class DBservices
     }
 
 
+=======
+>>>>>>> Stashed changes
     public List<Event> GetEvents(int PersonID)
     {
         using (SqlConnection con = connect("myProjDB"))
@@ -344,6 +357,36 @@ public class DBservices
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    public void CreateNewGiveRideRequest(GiveRideRequest giveRide)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+            {
+                { "@personID", giveRide.PersonID },
+                { "@eventID", giveRide.EventID },
+                { "@carCapacity", giveRide.CarCapacity },
+                { "@RideExitPoint", giveRide.RideExitPoint },
+                { "@preferredGender", giveRide.PreferredGender },
+                { "@preferredSmoker", giveRide.PreferredSmoker },
+                { "@latitude", giveRide.Latitude },
+                { "@longitude", giveRide.Longitude }
+
+            };
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_insertGiveRideRequest", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // אין פלט
+                }
+            }
+        }
+    }
+
+>>>>>>> Stashed changes
     public Person GetPerson(int personID)
     {
         using (SqlConnection con = connect("myProjDB"))
