@@ -184,13 +184,13 @@ public class DBservices
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    int newID = 0;  
+                    int isAdmin = 0;  
                     if (reader.Read())
                     {
-                         newID = Convert.ToInt32(reader["PersonID"]);
+                        isAdmin = Convert.ToInt32(reader["isAdmin"]);
                         
                     }
-                    return newID; 
+                    return isAdmin; 
                 }
             }
         }
