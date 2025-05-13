@@ -9,16 +9,18 @@ public class RideMatcher
 
     string EventLocation;
 
-    public GeoPoint EventCoordinates { get; set; } 
+    public double EventLongitude { get; set; }
+    public double EventLatitude { get; set; }
 
     private DBservices db = new DBservices();
 
-    public RideMatcher(List<GiveRideRequest> giveRideRequests, List<RideRequest> rideRequests, string eventLocation, GeoPoint eventCoordinates)
+    public RideMatcher(List<GiveRideRequest> giveRideRequests, List<RideRequest> rideRequests, string eventLocation, double eventLongitude, double eventLatitude)
     {
         GiveRideRequests = giveRideRequests;
         RideRequests = rideRequests;
         EventLocation = eventLocation;
-        EventCoordinates = eventCoordinates;
+        EventLongitude = eventLongitude;
+        EventLatitude = eventLatitude;
     }
 
     public RideMatcher()
@@ -26,8 +28,8 @@ public class RideMatcher
     }
 
 
-   // מחשבים את המרחק האנכי בין הטרמפסיט לישר של נהג-אירוע
-   //סינון ראשוני של מרחק פחות מ2500 מטר
+    // מחשבים את המרחק האנכי בין הטרמפסיט לישר של נהג-אירוע
+    //סינון ראשוני של מרחק פחות מ2500 מטר
     public List<MatchResult> FilterRideRequests()
     {
         // שליפת קורדינאטות מיקום
@@ -43,17 +45,21 @@ public class RideMatcher
 
         //   var eventPoint = db.GetCoordinatesForCity(this.EventLocation);        // מיקום האירוע
 
-        var eventPoint = this.EventCoordinates;
+        GeoPoint EventCoordinate = new GeoPoint(this.EventLatitude, this.EventLongitude);
+
+
 
         var results = new List<MatchResult>(); // רשימה סופית
 
         foreach (var driver in GiveRideRequests)
         {
+            GeoPoint driverCoordinate = new GeoPoint(driver.Latitude, driver.Longitude);
             var potentialRiders = new List<RideRequest>();
 
             foreach (var rider in RideRequests)
             {
-                double distance = CalculateDistance(driver.RideExitCoordinates, eventPoint, rider.PickUpCoordinates);
+                GeoPoint riderCoordinate = new GeoPoint(rider.Latitude, rider.Longitude);
+                double distance = CalculateDistance(driverCoordinate, EventCoordinate, riderCoordinate);
 
                 if (distance <= 2500)// לבדוק מה מרחק סביר
                 {
@@ -75,6 +81,7 @@ public class RideMatcher
 
     private double CalculateDistance(GeoPoint A, GeoPoint B, GeoPoint P)
     {
+
         // ----------------------------
         // 📌 הגדרות קבועות והמרות:
         // ----------------------------

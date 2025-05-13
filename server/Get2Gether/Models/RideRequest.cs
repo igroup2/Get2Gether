@@ -9,11 +9,13 @@
         public string PickUpLocation { get; set; }
         public string PreferredGender { get; set; }
         public bool PreferredSmoker { get; set; }
-        public GeoPoint PickUpCoordinates { get; set; }
+
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
         public RideRequest() { }
 
-        public RideRequest(int id, int eventID, int personID, int numOfGuest, string pickUpLocation, string preferredGender, bool preferredSmoker)
+        public RideRequest(int id, int eventID, int personID, int numOfGuest, string pickUpLocation, string preferredGender, bool preferredSmoker, double latitude, double longitude)
         {
             Id = id;
             EventID = eventID;
@@ -22,6 +24,8 @@
             PickUpLocation = pickUpLocation;
             PreferredGender = preferredGender;
             PreferredSmoker = preferredSmoker;
+            Latitude = latitude;
+            Longitude = longitude;
         }
 
         public void CreateNewRequest(RideRequest request)

@@ -28,6 +28,8 @@ namespace Get2Gether.Controllers
         public void Post([FromBody] GiveRideRequest giveRide)
         {
             Models.GiveRideRequest.CreateNewGiveRideRequest(giveRide);
+            HttpContext.Response.ContentType = "application/json";
+            HttpContext.Response.WriteAsync("{}");
         }
 
         // PUT api/<GiveRideRequestsController>/5
