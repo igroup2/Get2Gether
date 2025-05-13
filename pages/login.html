@@ -18,26 +18,34 @@
       const api = "https://localhost:7035/api/";
 
       $(document).ready(function () {
-        console.log("Document ready!");
         $("#loginForm").submit((event) => {
           event.preventDefault();
-          console.log("Form login submitted!"); // בדוק אם הפונקציה פועלת
+
           Login(); // קריאה לפונקציה
         });
       });
+
       function Login() {
-        console.log("submit");
         let user = {
           phone: $("#phone").val(),
           password: $("#password").val(),
         };
+        console.log(user, "user loggin:");
+        if (user.phone == "" || user.password == "") {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Please fill in all fields",
+            showConfirmButton: true,
+          });
+          return;
+        }
 
-        console.log(user);
         ajaxCall(
-          "POST",
+          "GET",
           api + `Persons/login?phone=${user.phone}&password=${user.password}`,
           null,
-          () => {
+          (response) => {
             console.log("Login successful");
             Swal.fire({
               position: "center",
@@ -46,7 +54,11 @@
               showConfirmButton: false,
               timer: 3000,
             }).then(() => {
-              window.location.href = "index.html"; // Redirect to index.html
+              if (response == 1) {
+                window.location.href = "Admin.html"; // Redirect to Admin.html
+              } else {
+                window.location.href = "index.html"; // Redirect to index.html
+              }
             });
           },
           (error) => {
@@ -60,7 +72,6 @@
             });
           }
         );
-        return false;
       }
     </script>
   </head>

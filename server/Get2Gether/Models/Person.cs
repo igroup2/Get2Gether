@@ -1,20 +1,17 @@
-﻿using System;
-namespace Get2Gether.Models
+﻿namespace Get2Gether.Models
 {
     public class Person
-	{
-        int personID;
-        string fullName;
-        string password;
-        private string phoneNumber;
-        bool smoke;
-        string gender;
-        string sideInWedding;
-        string relationToCouple;
+    {
+        public int PersonID { get; set; }
+        public string FullName { get; set; }
+        public string Password { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool Smoke { get; set; }
+        public string Gender { get; set; }
 
-        public Person(){ }
+        public Person() { }
 
-        public Person(int personID, string fullName,string password, string phoneNumber, bool smoke, string gender, string sideInWedding, string relationToCouple)
+        public Person(int personID, string fullName, string password, string phoneNumber, bool smoke, string gender)
         {
             PersonID = personID;
             FullName = fullName;
@@ -22,37 +19,18 @@ namespace Get2Gether.Models
             PhoneNumber = phoneNumber;
             Smoke = smoke;
             Gender = gender;
-            SideInWedding = sideInWedding;
-            RelationToCouple = relationToCouple;
         }
 
-        public int PersonID { get => personID; set => personID = value; }
-        public string FullName { get => fullName; set => fullName = value; }
-        public string Password { get => password; set => password = value; }
-        public string PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
-        public bool Smoke { get => smoke; set => smoke = value; }
-        public string Gender { get => gender; set => gender = value; }
-        public string SideInWedding { get => sideInWedding; set => sideInWedding = value; }
-        public string RelationToCouple { get => relationToCouple; set => relationToCouple = value; }
-
-
-
-        static public void createNewPerson(string fullName, string phoneNumber, char gender, string password)
+        public static void createNewPerson(Person p)
         {
             DBservices dbs = new DBservices();
-             dbs.CreateNewPerson(fullName, phoneNumber, gender, password);
+            dbs.CreateNewPerson(p);
         }
-<<<<<<< Updated upstream
-        public int logInUser(string password, string phoneNum)
-=======
 
         public  int logInUser(string phone, string password)
->>>>>>> Stashed changes
         {
             DBservices dbs = new DBservices();
             return dbs.logInUser(phone,password);
         }
-
     }
 }
-
