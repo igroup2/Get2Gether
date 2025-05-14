@@ -184,13 +184,13 @@ public class DBservices
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    int newID = 0;  
+                    int isAdmin = 0;  
                     if (reader.Read())
                     {
-                         newID = Convert.ToInt32(reader["PersonID"]);
+                        isAdmin = Convert.ToInt32(reader["isAdmin"]);
                         
                     }
-                    return newID; 
+                    return isAdmin; 
                 }
             }
         }
@@ -217,6 +217,8 @@ public class DBservices
                     List<GiveRideRequest> giveRideRequests = new List<GiveRideRequest>();
                     List<RideRequest> rideRequests = new List<RideRequest>();
                     string eventLocation = "";
+                    double eventLatitude = 0;
+                    double eventLongitude = 0;
 
                     while (reader.Read())
                     {
@@ -229,9 +231,13 @@ public class DBservices
                             Convert.ToInt32(reader["CarCapacity"]),
                             rideExitPoint,
                             reader["PreferredGender"].ToString(),
-                            Convert.ToBoolean(reader["PreferredSmoker"])
+                            Convert.ToBoolean(reader["PreferredSmoker"]),
+                            Convert.ToDouble("Longitude"),
+                            Convert.ToDouble("latitude")
                         )
-                        { RideExitCoordinates = coordinates });
+                            );
+
+
                     }
 
                     if (reader.NextResult())
@@ -239,7 +245,6 @@ public class DBservices
                         while (reader.Read())
                         {
                             var pickUpLocation = reader["PickUpLocation"].ToString();
-                            GeoPoint coordinates = GetCoordinatesForCity(pickUpLocation);
                             rideRequests.Add(new RideRequest(
                                 Convert.ToInt32(reader["ID"]),
                                 EventID,
@@ -247,20 +252,23 @@ public class DBservices
                                 Convert.ToInt32(reader["NumOfGuest"]),
                                 pickUpLocation,
                                 reader["PreferredGender"].ToString(),
-                                Convert.ToBoolean(reader["PreferredSmoker"])
+                                Convert.ToBoolean(reader["PreferredSmoker"]),
+                                Convert.ToDouble("Longitude"),
+                                Convert.ToDouble("latitude")
                             )
-                            { PickUpCoordinates = coordinates });
+                         );
                         }
                     }
 
                     if (reader.NextResult() && reader.Read())
                     {
                         eventLocation = reader["EventLocation"].ToString();
+                        eventLatitude = Convert.ToDouble(reader["EventLatitude"]);
+                        eventLongitude = Convert.ToDouble(reader["EventLongitude"]);
                     }
 
-                    GeoPoint eventCoordinates = GetCoordinatesForCity(eventLocation);
 
-                    return new RideMatcher(giveRideRequests, rideRequests, eventLocation, eventCoordinates);
+                    return new RideMatcher(giveRideRequests, rideRequests, eventLocation, eventLongitude, eventLatitude);
                 }
             }
         }
@@ -285,6 +293,7 @@ public class DBservices
         }
     }
 
+
     public void CreateNewRequest(RideRequest request)
     {
         using (SqlConnection con = connect("myProjDB"))
@@ -296,7 +305,11 @@ public class DBservices
                 { "@numOfGuest", request.NumOfGuest },
                 { "@pickUpLocation", request.PickUpLocation },
                 { "@preferredGender", request.PreferredGender },
-                { "@preferredSmoker", request.PreferredSmoker }
+                { "@preferredSmoker", request.PreferredSmoker },
+                { "@latitude", request.Latitude },
+                { "@longitude", request.Longitude }
+
+
             };
 
             using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_insertRideRequest", con, paramDic))
@@ -308,6 +321,34 @@ public class DBservices
             }
         }
     }
+
+    public void CreateNewGiveRideRequest(GiveRideRequest giveRide)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+            {
+                { "@personID", giveRide.PersonID },
+                { "@eventID", giveRide.EventID },
+                { "@carCapacity", giveRide.CarCapacity },
+                { "@RideExitPoint", giveRide.RideExitPoint },
+                { "@preferredGender", giveRide.PreferredGender },
+                { "@preferredSmoker", giveRide.PreferredSmoker },
+                { "@latitude", giveRide.Latitude },
+                { "@longitude", giveRide.Longitude }
+
+            };
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_insertGiveRideRequest", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // אין פלט
+                }
+            }
+        }
+    }
+
 
     public List<Event> GetEvents(int PersonID)
     {
@@ -336,30 +377,6 @@ public class DBservices
                         });
                     }
                     return events;
-                }
-            }
-        }
-    }
-
-    public void CreateNewGiveRideRequest(GiveRideRequest giveRide)
-    {
-        using (SqlConnection con = connect("myProjDB"))
-        {
-            Dictionary<string, object> paramDic = new Dictionary<string, object>
-            {
-                { "@personID", giveRide.PersonID },
-                { "@eventID", giveRide.EventID },
-                { "@CarCapacity", giveRide.CarCapacity },
-                { "@RideExitPoint", giveRide.RideExitPoint },
-                { "@preferredGender", giveRide.PreferredGender },
-                { "@preferredSmoker", giveRide.PreferredSmoker }
-            };
-
-            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_insertGiveRideRequest", con, paramDic))
-            {
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    // אין פלט
                 }
             }
         }

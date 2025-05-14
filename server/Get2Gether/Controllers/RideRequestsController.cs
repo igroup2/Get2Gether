@@ -28,7 +28,9 @@ namespace Get2Gether.Controllers
         public void Post([FromBody] RideRequest request)
         {
             RideRequest r = new RideRequest();
-            r.CreateNewRequest(request); 
+            r.CreateNewRequest(request);
+            HttpContext.Response.ContentType = "application/json";
+            HttpContext.Response.WriteAsync("{}");
         }
 
         // PUT api/<RideRequestsController>/5
