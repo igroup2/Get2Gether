@@ -307,8 +307,8 @@ public class DBservices
                 { "@preferredGender", request.PreferredGender },
                 { "@preferredSmoker", request.PreferredSmoker },
                 { "@latitude", request.Latitude },
-                { "@longitude", request.Longitude }
-
+                { "@longitude", request.Longitude },
+                { "@note", (object?)request.Note ?? DBNull.Value }
 
             };
 
@@ -335,7 +335,8 @@ public class DBservices
                 { "@preferredGender", giveRide.PreferredGender },
                 { "@preferredSmoker", giveRide.PreferredSmoker },
                 { "@latitude", giveRide.Latitude },
-                { "@longitude", giveRide.Longitude }
+                { "@longitude", giveRide.Longitude },
+                { "@note", (object?)giveRide.Note ?? DBNull.Value }
 
             };
 
