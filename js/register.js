@@ -103,9 +103,9 @@ function registerPerson() {
     api + "Persons/register",
     JSON.stringify(newPerson),
     function (response) {
-      const personID = response;
-      console.log("✅ Person ID:", personID);
-      localStorage.setItem("pratner1ID", personID);
+      const partner1ID = response;
+      console.log("partner1ID:", partner1ID);
+      localStorage.setItem("partner1ID", partner1ID);
       alert("✅ ההצטרפות הושלמה בהצלחה!");
       registerPartner2();
       window.location.href = "register-step3.html";
@@ -153,7 +153,7 @@ function registerPerson() {
 
 // שלב 3: יצירת אירוע
 function submitFinalStep() {
-  const partner1ID = localStorage.getItem("personID");
+  const partner1ID = localStorage.getItem("partner1ID");
   const partner2ID = localStorage.getItem("partner2ID");
   console.log("📋 Person ID from localStorage:", partner1ID);
   console.log("📋 Partner 2 ID from localStorage:", partner2ID);
@@ -183,6 +183,7 @@ function submitFinalStep() {
       localStorage.setItem("eventID", eventID);
 
       alert("🎉 שמחה רבה שמחה רבה אביב הגיע חתונה נוצרה!");
+      window.location.href = "homePage.html";
     },
     function (error) {
       console.error("❌ Error during event creation:", error);

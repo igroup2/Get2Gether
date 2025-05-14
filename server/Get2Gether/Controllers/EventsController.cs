@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Get2Gether.Models;
+using System.Collections.Generic;
 
 
 namespace Get2Gether.Controllers
@@ -24,11 +25,18 @@ namespace Get2Gether.Controllers
             Event.createNewEvent(NewEvent);
             return NewEvent.EventID; 
         }
-
-        // PUT api/<EventsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put([FromBody] Event e)
         {
+            try
+            {
+                Models.Event.updateEvent(e);
+                return Ok("האירוע עודכן בהצלחה");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "שגיאה בשרת: " + ex.Message);
+            }
         }
 
         // DELETE api/<EventsController>/5

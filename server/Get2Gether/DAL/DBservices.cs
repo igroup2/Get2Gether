@@ -77,15 +77,41 @@ public class DBservices
         }
     }
 
-
-
-
-    //---------------------------------------------------------------------------------
-    // Create the SqlCommand using a stored procedure 
-    //---------------------------------------------------------------------------------
-    private SqlCommand CreateCommandWithStoredProcedureCreateNewPerson(String spName, SqlConnection con, Dictionary<string, object> paramDic)
+    public void updateEvent (Event NewEvent)
     {
-        return CreateCommandWithStoredProcedureGENERAL(spName, con, paramDic);
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+         {
+             {"@eventID", NewEvent.EventID },
+             {"@EventDesc", NewEvent.EventDesc },
+             {"@NumOfGuest" , NewEvent.NumOfGuest },
+             {"@EventDate" , NewEvent.EventDate },
+             {"@EventLocation" , NewEvent.EventLocation },
+             {"@EventLatitude" , NewEvent.EventLatitude },
+             {"@EventLongitude" , NewEvent.EventLongitude },
+
+         };
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureCreateNewEvent("SP_updateEvent", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return;
+                    }
+                }
+            }
+
+        }
+
+
+
+
+
+
+
     }
 
     //--------------------------------------------------------------------------------------------------
@@ -110,7 +136,7 @@ public class DBservices
         };
 
 
-            using (SqlCommand cmd = CreateCommandWithStoredProcedureCreateNewPerson("SP_CreateNewPerson", con, paramDic))
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_CreateNewPerson", con, paramDic))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -123,14 +149,6 @@ public class DBservices
             }
         }
     }
-
-
-
-    //---------------------------------------------------------------------------------
-    // Create the SqlCommand using a stored procedure  -- Coordinate
-    //---------------------------------------------------------------------------------
-
-
 
     private SqlCommand CreateCommandWithStoredProcedureGetCoordinates(String spName, SqlConnection con, Dictionary<string, object> paramDic)
     {
