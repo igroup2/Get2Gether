@@ -126,6 +126,72 @@ public class DBservices
 
 
 
+    public int CreateGuests(Person person)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+
+        {
+            { "@FullName", person.FullName },
+            { "@Password", person.Password },
+            { "@PhoneNumber", person.PhoneNumber },
+            { "@Gender", person.Gender },
+            { "@Smoke", person.Smoke }
+        };
+
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureCreateNewPerson("SP_CreateGuest", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        person.PersonID = Convert.ToInt32(reader["PersonID"]);
+                    }
+                }
+
+            }
+        }
+        return person.PersonID;
+    }
+
+    /// <summary>
+    /// create guest in event 
+    /// </summary>
+    /// <returns></returns>
+    public int CreateGuestsInEvent(List<GuestInEvent> guestList)
+    {
+        int rowsAffected = 0;
+
+        using (SqlConnection con = connect("myProjDB"))
+        {
+
+            foreach (GuestInEvent guest in guestList)
+            {
+                Dictionary<string, object> paramDic = new Dictionary<string, object>
+                {
+                    { "@PersonID", guest.PersonID },
+                    { "@EventID", guest.EventID },
+                    { "@RoleInEvent", guest.RoleInEvent },
+                    { "@NumOfGuest", guest.NumOfGuest },
+                    { "@RsvpStatus", guest.RsvpStatus },
+                    { "@SideInWedding", guest.SideInWedding },
+                    { "@RelationToCouple", guest.RelationToCouple }
+                };
+
+                using (SqlCommand cmd = CreateCommandWithStoredProcedure("SP_InsertGuestInEvent", con, paramDic))
+                {
+                    rowsAffected += cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        return rowsAffected;
+    }
+
+
+
     //---------------------------------------------------------------------------------
     // Create the SqlCommand using a stored procedure  -- Coordinate
     //---------------------------------------------------------------------------------
