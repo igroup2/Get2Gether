@@ -26,17 +26,10 @@ namespace Get2Gether.Controllers
             return NewEvent.EventID; 
         }
         [HttpPut]
-        public IActionResult Put([FromBody] Event e)
+        public void Put([FromBody] Event e)
         {
-            try
-            {
-                Models.Event.updateEvent(e);
-                return Ok("האירוע עודכן בהצלחה");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "שגיאה בשרת: " + ex.Message);
-            }
+            Models.Event.updateEvent(e);
+            
         }
 
         // DELETE api/<EventsController>/5

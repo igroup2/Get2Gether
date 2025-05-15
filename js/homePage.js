@@ -50,13 +50,15 @@ document.addEventListener("DOMContentLoaded", function () {
         "PUT",
         api + "Events",
         JSON.stringify(newEvent),
-        function (response) {
+        function () {
           alert("✅ האירוע עודכן בהצלחה!");
-          window.location.href = "homePage.html";
+          return ok();
+          //window.location.href = "homePage.html";
         },
-        function (error) {
-          console.error("❌ Error during event update:", error);
+        function () {
+          console.error("❌ Error during event update");
           alert("שגיאה בעדכון האירוע");
+          return;
         }
       );
     });
