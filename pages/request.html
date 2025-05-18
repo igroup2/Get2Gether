@@ -190,9 +190,9 @@
               $("input[name='preferNoSmoking']:checked").val() === "0"
                 ? false
                 : true,
-            //pickUpCoordinates: selectedCoordinates,
             latitude: selectedCoordinates.latitude,
             longitude: selectedCoordinates.longitude,
+            note: $("#notes").val(), // הוספת הערות נוספות
           };
 
           console.log("📩 Ride request data:", rideRequest);
