@@ -35,11 +35,7 @@
         <h4 class="card-title">ניהול קובץ מוזמנים</h4>
       </div>
       <div class="card-body">
-        <a
-          href="/files/sample_guest_list.xlsx"
-          download
-          class="btn btn-primary"
-        >
+        <a href="../files/GuestListG2G.xlsx" download class="btn btn-primary">
           הורד קובץ מוזמנים לדוגמה
         </a>
 
@@ -71,28 +67,65 @@
 
     <!-- SCRIPT -->
     <script>
+      const api = "https://localhost:7035/api/";
+
       $("#uploadForm").on("submit", function (e) {
         e.preventDefault();
+
         var formData = new FormData(this);
 
-        $.ajax({
-          url: "/api/Guests/UploadExcel",
-          type: "POST",
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function (response) {
-            $("#uploadStatus").html(
-              "<div class='alert alert-success'>הקובץ הועלה בהצלחה!</div>"
-            );
-          },
-          error: function () {
-            $("#uploadStatus").html(
-              "<div class='alert alert-danger'>שגיאה בהעלאת הקובץ.</div>"
-            );
-          },
-        });
+        // שליפת ה־eventID מ־localStorage
+        var eventId = localStorage.getItem("eventID");
+
+        // בדיקת תקינות
+        if (!eventId) {
+          $("#uploadStatus").html(
+            "<div class='alert alert-warning'>לא נמצא מזהה אירוע (eventID). ודא שהתחברת או בחרת אירוע.</div>"
+          );
+          return;
+        }
+
+        // הוספת eventID לשדות הטופס שנשלחים לשרת
+        formData.append("eventId", eventId);
+
+        // שליחת הבקשה
+
+        ajaxCallWithFormData(
+          "POST",
+          api + `GuestInEvents/UploadExcel/${eventId}`,
+          formData,
+          SCB,
+          ERC
+        );
+
+        function SCB(response) {
+          $("#uploadStatus").html(
+            "<div class='alert alert-success'>הקובץ הועלה בהצלחה!</div>"
+          );
+        }
+        function ERC() {
+          $("#uploadStatus").html(
+            "<div class='alert alert-danger'>שגיאה בהעלאת הקובץ.</div>"
+          );
+        }
       });
+      function ajaxCallWithFormData(
+        method,
+        apiUrl,
+        formData,
+        successCB,
+        errorCB
+      ) {
+        $.ajax({
+          type: method,
+          url: apiUrl,
+          data: formData,
+          contentType: false, // חשוב: לא לקבוע contentType, כי הדפדפן עושה את זה אוטומטית
+          processData: false, // חשוב: לא להפוך את ה־formData למחרוזת
+          success: successCB,
+          error: errorCB,
+        });
+      }
     </script>
   </body>
 </html>

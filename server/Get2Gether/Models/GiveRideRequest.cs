@@ -13,9 +13,10 @@
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
+        public string Note { get; set; }
         public GiveRideRequest() { }
 
-        public GiveRideRequest(int id, int eventID, int personID, int carCapacity, string rideExitPoint, string preferredGender, bool preferredSmoker, double latitude, double longitude)
+        public GiveRideRequest(int id, int eventID, int personID, int carCapacity, string rideExitPoint, string preferredGender, bool preferredSmoker, double latitude, double longitude, string note = null)
         {
             Id = id;
             EventID = eventID;
@@ -26,6 +27,7 @@
             PreferredSmoker = preferredSmoker;
             Latitude = latitude;
             Longitude = longitude;
+            Note = note;
         }
 
         public static void CreateNewGiveRideRequest(GiveRideRequest giveRide)
