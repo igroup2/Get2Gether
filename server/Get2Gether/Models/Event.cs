@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace Get2Gether.Models
 {
     public class Event
@@ -42,17 +43,21 @@ namespace Get2Gether.Models
         public double EventLongitude { get => eventLongitude; set => eventLongitude = value; }
 
 
-        static public void createNewEvent(Event NewEvent)
+        public static void createNewEvent(Event NewEvent)
         {
             DBservices dbs = new DBservices();
              dbs.CreateNewEvent(NewEvent);
         }
-        static public List<Event> GetEvents(int PersonID)
+        public static  List<Event> GetEvents(int PersonID)
         {
             DBservices dbs = new DBservices();
             return dbs.GetEvents(PersonID);
         }
-
+        public static void updateEvent(Event NewEvent)
+        {
+            DBservices dbs = new DBservices();
+            dbs.updateEvent(NewEvent);
+        }
     }
 }
 

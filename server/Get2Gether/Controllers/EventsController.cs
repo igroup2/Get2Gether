@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Get2Gether.Models;
+using System.Collections.Generic;
 
 
 namespace Get2Gether.Controllers
@@ -24,11 +25,11 @@ namespace Get2Gether.Controllers
             Event.createNewEvent(NewEvent);
             return NewEvent.EventID; 
         }
-
-        // PUT api/<EventsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public void Put([FromBody] Event e)
         {
+            Models.Event.updateEvent(e);
+            
         }
 
         // DELETE api/<EventsController>/5

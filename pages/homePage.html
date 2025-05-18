@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>דשבורד</title>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="../js/js.js"></script>
+    <script src="../js/ajaxcalls.js"></script>
+    <script src="../js/map.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+      .dashboard-container {
+        max-width: 500px;
+        margin: 40px auto;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .dashboard-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 30px;
+      }
+
+      .dashboard-btn {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        margin: 10px 0;
+        font-size: 18px;
+        border: none;
+        border-radius: 10px;
+        background-color: #e9e5e0;
+        color: #333;
+        cursor: pointer;
+        text-align: right;
+        transition: 0.3s;
+      }
+
+      .dashboard-btn:hover {
+        background-color: #d3cfc9;
+      }
+
+      .logout-btn {
+        background-color: #5c2e1f;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="logo">
+        <img src="../images/logo.png" alt="הלוגו שלך" id="myLogo" />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">בית</a></li>
+          <li><a href="login.html">התחברות</a></li>
+          <li><a href="register-step1.html">הרשמה</a></li>
+          <li><a href="select.html">בחירה</a></li>
+          <li><a href="map.html">מפה</a></li>
+          <li><a href="Events.html">Events</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>בוקר טוב, דקלה ואסי</h1>
+      <div class="dashboard-container">
+        <div class="dashboard-title"></div>
+
+        <button class="dashboard-btn" onclick="location.href='editEvent.html'">
+          ✏️ עריכת פרטי אירוע
+        </button>
+        <button class="dashboard-btn" onclick="location.href='guests.html'">
+          😊 קובץ מוזמנים
+        </button>
+        <button
+          class="dashboard-btn"
+          onclick="location.href='upload-documents.html'"
+        >
+          📄 העלאת מסמכים
+        </button>
+        <button
+          class="dashboard-btn"
+          onclick="location.href='create-ride.html'"
+        >
+          🚌 הקמת הסעה
+        </button>
+        <button class="dashboard-btn" onclick="location.href='view-rides.html'">
+          👁️ צפייה בהסעה קיימת
+        </button>
+        <button class="dashboard-btn" onclick="location.href='profile.html'">
+          👤 לאזור האישי
+        </button>
+
+        <button
+          class="dashboard-btn logout-btn"
+          onclick="location.href='login.html'"
+        >
+          🔴 התנתקות
+        </button>
+      </div>
+    </section>
+    <!-- FOOTER -->
+    <footer>
+      <p>צור קשר:</p>
+      <a href="https://www.instagram.com" target="_blank">
+        <img
+          src="../images/instagram-icon.png"
+          alt="Instagram"
+          width="24"
+          height="24"
+        />
+      </a>
+      <a href="https://www.facebook.com" target="_blank">
+        <img
+          src="../images/facebook-icon.png"
+          alt="Facebook"
+          width="24"
+          height="24"
+        />
+      </a>
+      <a href="mailto:igroup2project@gmail.com">
+        <img
+          src="../images/google-icon.png"
+          alt="Google"
+          width="24"
+          height="24"
+        />
+      </a>
+    </footer>
+  </body>
+</html>
