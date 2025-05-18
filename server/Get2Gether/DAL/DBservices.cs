@@ -77,22 +77,59 @@ public class DBservices
         }
     }
 
-
-
-
-    //---------------------------------------------------------------------------------
-    // Create the SqlCommand using a stored procedure 
-    //---------------------------------------------------------------------------------
-    private SqlCommand CreateCommandWithStoredProcedureCreateNewPerson(String spName, SqlConnection con, Dictionary<string, object> paramDic)
+    public int updateEvent(Event NewEvent)
     {
-        return CreateCommandWithStoredProcedureGENERAL(spName, con, paramDic);
+        SqlConnection con = null;
+        try
+        {
+            con = connect("myProjDB");
+
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+        {
+            {"@eventID", NewEvent.EventID },
+            {"@EventDesc", NewEvent.EventDesc },
+            {"@NumOfGuest", NewEvent.NumOfGuest },
+            {"@EventDate", NewEvent.EventDate },
+            {"@EventLocation", NewEvent.EventLocation },
+            {"@EventLatitude", NewEvent.EventLatitude },
+            {"@EventLongitude", NewEvent.EventLongitude },
+        };
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureCreateNewEvent("SP_updateEvent", con, paramDic))
+            {
+                int rowsAffected = cmd.ExecuteNonQuery(); // מתאים לעדכון
+                return rowsAffected; // מחזיר כמה שורות עודכנו
+            }
+        }
+        catch (Exception ex)
+        {
+            // לוג שגיאה או הדפסה
+            Console.WriteLine("❌ שגיאה בעדכון האירוע: " + ex.Message);
+            return -1; // מציין כישלון
+        }
+        finally
+        {
+            if (con != null && con.State == System.Data.ConnectionState.Open)
+            {
+                con.Close();
+            }
+        }
     }
 
-    //--------------------------------------------------------------------------------------------------
-    // This method insert a Person to the Person table 
-    //--------------------------------------------------------------------------------------------------
-    //
-    public void CreateNewPerson(Person person)
+
+
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------
+// This method insert a Person to the Person table 
+//--------------------------------------------------------------------------------------------------
+//
+public void CreateNewPerson(Person person)
 
 
 
@@ -110,7 +147,7 @@ public class DBservices
         };
 
 
-            using (SqlCommand cmd = CreateCommandWithStoredProcedureCreateNewPerson("SP_CreateNewPerson", con, paramDic))
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_CreateNewPerson", con, paramDic))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -126,10 +163,75 @@ public class DBservices
 
 
 
+    public int CreateGuests(Person person)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+
+        {
+            { "@FullName", person.FullName },
+            { "@Password", person.Password },
+            { "@PhoneNumber", person.PhoneNumber },
+            { "@Gender", person.Gender },
+            { "@Smoke", person.Smoke }
+        };
+
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureCreateNewPerson("SP_CreateGuest", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        person.PersonID = Convert.ToInt32(reader["PersonID"]);
+                    }
+                }
+
+            }
+        }
+        return person.PersonID;
+    }
+
+    /// <summary>
+    /// create guest in event 
+    /// </summary>
+    /// <returns></returns>
+    public int CreateGuestsInEvent(List<GuestInEvent> guestList)
+    {
+        int rowsAffected = 0;
+
+        using (SqlConnection con = connect("myProjDB"))
+        {
+
+            foreach (GuestInEvent guest in guestList)
+            {
+                Dictionary<string, object> paramDic = new Dictionary<string, object>
+                {
+                    { "@PersonID", guest.PersonID },
+                    { "@EventID", guest.EventID },
+                    { "@RoleInEvent", guest.RoleInEvent },
+                    { "@NumOfGuest", guest.NumOfGuest },
+                    { "@RsvpStatus", guest.RsvpStatus },
+                    { "@SideInWedding", guest.SideInWedding },
+                    { "@RelationToCouple", guest.RelationToCouple }
+                };
+
+                using (SqlCommand cmd = CreateCommandWithStoredProcedure("SP_InsertGuestInEvent", con, paramDic))
+                {
+                    rowsAffected += cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        return rowsAffected;
+    }
+
+
+
     //---------------------------------------------------------------------------------
     // Create the SqlCommand using a stored procedure  -- Coordinate
     //---------------------------------------------------------------------------------
-
 
 
     private SqlCommand CreateCommandWithStoredProcedureGetCoordinates(String spName, SqlConnection con, Dictionary<string, object> paramDic)
