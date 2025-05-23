@@ -161,6 +161,10 @@ public void CreateNewPerson(Person person)
         }
     }
 
+    private SqlCommand CreateCommandWithStoredProcedureCreateNewPerson(String spName, SqlConnection con, Dictionary<string, object> paramDic)
+    {
+        return CreateCommandWithStoredProcedureGENERAL(spName, con, paramDic);
+    }
 
 
     public int CreateGuests(Person person)
