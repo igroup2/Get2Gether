@@ -1,4 +1,3 @@
-const api = "https://localhost:7035/api/";
 document
   .getElementById("loadSettingsBtn")
   .addEventListener("click", function () {

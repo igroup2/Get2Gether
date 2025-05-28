@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Get2Gether.Models;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 
 namespace Get2Gether.Controllers
@@ -36,6 +38,36 @@ namespace Get2Gether.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        // Upload invite image
+        [HttpPost("UploadInviteImage")]
+        public async Task<IActionResult> UploadInviteImage([FromForm] IFormFile inviteImage, [FromForm] string fileName, [FromForm] int eventID)
+        {
+            if (inviteImage == null || inviteImage.Length == 0)
+                return BadRequest("לא נבחר קובץ");
+
+            // יצירת שם קובץ ייחודי לפי eventID
+            string extension = Path.GetExtension(fileName);
+            string newFileName = $"invite_{eventID}{extension}";
+            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "invites");
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+            string filePath = Path.Combine(folderPath, newFileName);
+
+            // שמירת הקובץ ב-wwwroot/invites
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await inviteImage.CopyToAsync(stream);
+            }
+
+            // שמירת שם התמונה ב-SQL לפי eventID
+            DBservices db = new DBservices();
+            db.UpdateInviteImageName(eventID, newFileName); // יש להוסיף את הפונקציה הזו ב-DBservices
+
+            // החזרת URL יחסי ללקוח
+            string imageUrl = $"/invites/{newFileName}";
+            return Ok(new { inviteImageUrl = imageUrl });
         }
     }
 }

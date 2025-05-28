@@ -1,4 +1,3 @@
-const api = "https://localhost:7035/api/"; // API URL
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 
 function initAutocomplete() {
@@ -62,4 +61,49 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       );
     });
+});
+
+$(function () {
+  // ודא שהקוד רץ רק פעם אחת
+  console.log('homePage.js loaded');
+  $('#uploadInviteBtn').off('click').on('click', function (e) {
+    e.preventDefault();
+    console.log('הועלתה לחיצה על כפתור העלאה');
+    var fileInput = document.getElementById('inviteImageInput');
+    if (!fileInput.files || fileInput.files.length === 0) {
+      alert('אנא בחר תמונה להעלאה');
+      return;
+    }
+    var file = fileInput.files[0];
+    var eventID = localStorage.getItem('eventID');
+    if (!eventID) {
+      alert('לא נמצא EventID');
+      return;
+    }
+    var formData = new FormData();
+    formData.append('inviteImage', file);
+    formData.append('fileName', file.name);
+    formData.append('eventID', eventID);
+    console.log('נשלח AJAX:', formData);
+    $.ajax({
+      url: 'https://localhost:7035/api/Events/UploadInviteImage',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (response) {
+        alert('התמונה הועלתה בהצלחה!');
+        if (response && response.inviteImageUrl) {
+          var imgUrl = response.inviteImageUrl;
+          if (imgUrl.startsWith('/')) {
+            imgUrl = window.location.origin + imgUrl;
+          }
+          $('#inviteImagePreview').html('<img src="' + imgUrl + '" alt="הזמנה" style="max-width:300px;max-height:300px;border-radius:12px;box-shadow:0 2px 8px #0002;" />');
+        }
+      },
+      error: function (xhr, status, error) {
+        alert('שגיאה בהעלאת התמונה: ' + (xhr.responseText || error));
+      }
+    });
+  });
 });

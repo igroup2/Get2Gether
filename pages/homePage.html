@@ -12,6 +12,7 @@
     <script src="../js/js.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <script src="../js/map.js"></script>
+    <script src="../js/homePage.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
     <style>
       .dashboard-container {
@@ -72,6 +73,16 @@
 
     <section class="hero">
       <h1>בוקר טוב, דקלה ואסי</h1>
+
+      <div class="invite-upload-container" style="margin: 30px 0; text-align: center;">
+        <form id="inviteImageForm" enctype="multipart/form-data" onsubmit="return false;">
+          <label for="inviteImageInput" style="font-size: 18px;">העלה תמונת הזמנה:</label>
+          <input type="file" id="inviteImageInput" name="inviteImage" accept="image/*" style="margin: 10px;" />
+          <button type="button" id="uploadInviteBtn" class="dashboard-btn" style="width: auto; display: inline-block;">העלה</button>
+        </form>
+        <div id="inviteImagePreview" style="margin-top: 10px;"></div>
+      </div>
+
       <div class="dashboard-container">
         <div class="dashboard-title"></div>
 
