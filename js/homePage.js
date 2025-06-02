@@ -53,12 +53,12 @@ document.addEventListener("DOMContentLoaded", function () {
         function () {
           alert("✅ האירוע עודכן בהצלחה!");
           return ok();
-          //window.location.href = "homePage.html";
+          window.location.href = "homePage.html";
         },
         function () {
           console.error("❌ Error during event update");
           alert("שגיאה בעדכון האירוע");
-          return;
+          window.location.href = "homePage.html";
         }
       );
     });
