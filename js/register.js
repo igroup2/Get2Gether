@@ -108,7 +108,6 @@ function registerPerson() {
       localStorage.setItem("partner1ID", partner1ID);
       alert("✅ ההצטרפות הושלמה בהצלחה!");
       registerPartner2();
-      window.location.href = "register-step3.html";
     },
     function (error) {
       console.error("❌ Registration failed:", error);
@@ -142,6 +141,7 @@ function registerPerson() {
         console.log("✅ Partner 2 ID:", partner2ID);
         localStorage.setItem("partner2ID", partner2ID);
         alert("צורף בת/בת הזוג בהצלחה!");
+        window.location.href = "register-step3.html";
       },
       function (error) {
         console.error("❌ Registration failed:", error);

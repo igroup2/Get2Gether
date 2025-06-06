@@ -48,7 +48,7 @@ namespace Get2Gether.Controllers
                         Password = "1234",     // סיסמה זמנית
                         Smoke = false,
                         Gender = "N",
-                            // ערך ברירת מחדל
+                        // ערך ברירת מחדל
                     };
 
                     int personId = db.CreateGuests(person);
@@ -78,19 +78,33 @@ namespace Get2Gether.Controllers
                 return StatusCode(500, $"שגיאה פנימית: {ex.Message}");
             }
         }
-        // GET: api/<GuestInEventsController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("RideRequestsCount")]
+        public int GetRideRequestsCount([FromQuery] int eventID)
         {
-            return new string[] { "value1", "value2" };
+            return GuestInEvent.GetRequestsCount(eventID);
         }
 
-        // GET api/<GuestInEventsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("GiveRideRequestsCount")]
+        public int GetGiveRideRequestsCount([FromQuery] int eventID)
         {
-            return "value";
+            return GuestInEvent.GetGiveRideRequestsCount(eventID);
         }
+        [HttpGet("RSVPChartData")]
+        public IActionResult GetRSVPChartData([FromQuery] int eventID)
+        {
+            var results = GuestInEvent.GetRSVPStatusCounts(eventID);
+
+            var chartData = results.Select(r => new
+            {
+                status = r.Status,
+                count = r.Count
+            });
+
+            return Ok(chartData);
+        }
+
+
+
 
         // POST api/<GuestInEventsController>
         [HttpPost]
