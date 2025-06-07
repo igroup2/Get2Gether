@@ -47,6 +47,116 @@ public class DBservices
         return CreateCommandWithStoredProcedureGENERAL(spName, con, paramDic);
     }
 
+
+    public bool CreateNewShuttle(Shuttle shuttle)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+        {
+            { "@EventID", shuttle.EventID },
+            { "@PickUpLocation", shuttle.PickUpLocation },
+            { "@Latitude", shuttle.Latitude },
+            { "@Longitude", shuttle.Longitude },
+            { "@Capacity", shuttle.Capacity },
+            { "@DepartureTime", shuttle.DepartureTime },
+            { "@ContactName", shuttle.ContactName },
+            { "@ContactPhone", shuttle.ContactPhone }
+        };
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_CreateNewShuttle", con, paramDic))
+            {
+                try
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            int shuttleID = Convert.ToInt32(reader["ShuttleID"]);
+                            return shuttleID > 0;
+                        }
+                    }
+
+                    return false;
+                }
+                catch (SqlException ex)
+                {
+                    // ✅ מוסיף הדפסת השגיאה ללוג או לקונסול
+                    Console.WriteLine("❌ שגיאת SQL: " + ex.Message);
+                    throw; // נשלח את השגיאה חזרה למעלה (ל־Controller)
+                }
+            }
+        }
+    }
+
+    public List<Shuttle> GetALLShuttles(int EventID)
+    {
+        List<Shuttle> shuttles = new List<Shuttle>();
+
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+        {
+            { "@EventID", EventID }
+        };
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_MyShuttles", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Shuttle shuttle = new Shuttle
+                        {
+                            ShuttleID = Convert.ToInt32(reader["ShuttleID"]),
+                            EventID = Convert.ToInt32(reader["EventID"]),
+                            PickUpLocation = reader["PickupLocation"].ToString(),
+                            DepartureTime = reader["DepartureTime"].ToString(),
+                            Capacity = Convert.ToInt32(reader["Capacity"]),
+                            ContactName = reader["ContactName"].ToString(),
+                            ContactPhone = reader["ContactPhone"].ToString()
+                        };
+
+                        shuttles.Add(shuttle);
+                    }
+                }
+            }
+        }
+
+        return shuttles;
+    }
+
+
+    public bool DeleteShuttle(int ShuttleID)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+        {
+            { "@ShuttleID", ShuttleID } // ← תיקון השם
+        };
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_DeleteShuttle", con, paramDic))
+            {
+                try
+                {
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+                catch (Exception ex)
+                {
+                    // ניתן גם ללוג או טיפול בשגיאה
+                    return false;
+                }
+            }
+        }
+    }
+
+
+
+
+
+
     public void CreateNewEvent(Event e)
     {
         using (SqlConnection con = connect("myProjDB"))
@@ -148,6 +258,10 @@ public void CreateNewPerson(Person person)
         }
     }
 
+    private SqlCommand CreateCommandWithStoredProcedureCreateNewPerson(String spName, SqlConnection con, Dictionary<string, object> paramDic)
+    {
+        return CreateCommandWithStoredProcedureGENERAL(spName, con, paramDic);
+    }
 
 
     public int CreateGuests(Person person)
@@ -180,10 +294,9 @@ public void CreateNewPerson(Person person)
         return person.PersonID;
     }
 
-    /// <summary>
-    /// create guest in event 
-    /// </summary>
-    /// <returns></returns>
+   
+
+    
     public int CreateGuestsInEvent(List<GuestInEvent> guestList)
     {
         int rowsAffected = 0;
@@ -312,7 +425,6 @@ public void CreateNewPerson(Person person)
                     while (reader.Read())
                     {
                         var rideExitPoint = reader["RideExitPoint"].ToString();
-                        GeoPoint coordinates = GetCoordinatesForCity(rideExitPoint);
                         giveRideRequests.Add(new GiveRideRequest(
                             Convert.ToInt32(reader["ID"]),
                             EventID,
@@ -321,8 +433,9 @@ public void CreateNewPerson(Person person)
                             rideExitPoint,
                             reader["PreferredGender"].ToString(),
                             Convert.ToBoolean(reader["PreferredSmoker"]),
-                            Convert.ToDouble("Longitude"),
-                            Convert.ToDouble("latitude")
+                               Convert.ToDouble(reader["Latitude"]),
+                            Convert.ToDouble(reader["Longitude"])
+                         
                         )
                             );
 
@@ -342,8 +455,8 @@ public void CreateNewPerson(Person person)
                                 pickUpLocation,
                                 reader["PreferredGender"].ToString(),
                                 Convert.ToBoolean(reader["PreferredSmoker"]),
-                                Convert.ToDouble("Longitude"),
-                                Convert.ToDouble("latitude")
+                                Convert.ToDouble(reader["latitude"]),
+                                Convert.ToDouble(reader["Longitude"])
                             )
                          );
                         }
@@ -684,7 +797,21 @@ public void CreateNewPerson(Person person)
 
     //---------------------------------------------------------------------------------
     // Create the SqlCommand
-   
+    public void UpdateInviteImageName(int eventID, string imageName)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+            {
+                { "@eventId", eventID }, // שם פרמטר תואם לפרוצדורה
+                { "@InviteImageUrl", imageName } // שם פרמטר תואם לפרוצדורה
+            };
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_UpdateInviteImageUrl", con, paramDic))
+            {
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
 
 
 
