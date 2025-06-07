@@ -1,7 +1,7 @@
 // 📦 כל קובץ map.js החדש והמסודר:
 
 const api = "https://localhost:7035/api/";
-const eventID = 15; // הארדקוד לפי בקשה
+const eventID = 1077; // הארדקוד לפי בקשה
 let loadedData = null;
 
 const map = L.map("map", {
@@ -40,39 +40,60 @@ function addMarker(lat, lng, label, type) {
   const marker = L.marker([lat, lng], { icon: icons[type] }).bindPopup(label);
   markersCluster.addLayer(marker);
 }
-
 function addGiveRideMarkers(giveRideRequests) {
   giveRideRequests.forEach((giveRide) => {
-    if (giveRide.rideExitCoordinates?.x && giveRide.rideExitCoordinates?.y) {
-      const label = `🚙 נהג<br>📄 Request ID: ${giveRide.id}<br>🧍 Person ID: ${giveRide.personID}`;
+    const label = `🚙 נהג<br>📄 Request ID: ${giveRide.id}<br>🧍 Person ID: ${giveRide.personID}`;
+
+    if (giveRide.Latitude && giveRide.Longitude) {
       addMarker(
-        giveRide.rideExitCoordinates.y,
-        giveRide.rideExitCoordinates.x,
+        giveRide.Latitude,
+        giveRide.Longitude,
         label,
         "giveRideRequest"
       );
+    } else {
+      geocodeAndAddMarker(giveRide.rideExitPoint, label, "giveRideRequest");
+    }
+  });
+}
+function addRideRequestMarkers(rideRequests) {
+  rideRequests.forEach((ride) => {
+    const label = `🧑 נוסע<br>📄 Request ID: ${ride.id}<br>🧍 Person ID: ${ride.personID}`;
+
+    if (ride.Latitude && ride.Longitude) {
+      addMarker(ride.Latitude, ride.Longitude, label, "rideRequest");
+    } else {
+      geocodeAndAddMarker(ride.pickUpLocation, label, "rideRequest");
     }
   });
 }
 
-function addRideRequestMarkers(rideRequests) {
-  rideRequests.forEach((ride) => {
-    if (ride.pickUpCoordinates?.x && ride.pickUpCoordinates?.y) {
-      const label = `🧑 נוסע<br>📄 Request ID: ${ride.id}<br>🧍 Person ID: ${ride.personID}`;
-      addMarker(
-        ride.pickUpCoordinates.y,
-        ride.pickUpCoordinates.x,
-        label,
-        "rideRequest"
-      );
+function geocodeAndAddMarker(address, label, type) {
+  const geocoder = new google.maps.Geocoder();
+
+  geocoder.geocode({ address: address }, function (results, status) {
+    if (status === "OK") {
+      const location = results[0].geometry.location;
+      addMarker(location.lat(), location.lng(), label, type);
+    } else {
+      console.warn(`⚠️ לא ניתן למקם כתובת: ${address}`, status);
     }
   });
 }
 
 function addEventMarker(eventCoordinates, eventLocation) {
-  if (eventCoordinates?.x && eventCoordinates?.y) {
-    const label = `🎉 אירוע<br>📍 מיקום: ${eventLocation}`;
-    addMarker(eventCoordinates.y, eventCoordinates.x, label, "eventLocation");
+  const label = `🎉 אירוע<br>📍 מיקום: ${eventLocation}`;
+
+  // בדיקה לפי eventLatitude / eventLongitude שהגיעו מ־loadedData
+  if (loadedData.eventLatitude && loadedData.eventLongitude) {
+    addMarker(
+      loadedData.eventLatitude,
+      loadedData.eventLongitude,
+      label,
+      "eventLocation"
+    );
+  } else {
+    geocodeAndAddMarker(eventLocation, label, "eventLocation");
   }
 }
 
@@ -87,6 +108,12 @@ function loadRideData(eventID) {
     (data) => {
       console.log("✅ Success loading data", data);
       loadedData = data;
+
+      // הוספת קואורדינטות ישירות ל-loadedData עבור שימוש נוח בהמשך
+      if (data.eventCoordinates) {
+        loadedData.eventLatitude = data.eventCoordinates.y;
+        loadedData.eventLongitude = data.eventCoordinates.x;
+      }
 
       if (
         (!data.giveRideRequests || data.giveRideRequests.length === 0) &&
@@ -121,7 +148,8 @@ function sendToServer() {
     giveRideRequests: loadedData.giveRideRequests,
     rideRequests: loadedData.rideRequests,
     eventLocation: loadedData.eventLocation,
-    eventCoordinates: loadedData.eventCoordinates,
+    EventLongitude: loadedData.eventLongitude,
+    EventLatitude: loadedData.eventLatitude,
   };
 
   ajaxCall(
@@ -142,9 +170,11 @@ function runAlgorithm(data) {
   console.log("🚀 הפעלת אלגוריתם חישוב סטייה...");
 
   const eventCoords = {
-    lat: loadedData.eventCoordinates.y,
-    lng: loadedData.eventCoordinates.x,
+    lat: parseFloat(loadedData.eventLatitude), // Latitude → lat (✔️)
+    lng: parseFloat(loadedData.eventLongitude), // Longitude → lng (✔️)
   };
+
+  console.log("📍 מיקום האירוע:", eventCoords);
 
   const detourResults = [];
   let pairsCompleted = 0;
@@ -162,17 +192,51 @@ function runAlgorithm(data) {
   data.forEach((matchResult) => {
     const driver = matchResult.driver;
     const origin = {
-      lat: driver.rideExitCoordinates.y,
-      lng: driver.rideExitCoordinates.x,
+      lat: parseFloat(driver.latitude),
+      lng: parseFloat(driver.longitude),
     };
-    const destination = eventCoords;
+
+    const destination = {
+      lat: parseFloat(loadedData.eventLatitude), // latitude
+      lng: parseFloat(loadedData.eventLongitude), // longitude
+    };
+
+    // בדיקת קואורדינטות נהג ויעד
+    if (
+      isNaN(origin.lat) ||
+      isNaN(origin.lng) ||
+      isNaN(destination.lat) ||
+      isNaN(destination.lng)
+    ) {
+      console.warn("⚠️ קואורדינטות נהג/אירוע לא תקינות!", {
+        origin,
+        destination,
+      });
+      return;
+    }
+
+    console.log(
+      `🚗 נהג: ${driver.id} (${driver.latitude}, ${driver.longitude})`
+    );
 
     calculateBaseRouteTime(origin, destination, (baseTime) => {
       (matchResult.potentialRiders || []).forEach((rider) => {
         const waypoint = {
-          lat: rider.pickUpCoordinates.y,
-          lng: rider.pickUpCoordinates.x,
+          lat: parseFloat(rider.latitude),
+          lng: parseFloat(rider.longitude),
         };
+
+        // בדיקת קואורדינטות נוסע
+        if (isNaN(waypoint.lat) || isNaN(waypoint.lng)) {
+          console.warn("⚠️ קואורדינטות נוסע לא תקינות!", waypoint);
+          return;
+        }
+
+        console.log("🚀 בדיקה מהירה");
+        console.log("eventCoords:", eventCoords);
+        console.log("origin:", origin);
+        console.log("waypoint:", waypoint);
+
         calculateRouteWithWaypoint(
           origin,
           waypoint,
