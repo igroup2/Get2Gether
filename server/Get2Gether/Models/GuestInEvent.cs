@@ -27,8 +27,23 @@ namespace Get2Gether.Models
             SideInWedding = sideInWedding;
             RelationToCouple = relationToCouple;
         }
+        public static int GetRequestsCount(int eventID)
+        {
+            DBservices db = new DBservices();
+            return db.GetRideRequestsCount(eventID);
+        }
 
-   
+        public static int GetGiveRideRequestsCount(int eventID)
+        {
+            DBservices db = new DBservices();
+            return db.GetGiveRideRequestsCount(eventID);
+        }
+        public static List<(string Status, int Count)> GetRSVPStatusCounts(int eventID)
+        {
+            DBservices db = new DBservices();
+            return db.GetRSVPStatusCounts(eventID); 
+        }
+
     }
 }
 

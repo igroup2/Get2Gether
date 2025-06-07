@@ -107,7 +107,6 @@ function registerPerson() {
       localStorage.setItem("partner1ID", partner1ID);
       alert("✅ ההצטרפות הושלמה בהצלחה!");
       registerPartner2();
-      window.location.href = "register-step3.html";
     },
     function (error) {
       console.error("❌ Registration failed:", error);

@@ -116,19 +116,6 @@ public class DBservices
         }
     }
 
-
-
-
-
-
-
-
-
-
-//--------------------------------------------------------------------------------------------------
-// This method insert a Person to the Person table 
-//--------------------------------------------------------------------------------------------------
-//
 public void CreateNewPerson(Person person)
 
 
@@ -182,7 +169,7 @@ public void CreateNewPerson(Person person)
         };
 
 
-            using (SqlCommand cmd = CreateCommandWithStoredProcedureCreateNewPerson("SP_CreateGuest", con, paramDic))
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_CreateGuest", con, paramDic))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -195,6 +182,11 @@ public void CreateNewPerson(Person person)
             }
         }
         return person.PersonID;
+    }
+
+    private SqlCommand CreateCommandWithStoredProcedureCreateNewPerson(String spName, SqlConnection con, Dictionary<string, object> paramDic)
+    {
+        return CreateCommandWithStoredProcedureGENERAL(spName, con, paramDic);
     }
 
     /// <summary>
@@ -379,6 +371,88 @@ public void CreateNewPerson(Person person)
             }
         }
     }
+
+    public int GetRideRequestsCount(int eventId)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+        {
+            { "@EventID", eventId }
+        };
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_GetRideRequest", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        int total = Convert.ToInt32(reader["totalRideRequest"]);
+                        
+                        return total; 
+                    }
+                    else
+                    {
+                        return 0; 
+                    }
+                }
+            }
+        }
+    }
+    public int GetGiveRideRequestsCount(int eventId)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+        {
+            { "@EventID", eventId }
+        };
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_GetGiveRideRequest", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        int total = Convert.ToInt32(reader["totalGiveRideRequest"]);
+
+                        return total;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+        }
+    }
+    public List<(string Status, int Count)> GetRSVPStatusCounts(int eventId)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+        {
+            { "@EventID", eventId }
+        };
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_GetRSVPStatusData", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    List<(string, int)> results = new List<(string, int)>();
+                    while (reader.Read())
+                    {
+                        string status = reader["RSVPStatus"]?.ToString() ?? "לא ידוע";
+                        int count = Convert.ToInt32(reader["Count"]);
+                        results.Add((status, count));
+                    }
+                    return results;
+                }
+            }
+        }
+    }
+
+
 
     public List<string> GetCities()
     {

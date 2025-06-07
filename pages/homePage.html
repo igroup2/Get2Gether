@@ -74,14 +74,42 @@
     <section class="hero">
       <h1>בוקר טוב, דקלה ואסי</h1>
 
-      <div class="invite-upload-container" style="margin: 30px 0; text-align: center;">
-        <form id="inviteImageForm" enctype="multipart/form-data" onsubmit="return false;">
-          <label for="inviteImageInput" style="font-size: 18px;">העלה תמונת הזמנה:</label>
-          <input type="file" id="inviteImageInput" name="inviteImage" accept="image/*" style="margin: 10px;" />
-          <button type="button" id="uploadInviteBtn" class="dashboard-btn" style="width: auto; display: inline-block;">העלה</button>
+      <div
+        class="invite-upload-container"
+        style="margin: 30px 0; text-align: center"
+      >
+        <form
+          id="inviteImageForm"
+          enctype="multipart/form-data"
+          onsubmit="return false;"
+        >
+          <label for="inviteImageInput" style="font-size: 18px"
+            >העלה תמונת הזמנה:</label
+          >
+          <input
+            type="file"
+            id="inviteImageInput"
+            name="inviteImage"
+            accept="image/*"
+            style="margin: 10px"
+          />
+          <button
+            type="button"
+            id="uploadInviteBtn"
+            class="dashboard-btn"
+            style="width: auto; display: inline-block"
+          >
+            העלה
+          </button>
         </form>
-        <button type="button" id="showInviteBtn" style="display:none;margin-right:10px">הצג הזמנת אירוע נוכחית</button>
-        <div id="inviteImagePreview" style="margin-top: 10px;"></div>
+        <button
+          type="button"
+          id="showInviteBtn"
+          style="display: none; margin-right: 10px"
+        >
+          הצג הזמנת אירוע נוכחית
+        </button>
+        <div id="inviteImagePreview" style="margin-top: 10px"></div>
       </div>
 
       <div class="dashboard-container">
@@ -93,12 +121,7 @@
         <button class="dashboard-btn" onclick="location.href='guests.html'">
           😊 קובץ מוזמנים
         </button>
-        <button
-          class="dashboard-btn"
-          onclick="location.href='upload-documents.html'"
-        >
-          📄 העלאת מסמכים
-        </button>
+
         <button
           class="dashboard-btn"
           onclick="location.href='create-ride.html'"
