@@ -1,5 +1,6 @@
 // 📦 כל קובץ map.js החדש והמסודר:
 
+
 const api = "https://localhost:7035/api/";
 const eventID = 1077; // הארדקוד לפי בקשה
 let loadedData = null;

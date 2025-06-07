@@ -258,6 +258,10 @@ public void CreateNewPerson(Person person)
         }
     }
 
+    private SqlCommand CreateCommandWithStoredProcedureCreateNewPerson(String spName, SqlConnection con, Dictionary<string, object> paramDic)
+    {
+        return CreateCommandWithStoredProcedureGENERAL(spName, con, paramDic);
+    }
 
 
     public int CreateGuests(Person person)
@@ -799,7 +803,21 @@ public void CreateNewPerson(Person person)
 
     //---------------------------------------------------------------------------------
     // Create the SqlCommand
-   
+    public void UpdateInviteImageName(int eventID, string imageName)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+            {
+                { "@eventId", eventID }, // שם פרמטר תואם לפרוצדורה
+                { "@InviteImageUrl", imageName } // שם פרמטר תואם לפרוצדורה
+            };
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_UpdateInviteImageUrl", con, paramDic))
+            {
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
 
 
 
