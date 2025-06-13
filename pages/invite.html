@@ -51,12 +51,25 @@
         <div class="invite-title">הזמנה לאירוע</div>
         <img class="invite-image" src="https://localhost:7035/invites/invite_1079.jpg" alt="הזמנה לאירוע" id="inviteImg">
         <script>
-            // בעתיד: שליפת EVENTID מה-localStorage ועדכון התמונה
-            // דוגמה:
-            // const eventId = localStorage.getItem('EVENTID') || '1079';
-            // // הוספת פרמטר ייחודי (timestamp) לכתובת התמונה כדי לעקוף cache
-            // const timestamp = Date.now();
-            // document.getElementById('inviteImg').src = `https://localhost:7035/invites/invite_${eventId}.jpg?v=${timestamp}`;
+            // שליפת פרמטרים מה-URL
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+            // שליפת eventID ו-personID מה-URL (ללא ערך קבוע)
+            const eventId = getQueryParam('eventID');
+            const personId = getQueryParam('personID');
+            if (!eventId || !personId) {
+                alert('חסרים נתונים בכתובת (eventID/personID)');
+            } else {
+                // שמור personID ו-eventID ב-localStorage
+                localStorage.setItem('personID', personId);
+                localStorage.setItem('eventID', eventId);
+                // עדכון כתובת התמונה לפי eventID
+                const timestamp = Date.now();
+                document.getElementById('inviteImg').src = `https://localhost:7035/invites/invite_${eventId}.jpg?v=${timestamp}`;
+            }
+            // תוכל להשתמש גם ב-personId לטעינת פרטים נוספים בהמשך
         </script>
         <div style="margin: 24px 0;">
             <button class="invite-btn yes">מגיע</button>

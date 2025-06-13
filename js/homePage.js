@@ -164,8 +164,12 @@ $(document).ready(function() {
             `https://localhost:7035/api/GuestInEvents/GetInviteDetails?eventId=${eventId}`,
             null,
             function(data) {
-                console.log('Invite details (SUCCESS):', data);
-                alert('הפרטים נשלפו בהצלחה!');
+                // הצגת קישורים להזמנות לכל אורח בחלון חדש
+                if (Array.isArray(data) && data.length > 0) {
+                    openInviteLinksForGuests(data);
+                } else {
+                    alert('לא נמצאו אורחים לאירוע');
+                }
             },
             function(err) {
                 console.error('Invite details (ERROR):', err);
@@ -173,4 +177,14 @@ $(document).ready(function() {
             }
         );
     });
+    // פונקציה ליצירת קישורים להזמנות לכל אורח בחלון חדש
+    function openInviteLinksForGuests(guests) {
+        let links = guests.map(g => {
+            const url = `http://127.0.0.1:5500/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
+            return `<div style='margin:10px;'><a href="${url}" target="_blank">${url}</a></div>`;
+        }).join('');
+        const win = window.open('', '_blank', 'width=700,height=600');
+        win.document.write(`<h2>קישורי הזמנות לאורחים</h2>${links}`);
+        win.document.close();
+    }
 });
