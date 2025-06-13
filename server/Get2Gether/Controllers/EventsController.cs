@@ -55,12 +55,6 @@ namespace Get2Gether.Controllers
                 Directory.CreateDirectory(folderPath);
             string filePath = Path.Combine(folderPath, newFileName);
 
-            // מחיקת קובץ קודם אם קיים
-            if (System.IO.File.Exists(filePath))
-            {
-                System.IO.File.Delete(filePath);
-            }
-
             // שמירת הקובץ ב-wwwroot/invites
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
