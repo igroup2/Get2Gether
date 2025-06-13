@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>הקמת הסעה</title>
+    <link rel="stylesheet" href="../css/shuttle.css" />
+    <link rel="stylesheet" href="../css/headerFooter.css" />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- flatpickr -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/confetti.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- קבצים שלך -->
+    <script src="../js/ajaxcalls.js"></script>
+    <script src="../js/shuttle.js"></script>
+
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places&callback=initAutocomplete"
+      async
+      defer
+    ></script>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <header class="main-header">
+        <div class="header-container">
+        <div class="branding">
+          <img src="../images/logo.png" class="site-logo" />
+          <h1 class="site-title">Get2Gether</h1>
+        </div>
+          <!-- כפתור המבורגר -->
+          <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">
+            ☰
+          </button>
+
+          <!-- תפריט ניווט -->
+          <nav class="main-nav">
+            <ul>
+              <li><a href="dashboard.html">דשבורד</a></li>
+              <li><a href="Events.html">האירועים שלי</a></li>
+              <li><a href="map.html">מפת האורחים</a></li>
+              <li><a href="Activities.html">הפעולות שלי</a></li>
+              <li><a href="#" onclick="logout()">התנתקות</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <form class="ride-form">
+          <h2>פרטי ההסעה</h2>
+
+          <label for="pickup">תחנת איסוף</label>
+          <input
+            type="text"
+            id="pickup"
+            name="pickup"
+            placeholder="לדוגמה: תחנת רכבת תל אביב"
+          />
+
+          <label for="capacity">כמות אורחים בהסעה</label>
+          <input
+            type="text"
+            id="capacity"
+            name="capacity"
+            placeholder="לדוגמה: 45"
+          />
+
+          <label for="departure">שעת יציאה</label>
+          <input
+            type="text"
+            id="departure"
+            name="departure"
+            placeholder="לדוגמה: 18:00"
+          />
+
+          <label for="contactName">שם איש קשר</label>
+          <input
+            type="text"
+            id="contactName"
+            name="contactName"
+            placeholder="לדוגמה: דני"
+          />
+
+          <label for="contactPhone">מספר טלפון של איש קשר</label>
+          <input
+            type="text"
+            id="contactPhone"
+            name="contactPhone"
+            placeholder="לדוגמה: 050-0001122"
+          />
+
+          <button type="submit">אישור הקמה</button>
+        </form>
+      </main>
+      <footer class="main-footer">
+        <div class="footer-container">
+          <p>צור קשר:</p>
+          <div class="footer-links">
+            <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
+            <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
+            <a href="mailto:igroup2project@gmail.com">אימייל</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

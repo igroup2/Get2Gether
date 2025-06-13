@@ -1,4 +1,3 @@
-const api = "https://localhost:7035/api/"; // API URL
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -155,22 +154,56 @@ function registerPerson() {
 function submitFinalStep() {
   const partner1ID = localStorage.getItem("partner1ID");
   const partner2ID = localStorage.getItem("partner2ID");
-  console.log("📋 Person ID from localStorage:", partner1ID);
-  console.log("📋 Partner 2 ID from localStorage:", partner2ID);
-  if (!partner1ID && !partner2ID) {
-    alert("שגיאה: לא נמצא משתמש מזוהה");
+  const eventDesc = document.getElementById("description")?.value;
+  const numOfGuest = parseInt(document.getElementById("guestNumber")?.value);
+  const eventDate = document.getElementById("date")?.value;
+  const eventLocation = document.getElementById("location")?.value;
+  const eventLatitude = selectedCoordinates.latitude;
+  const eventLongitude = selectedCoordinates.longitude;
+
+  // בדיקות ערכים לפני שליחה
+  if (!partner1ID || isNaN(parseInt(partner1ID))) {
+    alert("שגיאה: לא נמצא משתמש מזוהה (partner1ID)");
+    return;
+  }
+  if (!partner2ID || isNaN(parseInt(partner2ID))) {
+    alert("שגיאה: לא נמצא שותף מזוהה (partner2ID)");
+    return;
+  }
+  if (!eventDesc || eventDesc.length < 2) {
+    alert("יש להזין תיאור אירוע תקין");
+    return;
+  }
+  if (!numOfGuest || isNaN(numOfGuest) || numOfGuest < 1) {
+    alert("יש להזין מספר מוזמנים תקין");
+    return;
+  }
+  if (!eventDate || !/^\d{4}-\d{2}-\d{2}$/.test(eventDate)) {
+    alert("יש להזין תאריך בפורמט YYYY-MM-DD");
+    return;
+  }
+  if (!eventLocation || eventLocation.length < 2) {
+    alert("יש להזין מיקום אירוע");
+    return;
+  }
+  if (typeof eventLatitude !== "number" || typeof eventLongitude !== "number") {
+    alert("יש לבחור מיקום במפה");
+    return;
+  }
+  if (eventLatitude === 0 && eventLongitude === 0) {
+    alert("יש לבחור מיקום אמיתי מתוך ההצעות של גוגל (לא להשאיר ברירת מחדל)");
     return;
   }
 
   const newEvent = {
     partnerID1: parseInt(partner1ID),
-    partnerID2: parseInt(partner2ID), // אם יש שותף נוסף – שים כאן דינמית
-    eventDesc: document.getElementById("description")?.value,
-    numOfGuest: parseInt(document.getElementById("guestNumber")?.value),
-    eventDate: document.getElementById("date")?.value,
-    eventLocation: document.getElementById("location")?.value,
-    eventLatitude: selectedCoordinates.latitude,
-    eventLongitude: selectedCoordinates.longitude,
+    partnerID2: parseInt(partner2ID),
+    eventDesc: eventDesc,
+    numOfGuest: numOfGuest,
+    eventDate: eventDate,
+    eventLocation: eventLocation,
+    eventLatitude: eventLatitude,
+    eventLongitude: eventLongitude,
   };
   console.log("📋 New Event Data:", newEvent);
 
@@ -181,13 +214,12 @@ function submitFinalStep() {
     function (response) {
       const eventID = response;
       localStorage.setItem("eventID", eventID);
-
       alert("🎉 שמחה רבה שמחה רבה אביב הגיע חתונה נוצרה!");
       window.location.href = "homePage.html";
     },
     function (error) {
       console.error("❌ Error during event creation:", error);
-      alert("שגיאה ביצירת האירוע");
+      alert("שגיאה ביצירת האירוע\nבדוק שכל השדות מלאים ותקינים");
     }
   );
 }

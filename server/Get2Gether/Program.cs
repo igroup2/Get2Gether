@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Get2Gether;
 using OfficeOpenXml;
 
@@ -22,6 +21,7 @@ if (true)
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles(); // מאפשר גישה ל-wwwroot ולתמונות
 app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.UseAuthorization();
 

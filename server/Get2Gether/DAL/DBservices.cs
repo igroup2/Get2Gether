@@ -296,7 +296,10 @@ public void CreateNewPerson(Person person)
 
    
 
-    
+    /// <summary>
+    /// create guest in event 
+    /// </summary>
+    /// <returns></returns>
     public int CreateGuestsInEvent(List<GuestInEvent> guestList)
     {
         int rowsAffected = 0;

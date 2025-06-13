@@ -1,0 +1,271 @@
+body {
+  font-family: "Assistant", sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+  text-align: right;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#shuttleContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  padding: 40px 20px;
+  flex-grow: 1;
+}
+
+.shuttle-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  width: 280px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.shuttle-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.shuttle-card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.3rem;
+  color: #333;
+}
+
+.shuttle-card p {
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.shuttle-card strong {
+  color: #222;
+}
+
+@media (max-width: 600px) {
+  .shuttle-card {
+    width: 90%;
+  }
+
+  #shuttleContainer {
+    padding: 20px 10px;
+  }
+}
+.no-shuttles {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.no-shuttles p {
+  font-size: 1.2rem;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+/* יצירת הסעה – ורוד */
+.create-shuttle-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #f06292; /* ורוד */
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  border: none; /* ביטול מסגרת */
+}
+
+.create-shuttle-btn:hover {
+  background-color: #e91e63;
+}
+
+/* עריכת הסעה – כסף מבריק */
+.edit-toggle-btn {
+  display: inline-block;
+  margin: 20px auto;
+  padding: 10px 18px;
+  background: linear-gradient(145deg, #dcdcdc, #ffffff); /* כסף מבריק */
+  color: #111;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.edit-toggle-btn:hover {
+  background: linear-gradient(145deg, #cfcfcf, #ffffff);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.add-shuttle-top {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.shuttle-card {
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.shuttle-card.edit-mode {
+  animation: shake 0.3s infinite alternate;
+}
+
+@keyframes shake {
+  from {
+    transform: rotate(0.5deg);
+  }
+  to {
+    transform: rotate(-0.5deg);
+  }
+}
+
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: crimson;
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  display: none;
+  cursor: pointer;
+  z-index: 2;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* MODAL OVERLAY */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* MODAL CONTENT */
+.modal-content {
+  background-color: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  padding: 30px 40px;
+  position: relative;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  font-family: "Assistant", sans-serif;
+}
+
+.close-modal {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-modal:hover {
+  color: #f06292;
+}
+
+/* FORM INSIDE MODAL */
+.ride-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ride-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #f06292;
+}
+
+.ride-form label {
+  font-weight: bold;
+  color: #333;
+}
+
+.ride-form input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.ride-form button {
+  background-color: #f06292;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.ride-form button:hover {
+  background-color: #e91e63;
+}
+/* ודא שתיבת ההשלמה של גוגל נראית מעל ה-modal */
+.pac-container {
+  z-index: 3000 !important;
+  direction: rtl;
+  font-family: "Assistant", sans-serif;
+}

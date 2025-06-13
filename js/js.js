@@ -1,3 +1,5 @@
+const api = "https://localhost:7035/api/"; // הוספת הגדרת קבוע גלובלית
+
 document.addEventListener("DOMContentLoaded", function () {
   const loginForm = document.getElementById("loginForm");
   const registerForm = document.getElementById("registerForm");
