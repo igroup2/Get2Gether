@@ -103,8 +103,14 @@ namespace Get2Gether.Controllers
             return Ok(chartData);
         }
 
-
-
+        [HttpGet("GetInviteDetails")]
+        public IActionResult GetInviteDetails([FromQuery] int eventId)
+        {
+            var guestDetails = GuestInEvent.GetInviteDetails(eventId);
+            if (guestDetails == null || guestDetails.Count == 0)
+                return NotFound("לא נמצאו אורחים לאירוע");
+            return Ok(guestDetails);
+        }
 
         // POST api/<GuestInEventsController>
         [HttpPost]

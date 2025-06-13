@@ -6,12 +6,11 @@ namespace Get2Gether.Models
         public int PersonInEventID { get; set; }
         public int PersonID { get; set; }
         public int EventID { get; set; }
-        public string RoleInEvent { get; set; }
+        public string? RoleInEvent { get; set; }
         public int NumOfGuest { get; set; }
-        public string RsvpStatus { get; set; }
-
-        public string SideInWedding { get; set; }
-        public string RelationToCouple { get; set; }       
+        public string? RsvpStatus { get; set; }
+        public string? SideInWedding { get; set; }
+        public string? RelationToCouple { get; set; }       
         public GuestInEvent()
 		{
 		}
@@ -42,6 +41,11 @@ namespace Get2Gether.Models
         {
             DBservices db = new DBservices();
             return db.GetRSVPStatusCounts(eventID); 
+        }
+        public static List<GuestInEvent> GetInviteDetails(int eventId)
+        {
+            DBservices db = new DBservices();
+            return db.GetInviteDetails(eventId);
         }
 
     }

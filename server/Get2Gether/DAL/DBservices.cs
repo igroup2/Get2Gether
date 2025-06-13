@@ -818,4 +818,38 @@ public void CreateNewPerson(Person person)
 
 
 
+    public List<GuestInEvent> GetInviteDetails(int eventId)
+    {
+        List<GuestInEvent> guests = new List<GuestInEvent>();
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+            {
+                { "@EventID", eventId }
+            };
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_GetGuestsForEvent", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        GuestInEvent guest = new GuestInEvent
+                        {
+                            PersonID = Convert.ToInt32(reader["PersonID"]),
+                            EventID = Convert.ToInt32(reader["EventID"]),
+                            RoleInEvent = reader["RoleInEvent"] as string,
+                            NumOfGuest = Convert.ToInt32(reader["NumOfGuest"]),
+                            RsvpStatus = reader["RsvpStatus"] as string,
+                            SideInWedding = reader["SideInWedding"] as string,
+                            RelationToCouple = reader["RelationToCouple"] as string
+                            // תוכל להוסיף כאן שדות נוספים אם צריך
+                        };
+                        guests.Add(guest);
+                    }
+                }
+            }
+        }
+        return guests;
+    }
+
 }

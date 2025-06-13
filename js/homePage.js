@@ -140,3 +140,37 @@ $(function () {
     window.open(imgUrl, '_blank');
   });
 });
+
+$(document).ready(function() {
+    $('#sendInviteBtn2').on('click', function() {
+        // שליפת eventID מתוך eventGuest ב-localStorage
+        let eventId = null;
+        const eventGuestStr = localStorage.getItem('eventGuest');
+        if (eventGuestStr) {
+            try {
+                const eventGuestObj = JSON.parse(eventGuestStr);
+                eventId = eventGuestObj.eventID;
+            } catch (e) {
+                console.error('שגיאה בפיענוח eventGuest:', e);
+            }
+        }
+        if (!eventId) {
+            alert('לא נמצא eventID ב-localStorage');
+            return;
+        }
+        // קריאת AJAX לשרת לקבלת פרטי האורח לפי eventID מ-GuestInEventController
+        ajaxCall(
+            'GET',
+            `https://localhost:7035/api/GuestInEvents/GetInviteDetails?eventId=${eventId}`,
+            null,
+            function(data) {
+                console.log('Invite details (SUCCESS):', data);
+                alert('הפרטים נשלפו בהצלחה!');
+            },
+            function(err) {
+                console.error('Invite details (ERROR):', err);
+                alert('שגיאה בשליפת פרטי ההזמנה');
+            }
+        );
+    });
+});
