@@ -136,8 +136,9 @@ $(function () {
       alert('לא קיימת תמונה להצגה');
       return;
     }
-    // פתח תמיד בכתובת של השרת
-    window.open(imgUrl, '_blank');
+    // הוסף פרמטר ייחודי כדי לעקוף cache
+    const urlWithTimestamp = imgUrl + (imgUrl.includes('?') ? '&' : '?') + 'v=' + Date.now();
+    window.open(urlWithTimestamp, '_blank');
   });
 });
 
