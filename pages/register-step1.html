@@ -9,50 +9,61 @@
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
       crossorigin="anonymous"
     ></script>
-    <script src="../js/js.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <script src="../js/register.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/register.css" />
+    <link rel="stylesheet" href="../css/headerFooter.css" />
   </head>
   <body>
-    <!-- HEADER -->
-    <header>
-      <div class="logo">
-        <img src="../images/logo.png" alt="הלוגו שלך" id="myLogo" />
-      </div>
-      <nav>
-        <ul>
-          <li><a href="index.html">בית</a></li>
-          <li><a href="login.html">התחברות</a></li>
-          <li><a href="register-step1.html">הרשמה</a></li>
-          <li><a href="select.html">בחירה</a></li>
-          <li><a href="map.html">מפה</a></li>
-          <li><a href="Events.html">אירועים</a></li>
-        </ul>
-      </nav>
-    </header>
+    <div class="page-wrapper">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-container">
+          <div class="branding">
+            <img src="../images/logo.png" class="site-logo" alt="logo" />
+            <h1 class="site-title">Get2Gether</h1>
+          </div>
+          <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">
+            ☰
+          </button>
+          <nav class="main-nav">
+            <ul>
+              <li><a href="../pages/index.html#hero">בית</a></li>
+              <li><a href="../pages/index.html#feature">המוצרים שלנו</a></li>
+              <li><a href="../pages/index.html#about">עלינו</a></li>
+              <li><a href="../pages/index.html#how">צור קשר</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
 
-    <!-- FORM -->
-    <div class="container">
-      <h2>הרשמה - שלב 1</h2>
-      <form id="step1Form">
-        <label for="phoneNumber">פלאפון:</label>
-        <input type="text" id="phoneNumber" required />
+      <!-- FORM -->
+      <main>
+        <div class="container">
+          <h2>הרשמה - שלב 1</h2>
+          <form id="step1Form">
+            <label for="phoneNumber">פלאפון:</label>
+            <input type="text" id="phoneNumber" required />
 
-        <label for="password">סיסמה:</label>
-        <input type="password" id="password" required />
+            <label for="password">סיסמה:</label>
+            <input type="password" id="password" required />
 
-        <button type="submit" id="firstSubmit">המשך</button>
-      </form>
+            <button type="submit" id="firstSubmit">המשך</button>
+          </form>
+        </div>
+      </main>
+
+      <!-- FOOTER -->
+      <footer class="main-footer" id="how">
+        <div class="footer-container">
+          <p>צור קשר:</p>
+          <div class="footer-links">
+            <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
+            <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
+            <a href="mailto:igroup2project@gmail.com">אימייל</a>
+          </div>
+        </div>
+      </footer>
     </div>
-
-    <!-- FOOTER -->
-    <footer>
-      <p>צור קשר:</p>
-      <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
-      <a href="https://wa.me/" target="_blank">ווצטאפ</a> |
-      <a href="mailto:igroup2project@gmail.com">גוגל</a>
-    </footer>
   </body>
 </html>

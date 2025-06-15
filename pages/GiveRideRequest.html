@@ -13,119 +13,130 @@
     ></script>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/GiveRideRequest.css" />
+    <link rel="stylesheet" href="../css/headerFooter.css" />
+    <link rel="stylesheet" href="../css/ride-request.css" />
 
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="../js/js.js"></script>
     <script src="../js/ajaxcalls.js"></script>
   </head>
 
   <body>
     <!-- HEADER -->
-    <header>
-      <div class="logo">
-        <img src="../images/logo.png" alt="הלוגו שלך" id="myLogo" />
-      </div>
-      <nav>
-        <ul>
-          <li><a href="index.html">בית</a></li>
-          <li><a href="login.html">התחברות</a></li>
-          <li><a href="register.html">הרשמה</a></li>
-          <li><a href="select.html">בחירה</a></li>
-          <li><a href="map.html">מפה</a></li>
-          <li><a href="Events.html">Events</a></li>
-        </ul>
-      </nav>
-    </header>
+    <div class="page-wrapper">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-container">
+          <div class="branding">
+            <img src="../images/logo.png" class="site-logo" alt="logo" />
+            <h1 class="site-title">Get2Gether</h1>
+          </div>
+          <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">
+            ☰
+          </button>
+          <nav class="main-nav">
+            <ul>
+              <li><a href="../pages/index.html#hero">בית</a></li>
+              <li><a href="../pages/index.html#feature">המוצרים שלנו</a></li>
+              <li><a href="../pages/index.html#about">עלינו</a></li>
+              <li><a href="../pages/index.html#how">צור קשר</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
 
-    <!-- MAIN SECTION -->
-    <section class="hero">
-      <h2 style="text-align: center">להקים טרמפ בקלות!</h2>
-      <h2 style="text-align: center; font-size: 1em">
-        כמה פרטים קטנים , כדי שנוכל לחבר אותך לטרמפיסט שהכי מתאים לך
-      </h2>
+      <!-- MAIN SECTION -->
+      <section class="ride-request-section">
+        <h1 class="ride-request-title">להקים טרמפ בקלות!</h1>
+        <h2 class="ride-request-subtitle">
+          כמה פרטים קטנים , כדי שנוכל לחבר אותך לטרמפיסט שהכי מתאים לך
+        </h2>
 
-      <form>
-        <!-- Ride Exit Point Input -->
-        <label for="rideExitPoint">נקודת יציאה:</label>
-        <input
-          type="text"
-          id="rideExitPoint"
-          name="rideExitPoint"
-          placeholder="עיר, רחוב, מספר"
-          required
-        />
+        <form>
+          <!-- Ride Exit Point Input -->
+          <label for="rideExitPoint">נקודת יציאה:</label>
+          <input
+            type="text"
+            id="rideExitPoint"
+            name="rideExitPoint"
+            placeholder="עיר, רחוב, מספר"
+            required
+          />
 
-        <!-- Car Capacity Dropdown -->
-        <label for="carCapacity">כמה מקומות ברכב:</label>
-        <select id="carCapacity" name="carCapacity" required>
-          <option value="">בחר</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
+          <!-- Car Capacity Dropdown -->
+          <label for="carCapacity">כמה מקומות ברכב:</label>
+          <select id="carCapacity" name="carCapacity" required>
+            <option value="">בחר</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
 
-        <!-- Radio Questions -->
-        <div class="radio-questions-box">
-          <h3>קצת עליך:</h3>
+          <!-- Radio Questions -->
+          <div class="radio-questions-box">
+            <h3>קצת עליך:</h3>
 
-          <div class="radio-line">
-            <label>המגדר שלי:</label>
-            <input type="radio" name="gender" value="M" required /> גבר
-            <input type="radio" name="gender" value="F" /> אישה
+            <div class="radio-line">
+              <label>המגדר שלי:</label>
+              <input type="radio" name="gender" value="M" required /> גבר
+              <input type="radio" name="gender" value="F" /> אישה
+            </div>
+
+            <div class="radio-line">
+              <label>האם אתה מעשן?</label>
+              <input type="radio" name="smoke" value="1" required /> כן
+              <input type="radio" name="smoke" value="0" /> לא
+            </div>
+
+            <div class="radio-line">
+              <label>מעדיף לנסוע עם:</label>
+              <input type="radio" name="preferredGender" value="M" required />
+              גבר <input type="radio" name="preferredGender" value="F" /> אישה
+            </div>
+
+            <div class="radio-line">
+              <label>מפריע לי עישון:</label>
+              <input type="radio" name="preferNoSmoking" value="1" required />
+              כן <input type="radio" name="preferNoSmoking" value="0" /> לא
+            </div>
           </div>
 
-          <div class="radio-line">
-            <label>האם אתה מעשן?</label>
-            <input type="radio" name="smoke" value="1" required /> כן
-            <input type="radio" name="smoke" value="0" /> לא
-          </div>
+          <!-- Notes -->
+          <label for="notes">הערות נוספות:</label><br />
+          <textarea
+            name="notes"
+            id="notes"
+            rows="4"
+            cols="50"
+            placeholder="כתוב כאן כל דבר שחשוב לדעת..."
+          ></textarea>
 
-          <div class="radio-line">
-            <label>מעדיף לנסוע עם:</label>
-            <input type="radio" name="preferredGender" value="M" required /> גבר
-            <input type="radio" name="preferredGender" value="F" /> אישה
+          <!-- Submit -->
+          <br /><br />
+          <div class="button-wrapper">
+            <button type="reset" class="form-button reset-button">
+              נקה בחירה
+            </button>
+            <button type="submit" class="form-button submit-button">
+              שלח הצעה
+            </button>
           </div>
+        </form>
+      </section>
 
-          <div class="radio-line">
-            <label>מפריע לי עישון:</label>
-            <input type="radio" name="preferNoSmoking" value="1" required /> כן
-            <input type="radio" name="preferNoSmoking" value="0" /> לא
+      <!-- FOOTER -->
+      <footer class="main-footer" id="how">
+        <div class="footer-container">
+          <p>צור קשר:</p>
+          <div class="footer-links">
+            <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
+            <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
+            <a href="mailto:igroup2project@gmail.com">אימייל</a>
           </div>
         </div>
-
-        <!-- Notes -->
-        <label for="notes">הערות נוספות:</label><br />
-        <textarea
-          name="notes"
-          id="notes"
-          rows="4"
-          cols="50"
-          placeholder="כתוב כאן כל דבר שחשוב לדעת..."
-        ></textarea>
-
-        <!-- Submit -->
-        <br /><br />
-        <button type="submit">שלח הצעת טרמפ</button>
-      </form>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-      <p>צור קשר:</p>
-      <a href="https://www.instagram.com" target="_blank">
-        <img src="../images/instagram-icon.png" alt="Instagram" width="24" />
-      </a>
-      <a href="https://www.facebook.com" target="_blank">
-        <img src="../images/facebook-icon.png" alt="Facebook" width="24" />
-      </a>
-      <a href="mailto:igroup2project@gmail.com">
-        <img src="../images/google-icon.png" alt="Google" width="24" />
-      </a>
-    </footer>
+      </footer>
+    </div>
 
     <!-- SCRIPT: Google Autocomplete + Submit -->
     <script>

@@ -1,3 +1,4 @@
+const api = "https://localhost:7035/api/"; // API URL
 document
   .getElementById("loadSettingsBtn")
   .addEventListener("click", function () {
@@ -30,7 +31,7 @@ function renderEventSettings(data) {
 
   container.innerHTML = `
       <h3>הגדרות אירוע</h3>
-      <table id="settingsTable" style="width:100%; border-collapse: collapse; margin-top: 15px;">
+<table id="settingsTable" dir="rtl" style="width:100%; border-collapse: collapse; margin-top: 15px;">
         <thead>
           <tr style="background-color: #f2f2f2;">
             <th style="border: 1px solid #ccc; padding: 8px;">שם שדה</th>

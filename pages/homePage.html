@@ -4,172 +4,101 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>דשבורד</title>
-    <script
-      src="https://code.jquery.com/jquery-3.7.1.min.js"
-      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-      crossorigin="anonymous"
-    ></script>
-    <script src="../js/js.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Scripts -->
     <script src="../js/ajaxcalls.js"></script>
-    <script src="../js/map.js"></script>
+    <script src="../js/sideBar.js"></script>
     <script src="../js/homePage.js"></script>
-    <link rel="stylesheet" href="../css/style.css" />
-    <style>
-      .dashboard-container {
-        max-width: 500px;
-        margin: 40px auto;
-        padding: 20px;
-        text-align: center;
-      }
 
-      .dashboard-title {
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 30px;
-      }
-
-      .dashboard-btn {
-        display: block;
-        width: 100%;
-        padding: 15px;
-        margin: 10px 0;
-        font-size: 18px;
-        border: none;
-        border-radius: 10px;
-        background-color: #e9e5e0;
-        color: #333;
-        cursor: pointer;
-        text-align: right;
-        transition: 0.3s;
-      }
-
-      .dashboard-btn:hover {
-        background-color: #d3cfc9;
-      }
-
-      .logout-btn {
-        background-color: #5c2e1f;
-        color: white;
-      }
-    </style>
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/headerFooter.css" />
+    <link rel="stylesheet" href="../css/SideBar.css" />
+    <link rel="stylesheet" href="../css/HomePage.css" />
   </head>
+
   <body>
-    <!-- HEADER -->
-    <header>
-      <div class="logo">
-        <img src="../images/logo.png" alt="הלוגו שלך" id="myLogo" />
-      </div>
-      <nav>
-        <ul>
-          <li><a href="index.html">בית</a></li>
-          <li><a href="login.html">התחברות</a></li>
-          <li><a href="register-step1.html">הרשמה</a></li>
-          <li><a href="select.html">בחירה</a></li>
-          <li><a href="map.html">מפה</a></li>
-          <li><a href="Events.html">Events</a></li>
-        </ul>
-      </nav>
-    </header>
+    <div class="page-wrapper">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-container">
+          <div class="branding">
+            <img src="../images/logo.png" class="site-logo" alt="logo" />
+            <h1 class="site-title">Get2Gether</h1>
+          </div>
+          <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">
+            ☰
+          </button>
+          <nav class="main-nav">
+            <ul>
+              <li><a href="#" id="actionsToggle">הפעולות שלי</a></li>
+              <li><a href="dashboard.html">דשבורד</a></li>
+              <li><a href="Events.html">האירועים שלי</a></li>
+              <li><a href="map.html">מפת האורחים</a></li>
+              <li><a href="#" onclick="logout()">התנתקות</a></li>
+            </ul>
+          </nav>
 
-    <section class="hero">
-      <h1>בוקר טוב, דקלה ואסי</h1>
+          <!-- תפריט צדדי -->
+          <div id="actionsSidebar">
+            <span class="close-sidebar" onclick="toggleSidebar()">×</span>
+            <ul>
+              <li><a href="editEvent.html">✏️ עריכת פרטי אירוע</a></li>
+              <li><a href="up.html">😊 קובץ מוזמנים</a></li>
+              <li><a href="shuttle.html">🚌 הקמת הסעה</a></li>
+              <li><a href="MyShuttle.html">👁️ צפייה בהסעה קיימת</a></li>
+              <li><a href="profile.html">👤 אזור אישי</a></li>
+              <li><a href="login.html">🔴 התנתקות</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
 
-      <div
-        class="invite-upload-container"
-        style="margin: 30px 0; text-align: center"
-      >
-        <form
-          id="inviteImageForm"
-          enctype="multipart/form-data"
-          onsubmit="return false;"
-        >
-          <label for="inviteImageInput" style="font-size: 18px"
-            >העלה תמונת הזמנה:</label
+      <!-- HERO SECTION -->
+      <section class="hero-section">
+        <h1 class="dashboard-greeting">בוקר טוב, דקלה ואסי</h1>
+
+        <div class="invite-upload-container">
+          <form
+            id="inviteImageForm"
+            enctype="multipart/form-data"
+            onsubmit="return false;"
           >
-          <input
-            type="file"
-            id="inviteImageInput"
-            name="inviteImage"
-            accept="image/*"
-            style="margin: 10px"
-          />
+            <label for="inviteImageInput">העלה תמונת הזמנה:</label>
+            <input
+              type="file"
+              id="inviteImageInput"
+              name="inviteImage"
+              accept="image/*"
+            />
+            <button type="button" id="uploadInviteBtn" class="dashboard-btn">
+              העלה
+            </button>
+          </form>
           <button
             type="button"
-            id="uploadInviteBtn"
-            class="dashboard-btn"
-            style="width: auto; display: inline-block"
+            id="showInviteBtn"
+            class="dashboard-btn secondary-btn"
           >
-            העלה
+            הצג הזמנת אירוע נוכחית
           </button>
-        </form>
-        <button
-          type="button"
-          id="showInviteBtn"
-          style="display: none; margin-right: 10px"
-        >
-          הצג הזמנת אירוע נוכחית
-        </button>
-        <div id="inviteImagePreview" style="margin-top: 10px"></div>
-      </div>
+          <div id="inviteImagePreview" class="image-preview"></div>
+        </div>
+      </section>
 
-      <div class="dashboard-container">
-        <div class="dashboard-title"></div>
-
-        <button class="dashboard-btn" onclick="location.href='editEvent.html'">
-          ✏️ עריכת פרטי אירוע
-        </button>
-        <button class="dashboard-btn" onclick="location.href='guests.html'">
-          😊 קובץ מוזמנים
-        </button>
-
-        <button
-          class="dashboard-btn"
-          onclick="location.href='create-ride.html'"
-        >
-          🚌 הקמת הסעה
-        </button>
-        <button class="dashboard-btn" onclick="location.href='view-rides.html'">
-          👁️ צפייה בהסעה קיימת
-        </button>
-        <button class="dashboard-btn" onclick="location.href='profile.html'">
-          👤 לאזור האישי
-        </button>
-
-        <button
-          class="dashboard-btn logout-btn"
-          onclick="location.href='login.html'"
-        >
-          🔴 התנתקות
-        </button>
-      </div>
-    </section>
-    <!-- FOOTER -->
-    <footer>
-      <p>צור קשר:</p>
-      <a href="https://www.instagram.com" target="_blank">
-        <img
-          src="../images/instagram-icon.png"
-          alt="Instagram"
-          width="24"
-          height="24"
-        />
-      </a>
-      <a href="https://www.facebook.com" target="_blank">
-        <img
-          src="../images/facebook-icon.png"
-          alt="Facebook"
-          width="24"
-          height="24"
-        />
-      </a>
-      <a href="mailto:igroup2project@gmail.com">
-        <img
-          src="../images/google-icon.png"
-          alt="Google"
-          width="24"
-          height="24"
-        />
-      </a>
-    </footer>
+      <!-- FOOTER -->
+      <footer class="main-footer">
+        <div class="footer-container">
+          <p>צור קשר:</p>
+          <div class="footer-links">
+            <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
+            <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
+            <a href="mailto:igroup2project@gmail.com">אימייל</a>
+          </div>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>

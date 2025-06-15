@@ -294,11 +294,7 @@ public void CreateNewPerson(Person person)
         return person.PersonID;
     }
 
-    private SqlCommand CreateCommandWithStoredProcedureCreateNewPerson(String spName, SqlConnection con, Dictionary<string, object> paramDic)
-    {
-        return CreateCommandWithStoredProcedureGENERAL(spName, con, paramDic);
-    }
-
+ 
     /// <summary>
     /// create guest in event 
     /// </summary>

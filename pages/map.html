@@ -5,109 +5,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>מפת ישראל</title>
 
-    <link rel="stylesheet" href="../css/style.css" />
+    <!-- CSS -->
     <link rel="stylesheet" href="../css/mapStyle.css" />
+    <link rel="stylesheet" href="../css/headerFooter.css" />
+    <link rel="stylesheet" href="../css/SideBar.css" />
 
+    <!-- Leaflet CSS -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
+
+    <!-- Marker Cluster CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+    />
+
+    <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="../js/js.js"></script>
+    <script src="../js/sideBar.js"></script>
     <script src="../js/ajaxcalls.js"></script>
   </head>
 
   <body>
-    <header>
-      <div class="logo">
-        <img src="../images/logo.png" alt="הלוגו שלך" id="myLogo" />
-      </div>
-      <nav>
-        <ul>
-          <li><a href="index.html">בית</a></li>
-          <li><a href="login.html">התחברות</a></li>
-          <li><a href="register.html">הרשמה</a></li>
-          <li><a href="select.html">בחירה</a></li>
-          <li><a href="map.html">מפה</a></li>
-          <li><a href="Events.html">אירועים</a></li>
-        </ul>
-      </nav>
-    </header>
+    <div class="page-wrapper">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-container">
+          <div class="branding">
+            <img src="../images/logo.png" class="site-logo" alt="logo" />
+            <h1 class="site-title">Get2Gether</h1>
+          </div>
+          <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">
+            ☰
+          </button>
+          <nav class="main-nav">
+            <ul>
+              <li><a href="#" id="actionsToggle">הפעולות שלי</a></li>
+              <li><a href="dashboard.html">דשבורד</a></li>
+              <li><a href="Events.html">האירועים שלי</a></li>
+              <li><a href="map.html">מפת האורחים</a></li>
+              <li><a href="#" onclick="logout()">התנתקות</a></li>
+            </ul>
+          </nav>
 
-    <!-- MAP + BUTTONS -->
-   </section> <section class="map-container">
-      <h1 style="text-align: center">מפת ישראל</h1>
-
-      <!-- 🔵🔵 כפתורי בחירת סוג פין 🔵🔵 -->
-      <div class="marker-buttons">
-        <button class="green" onclick="selectMarkerType('rideRequest')">
-          פין ירוק (נוסע)
-        </button>
-        <button class="blue" onclick="selectMarkerType('giveRideRequest')">
-          פין כחול (נהג)
-        </button>
-        <button class="orange" onclick="selectMarkerType('eventLocation')">
-          פין כתום (אירוע)
-        </button>
-      </div>
-
-      <div class="algoButton" onclick="filterAlgo()">
-        <button>הפעלת אלגוריתם</button>
-      </div>
-
-<div id="c" style="display: flex; flex-direction: row;">
-      <div id="map"></div>
-      <div>
-        <div class="tabs-wrapper">
-          <button onclick="showTab('initial')" class="tab-button active">סינון ראשוני</button>
-          <button onclick="showTab('final')" class="tab-button">שיבוץ סופי</button>
+          <!-- תפריט צדדי -->
+          <div id="actionsSidebar">
+            <span class="close-sidebar" onclick="toggleSidebar()">×</span>
+            <ul>
+              <li><a href="editEvent.html">✏️ עריכת פרטי אירוע</a></li>
+              <li><a href="up.html">😊 קובץ מוזמנים</a></li>
+              <li><a href="shuttle.html">🚌 הקמת הסעה</a></li>
+              <li><a href="MyShuttle.html">👁️ צפייה בהסעה קיימת</a></li>
+              <li><a href="profile.html">👤 אזור אישי</a></li>
+              <li><a href="login.html">🔴 התנתקות</a></li>
+            </ul>
+          </div>
         </div>
-        
-      
-        <div id="initialTab" class="tab-content">
-          <div id="initialResultsContainer"></div>
+      </header>
+
+      <!-- MAP HEADER TITLE -->
+      <section class="map-header">
+        <h1 class="map-title">מפת המוזמנים</h1>
+      </section>
+
+      <!-- MAIN CONTENT -->
+      <section class="map-page">
+        <div class="left-panel">
+          <div class="map-legend">
+            <h3>מקרא</h3>
+            <div class="legend-buttons">
+              <button class="green" onclick="selectMarkerType('rideRequest')">
+                סמן ירוק – נוסע
+              </button>
+              <button
+                class="blue"
+                onclick="selectMarkerType('giveRideRequest')"
+              >
+                סמן כחול – נהג
+              </button>
+              <button
+                class="orange"
+                onclick="selectMarkerType('eventLocation')"
+              >
+                סמן כתום – מיקום האירוע
+              </button>
+            </div>
+          </div>
+
+          <div class="algoButton" onclick="filterAlgo()">
+            <button>הפעלת אלגוריתם</button>
+          </div>
+
+          <div class="tabs-wrapper">
+            <button onclick="showTab('final')" class="tab-button">
+              שיבוץ סופי
+            </button>
+            <button onclick="showTab('initial')" class="tab-button active">
+              סינון ראשוני
+            </button>
+          </div>
+
+          <div id="initialTab" class="tab-content">
+            <div id="initialResultsContainer"></div>
+          </div>
+
+          <div id="finalTab" class="tab-content" style="display: none">
+            <div id="matchResultsContainer"></div>
+          </div>
         </div>
-      
-        <div id="finalTab" class="tab-content" style="display: none;">
-          <div id="matchResultsContainer"></div>
+
+        <div class="right-panel">
+          <div id="map"></div>
         </div>
-      </div>
-      
-      </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="main-footer">
+        <div class="footer-container">
+          <p>צור קשר:</p>
+          <div class="footer-links">
+            <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
+            <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
+            <a href="mailto:igroup2project@gmail.com">אימייל</a>
+          </div>
+        </div>
+      </footer>
     </div>
-    </section>
 
-    <!-- FOOTER -->
-    <footer>
-      <p>צור קשר:</p>
-      <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
-      <a href="https://wa.me/" target="_blank">ווצטאפ</a> |
-      <a href="mailto:igroup2project@gmail.com">אימייל</a>
-    </footer>
-
-    <!-- Leaflet -->
+    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Leaflet.markercluster CSS -->
-<link
-rel="stylesheet"
-href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
-/>
-<link
-rel="stylesheet"
-href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
-/>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
-<!-- Leaflet.markercluster JS -->
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
-    <!--Google Maps API--> 
+    <!-- Google Maps API -->
     <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places"
-    async
-    defer
-  ></script>
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places"
+      async
+      defer
+    ></script>
 
-
-  <script src="../js/map.js"></script>
+    <!-- Custom Map Logic -->
+    <script src="../js/map.js"></script>
   </body>
 </html>

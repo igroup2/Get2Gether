@@ -1,0 +1,80 @@
+#actionsSidebar {
+  position: fixed;
+  top: 0;
+  right: -3020px;
+  width: 280px;
+  height: 100vh;
+  background: rgba(245, 245, 245, 0.85); /* כסוף מטושטש */
+  backdrop-filter: blur(12px); /* טשטוש */
+  -webkit-backdrop-filter: blur(12px); /* תמיכה בספארי */
+  color: #111; /* שחור רך */
+  padding: 48px 24px;
+  box-shadow: -4px 0 18px rgba(0, 0, 0, 0.08);
+  z-index: 9999;
+  transition: right 0.35s ease;
+  border-radius: 12px 0 0 12px;
+  font-family: "Assistant", sans-serif;
+}
+
+#actionsSidebar.open {
+  right: 0;
+}
+
+/* פס ורוד צדדי */
+#actionsSidebar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, #f06292, #ec407a);
+  border-radius: 0 12px 12px 0;
+}
+
+/* כפתור סגירה */
+#actionsSidebar .close-sidebar {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  font-size: 24px;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#actionsSidebar .close-sidebar:hover {
+  color: #e91e63;
+}
+
+/* פריטי תפריט */
+#actionsSidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 60px;
+}
+
+#actionsSidebar li {
+  margin-bottom: 18px;
+}
+
+#actionsSidebar a {
+  display: block;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid #d0d0d0;
+  border-radius: 12px;
+  color: #111;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s ease;
+}
+
+#actionsSidebar a:hover {
+  background: #fce4ec;
+  color: #c2185b;
+  border-color: #f8bbd0;
+  transform: translateX(-5px);
+}

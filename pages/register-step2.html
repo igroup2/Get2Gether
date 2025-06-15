@@ -10,106 +10,112 @@
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
       crossorigin="anonymous"
     ></script>
-    <script src="../js/js.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <script src="../js/register.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/register.css" />
+    <link rel="stylesheet" href="../css/headerFooter.css" />
   </head>
   <body>
-    <!-- HEADER -->
-    <header>
-      <div class="logo">
-        <img src="../images/logo.png" alt="הלוגו שלך" id="myLogo" />
-      </div>
-      <nav>
-        <ul>
-          <li><a href="index.html">בית</a></li>
-          <li><a href="login.html">התחברות</a></li>
-          <li><a href="register-step1.html">הרשמה</a></li>
-          <li><a href="select.html">בחירה</a></li>
-          <li><a href="map.html">מפה</a></li>
-          <li><a href="Events.html">אירועים</a></li>
-        </ul>
-      </nav>
-    </header>
-
-    <!-- MAIN FORM -->
-    <div class="container">
-      <h2>הרשמה - שלב 2: פרטי בני הזוג</h2>
-      <form>
-        <div class="couple-container">
-          <!-- בן/בת זוג 1 -->
-          <div class="partner-box">
-            <label for="partner1-image">תמונת בן/בת זוג 1:</label>
-            <img
-              id="partner1-preview"
-              src=""
-              alt="בחר מגדר להצגת תמונה"
-              class="partner-image"
-            />
-            <label for="partner1">שם מלא - בן/בת זוג 1:</label>
-            <input type="text" id="partner1" name="partner1" required />
-
-            <label for="gender1">מגדר:</label>
-
-            <select
-              id="gender1"
-              required
-              onchange="updateImage('gender1', 'partner1-preview')"
-            >
-              <option value="">בחר מגדר</option>
-              <option value="M">זכר</option>
-              <option value="F">נקבה</option>
-            </select>
+    <div class="page-wrapper">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-container">
+          <div class="branding">
+            <img src="../images/logo.png" class="site-logo" alt="logo" />
+            <h1 class="site-title">Get2Gether</h1>
           </div>
-
-          <!-- בן/בת זוג 2 -->
-          <div class="partner-box">
-            <label for="partner2-image">תמונת בן/בת זוג 2:</label>
-            <img
-              id="partner2-preview"
-              src=""
-              alt="בחר מגדר להצגת תמונה"
-              class="partner-image"
-            />
-            <label for="partner2">שם מלא - בן/בת זוג 2:</label>
-            <input type="text" id="partner2" name="partner2" required />
-
-            <label for="partner2">פלאפון בת הזוג</label>
-            <input type="text" id="phone2" name="phone2" required />
-
-            <label for="gender2">מגדר:</label>
-            <select
-              id="gender2"
-              required
-              onchange="updateImage('gender2', 'partner2-preview')"
-            >
-              <option value="">בחר מגדר</option>
-              <option value="M">זכר</option>
-              <option value="F">נקבה</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <button
-            type="button"
-            onclick="window.location.href='register-step1.html'"
-          >
-            חזור
+          <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">
+            ☰
           </button>
-          <button type="button" id="submit2">המשך לשלב 3</button>
+          <nav class="main-nav">
+            <ul>
+              <li><a href="../pages/index.html#hero">בית</a></li>
+              <li><a href="../pages/index.html#feature">המוצרים שלנו</a></li>
+              <li><a href="../pages/index.html#about">עלינו</a></li>
+              <li><a href="../pages/index.html#how">צור קשר</a></li>
+            </ul>
+          </nav>
         </div>
-      </form>
-    </div>
+      </header>
 
-    <!-- FOOTER -->
-    <footer>
-      <p>צור קשר:</p>
-      <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
-      <a href="https://wa.me/" target="_blank">ווצטאפ</a> |
-      <a href="mailto:igroup2project@gmail.com">גוגל</a>
-    </footer>
+      <!-- MAIN FORM -->
+      <div class="container">
+        <h2>הרשמה - שלב 2: פרטי בני הזוג</h2>
+        <form>
+          <div class="couple-container">
+            <!-- בן/בת זוג 1 -->
+            <div class="partner-box">
+              <label for="partner1-image">תמונת בן/בת זוג 1:</label>
+              <img
+                id="partner1-preview"
+                src=""
+                alt="בחר מגדר להצגת תמונה"
+                class="partner-image"
+              />
+              <label for="partner1">שם מלא - בן/בת זוג 1:</label>
+              <input type="text" id="partner1" name="partner1" required />
+
+              <label for="gender1">מגדר:</label>
+
+              <select
+                id="gender1"
+                required
+                onchange="updateImage('gender1', 'partner1-preview')"
+              >
+                <option value="">בחר מגדר</option>
+                <option value="M">זכר</option>
+                <option value="F">נקבה</option>
+              </select>
+            </div>
+
+            <!-- בן/בת זוג 2 -->
+            <div class="partner-box">
+              <label for="partner2-image">תמונת בן/בת זוג 2:</label>
+              <img
+                id="partner2-preview"
+                src=""
+                alt="בחר מגדר להצגת תמונה"
+                class="partner-image"
+              />
+              <label for="partner2">שם מלא - בן/בת זוג 2:</label>
+              <input type="text" id="partner2" name="partner2" required />
+
+              <label for="partner2">פלאפון בת הזוג</label>
+              <input type="text" id="phone2" name="phone2" required />
+
+              <label for="gender2">מגדר:</label>
+              <select
+                id="gender2"
+                required
+                onchange="updateImage('gender2', 'partner2-preview')"
+              >
+                <option value="">בחר מגדר</option>
+                <option value="M">זכר</option>
+                <option value="F">נקבה</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="button"
+              onclick="window.location.href='register-step1.html'"
+            >
+              חזור
+            </button>
+            <button type="button" id="submit2">המשך לשלב 3</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- FOOTER -->
+      <footer>
+        <p>צור קשר:</p>
+        <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
+        <a href="https://wa.me/" target="_blank">ווצטאפ</a> |
+        <a href="mailto:igroup2project@gmail.com">גוגל</a>
+      </footer>
+    </div>
   </body>
 </html>
