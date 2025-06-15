@@ -294,7 +294,8 @@ public void CreateNewPerson(Person person)
         return person.PersonID;
     }
 
- 
+   
+
     /// <summary>
     /// create guest in event 
     /// </summary>
