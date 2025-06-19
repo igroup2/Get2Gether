@@ -11,6 +11,8 @@ namespace Get2Gether.Models
         public string? RsvpStatus { get; set; }
         public string? SideInWedding { get; set; }
         public string? RelationToCouple { get; set; }       
+        public string? FullName { get; set; }
+        public string? PhoneNumber { get; set; }
         public GuestInEvent()
 		{
 		}

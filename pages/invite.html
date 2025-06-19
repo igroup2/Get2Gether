@@ -49,7 +49,9 @@
 <body>
     <div class="invite-container">
         <div class="invite-title">הזמנה לאירוע</div>
-        <img class="invite-image" src="https://localhost:7035/invites/invite_1079.jpg" alt="הזמנה לאירוע" id="inviteImg">
+        <img class="invite-image" src="" alt="הזמנה לאירוע" id="inviteImg">
+        <div id="inviteMessage" style="margin-bottom:18px;font-size:1.2rem;color:#5c2e1f;"></div>
+        <div id="guestDetails" style="margin-bottom:18px;"></div>
         <script>
             // שליפת פרמטרים מה-URL
             function getQueryParam(param) {
@@ -59,15 +61,74 @@
             // שליפת eventID ו-personID מה-URL (ללא ערך קבוע)
             const eventId = getQueryParam('eventID');
             const personId = getQueryParam('personID');
+            console.log('invite.html | eventID:', eventId, 'personID:', personId);
             if (!eventId || !personId) {
                 alert('חסרים נתונים בכתובת (eventID/personID)');
             } else {
+                // מחיקת כל ערך שאינו רלוונטי לאורח הנוכחי
+                const allowedKeys = [
+                    'eventID',
+                    'personID',
+                    'inviteImageUrl',
+                    `guestFullName_${personId}`,
+                    `guestPhoneNumber_${personId}`,
+                    'fullName',
+                    'phoneNumber'
+                ];
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (!allowedKeys.includes(key)) {
+                        // דחייה של מחיקה מיידית כדי לא לשבור את הלולאה
+                        setTimeout(() => localStorage.removeItem(key), 0);
+                    }
+                }
                 // שמור personID ו-eventID ב-localStorage
                 localStorage.setItem('personID', personId);
                 localStorage.setItem('eventID', eventId);
-                // עדכון כתובת התמונה לפי eventID
+                // שלוף את השם המלא והטלפון של האורח לפי personId בלבד
+                const fullName = localStorage.getItem(`guestFullName_${personId}`);
+                const phoneNumber = localStorage.getItem(`guestPhoneNumber_${personId}`);
+                // שמור אותם גם במפתחות כלליים (fullName, phoneNumber) רק אם הם שייכים לאורח הנוכחי
+                if (fullName) localStorage.setItem('fullName', fullName);
+                if (phoneNumber) localStorage.setItem('phoneNumber', phoneNumber);
+                // הצגת הודעת הזמנה אישית
+                if (fullName) {
+                    document.getElementById('inviteMessage').innerHTML = `שלום <b>${fullName}</b>,<br>הנכם מוזמנים לחגוג איתנו את היום המאושר בחיינו!<br>נשמח לראותך בין אורחינו ולחגוג יחד ברגעים היפים ביותר.`;
+                } else {
+                    document.getElementById('inviteMessage').innerText = 'הנכם מוזמנים לחגוג איתנו את היום המאושר בחיינו!';
+                }
+                // בדוק אם יש inviteImageUrl ב-localStorage
+                let inviteImageUrl = localStorage.getItem('inviteImageUrl');
                 const timestamp = Date.now();
-                document.getElementById('inviteImg').src = `https://localhost:7035/invites/invite_${eventId}.jpg?v=${timestamp}`;
+                function setImage(src) {
+                    document.getElementById('inviteImg').src = src + '?v=' + timestamp;
+                    console.log('invite.html | inviteImg src:', src + '?v=' + timestamp);
+                }
+                function tryImageWithExtensions(baseUrl, exts, cb) {
+                    if (!exts.length) { cb(null); return; }
+                    const ext = exts[0];
+                    const url = baseUrl + ext;
+                    const img = new Image();
+                    img.onload = () => cb(url);
+                    img.onerror = () => tryImageWithExtensions(baseUrl, exts.slice(1), cb);
+                    img.src = url + '?v=' + timestamp;
+                }
+                if (inviteImageUrl) {
+                    setImage(inviteImageUrl);
+                } else {
+                    // ננסה דינאמית את הסיומות הנפוצות
+                    const baseUrl = `https://localhost:7035/invites/invite_${eventId}`;
+                    tryImageWithExtensions(baseUrl, ['.jpg', '.png', '.jpeg', '.webp'], function(foundUrl) {
+                        if (foundUrl) {
+                            setImage(foundUrl);
+                            localStorage.setItem('inviteImageUrl', foundUrl); // שמור להבא
+                        } else {
+                            document.getElementById('inviteImg').alt = 'לא נמצאה תמונת הזמנה';
+                            document.getElementById('inviteImg').style.display = 'none';
+                            alert('לא נמצאה תמונת הזמנה לאירוע');
+                        }
+                    });
+                }
             }
             // תוכל להשתמש גם ב-personId לטעינת פרטים נוספים בהמשך
         </script>

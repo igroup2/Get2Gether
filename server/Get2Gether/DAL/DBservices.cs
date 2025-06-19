@@ -841,8 +841,9 @@ public void CreateNewPerson(Person person)
                             NumOfGuest = Convert.ToInt32(reader["NumOfGuest"]),
                             RsvpStatus = reader["RsvpStatus"] as string,
                             SideInWedding = reader["SideInWedding"] as string,
-                            RelationToCouple = reader["RelationToCouple"] as string
-                            // תוכל להוסיף כאן שדות נוספים אם צריך
+                            RelationToCouple = reader["RelationToCouple"] as string,
+                            FullName = reader["FullName"] as string,
+                            PhoneNumber = reader["PhoneNumber"] as string
                         };
                         guests.Add(guest);
                     }

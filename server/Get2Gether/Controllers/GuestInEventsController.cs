@@ -109,6 +109,7 @@ namespace Get2Gether.Controllers
             var guestDetails = GuestInEvent.GetInviteDetails(eventId);
             if (guestDetails == null || guestDetails.Count == 0)
                 return NotFound("לא נמצאו אורחים לאירוע");
+            // אין צורך לשנות, הפרמטרים החדשים ייכללו אוטומטית בתשובה
             return Ok(guestDetails);
         }
 

@@ -118,7 +118,7 @@ $(function () {
       success: function (response) {
         alert('התמונה הועלתה בהצלחה!');
         if (response && response.inviteImageUrl) {
-          // תמיד שמור כתובת עם השרת הנכון
+          // תמיד שמור כתובת עם השרת הנכון (כולל הסיומת הנכונה)
           var imgUrl = 'https://localhost:7035' + response.inviteImageUrl;
           $('#inviteImagePreview').html('<img src="' + imgUrl + '" alt="הזמנה" style="max-width:300px;max-height:300px;border-radius:12px;box-shadow:0 2px 8px #0002;" />');
           setInviteImageUrl(imgUrl);
@@ -144,7 +144,8 @@ $(function () {
 
 $(document).ready(function() {
     $('#sendInviteBtn2').on('click', function() {
-        // שליפת eventID מתוך eventGuest ב-localStorage
+        console.log('נלחץ כפתור שלח הזמנה לאורחים!');
+        // שליפת eventID מתוך eventGuest או ישירות מה-localStorage
         let eventId = null;
         const eventGuestStr = localStorage.getItem('eventGuest');
         if (eventGuestStr) {
@@ -155,8 +156,12 @@ $(document).ready(function() {
                 console.error('שגיאה בפיענוח eventGuest:', e);
             }
         }
+        // אם לא נמצא ב-eventGuest, ננסה ישירות מה-localStorage
         if (!eventId) {
-            alert('לא נמצא eventID ב-localStorage');
+            eventId = localStorage.getItem('eventID');
+        }
+        if (!eventId) {
+            alert('לא נמצא eventID ב-localStorage. לא ניתן לשלוח הזמנות.');
             return;
         }
         // קריאת AJAX לשרת לקבלת פרטי האורח לפי eventID מ-GuestInEventController
@@ -165,11 +170,22 @@ $(document).ready(function() {
             `https://localhost:7035/api/GuestInEvents/GetInviteDetails?eventId=${eventId}`,
             null,
             function(data) {
-                // הצגת קישורים להזמנות לכל אורח בחלון חדש
                 if (Array.isArray(data) && data.length > 0) {
+                    console.log('🔎 GuestInEvent data:', data);
+                    // שמור לכל אורח את השם המלא והטלפון ב-localStorage
+                    data.forEach(g => {
+                        if (g.personID && g.fullName) {
+                            localStorage.setItem(`guestFullName_${g.personID}`, g.fullName);
+                            console.log(`נשמר guestFullName_${g.personID}:`, g.fullName);
+                        }
+                        if (g.personID && g.phoneNumber) {
+                            localStorage.setItem(`guestPhoneNumber_${g.personID}`, g.phoneNumber);
+                            console.log(`נשמר guestPhoneNumber_${g.personID}:`, g.phoneNumber);
+                        }
+                    });
                     openInviteLinksForGuests(data);
                 } else {
-                    alert('לא נמצאו אורחים לאירוע');
+                    alert('אין אורחים מוזמנים לאירוע זה.');
                 }
             },
             function(err) {
