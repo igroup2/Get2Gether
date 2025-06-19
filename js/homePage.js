@@ -136,7 +136,56 @@ $(function () {
       alert('לא קיימת תמונה להצגה');
       return;
     }
-    // פתח תמיד בכתובת של השרת
-    window.open(imgUrl, '_blank');
+    // הוסף פרמטר ייחודי כדי לעקוף cache
+    const urlWithTimestamp = imgUrl + (imgUrl.includes('?') ? '&' : '?') + 'v=' + Date.now();
+    window.open(urlWithTimestamp, '_blank');
   });
+});
+
+$(document).ready(function() {
+    $('#sendInviteBtn2').on('click', function() {
+        // שליפת eventID מתוך eventGuest ב-localStorage
+        let eventId = null;
+        const eventGuestStr = localStorage.getItem('eventGuest');
+        if (eventGuestStr) {
+            try {
+                const eventGuestObj = JSON.parse(eventGuestStr);
+                eventId = eventGuestObj.eventID;
+            } catch (e) {
+                console.error('שגיאה בפיענוח eventGuest:', e);
+            }
+        }
+        if (!eventId) {
+            alert('לא נמצא eventID ב-localStorage');
+            return;
+        }
+        // קריאת AJAX לשרת לקבלת פרטי האורח לפי eventID מ-GuestInEventController
+        ajaxCall(
+            'GET',
+            `https://localhost:7035/api/GuestInEvents/GetInviteDetails?eventId=${eventId}`,
+            null,
+            function(data) {
+                // הצגת קישורים להזמנות לכל אורח בחלון חדש
+                if (Array.isArray(data) && data.length > 0) {
+                    openInviteLinksForGuests(data);
+                } else {
+                    alert('לא נמצאו אורחים לאירוע');
+                }
+            },
+            function(err) {
+                console.error('Invite details (ERROR):', err);
+                alert('שגיאה בשליפת פרטי ההזמנה');
+            }
+        );
+    });
+    // פונקציה ליצירת קישורים להזמנות לכל אורח בחלון חדש
+    function openInviteLinksForGuests(guests) {
+        let links = guests.map(g => {
+            const url = `http://127.0.0.1:5500/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
+            return `<div style='margin:10px;'><a href="${url}" target="_blank">${url}</a></div>`;
+        }).join('');
+        const win = window.open('', '_blank', 'width=700,height=600');
+        win.document.write(`<h2>קישורי הזמנות לאורחים</h2>${links}`);
+        win.document.close();
+    }
 });
