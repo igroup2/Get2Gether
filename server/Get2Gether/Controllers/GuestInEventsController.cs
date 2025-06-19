@@ -130,5 +130,22 @@ namespace Get2Gether.Controllers
         public void Delete(int id)
         {
         }
+
+        [HttpPut("UpdateRSVPStatus")]
+        public IActionResult UpdateRSVPStatus([FromBody] GuestInEvent guest)
+        {
+            try
+            {
+                int res = GuestInEvent.UpdateRSVPStatus(guest.EventID, guest.PersonID, guest.RsvpStatus);
+                if (res > 0)
+                    return Ok(new { message = "RSVP status updated successfully" }); // החזרת אובייקט JSON
+                else
+                    return NotFound("אורח לא נמצא או שלא עודכן");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"שגיאה בעדכון סטטוס: {ex.Message}");
+            }
+        }
     }
 }

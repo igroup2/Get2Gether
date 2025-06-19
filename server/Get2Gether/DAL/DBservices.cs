@@ -853,4 +853,21 @@ public void CreateNewPerson(Person person)
         return guests;
     }
 
+    public int UpdateGuestRSVPStatus(int eventId, int personId, string rsvpStatus)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+            {
+                { "@eventID", eventId },
+                { "@personID", personId },
+                { "@RSVPstatus", rsvpStatus }
+            };
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("UpdateGuestRSVPStatus", con, paramDic))
+            {
+                return cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
 }

@@ -49,7 +49,11 @@ namespace Get2Gether.Models
             DBservices db = new DBservices();
             return db.GetInviteDetails(eventId);
         }
-
+        public static int UpdateRSVPStatus(int eventId, int personId, string rsvpStatus)
+        {
+            DBservices db = new DBservices();
+            return db.UpdateGuestRSVPStatus(eventId, personId, rsvpStatus);
+        }
     }
 }
 
