@@ -156,9 +156,8 @@ $(function () {
 
 $(document).ready(function () {
   $("#sendInviteBtn2").on("click", function () {
-    console.log("נלחץ כפתור שלח הזמנה לאורחים!");
-    // שליפת eventID מתוך eventGuest או ישירות מה-localStorage
-    let eventId = null;
+    // Retrieve eventId from localStorage
+    let eventId = 15;
     const eventGuestStr = localStorage.getItem("eventGuest");
     if (eventGuestStr) {
       try {
@@ -168,42 +167,27 @@ $(document).ready(function () {
         console.error("שגיאה בפיענוח eventGuest:", e);
       }
     }
-    // אם לא נמצא ב-eventGuest, ננסה ישירות מה-localStorage
     if (!eventId) {
-      eventId = localStorage.getItem("eventID");
-    }
-    if (!eventId) {
-      alert("לא נמצא eventID ב-localStorage. לא ניתן לשלוח הזמנות.");
+      alert("לא נמצא eventID ב-localStorage");
       return;
     }
-    // קריאת AJAX לשרת לקבלת פרטי האורח לפי eventID מ-GuestInEventController
+    // AJAX call to get all guests for the event
     ajaxCall(
       "GET",
       `https://localhost:7035/api/GuestInEvents/GetInviteDetails?eventId=${eventId}`,
       null,
-      function (data) {
-        if (Array.isArray(data) && data.length > 0) {
-          console.log("🔎 GuestInEvent data:", data);
-          // שמור לכל אורח את השם המלא והטלפון ב-localStorage
-          data.forEach((g) => {
-            if (g.personID && g.fullName) {
-              localStorage.setItem(`guestFullName_${g.personID}`, g.fullName);
-              console.log(`נשמר guestFullName_${g.personID}:`, g.fullName);
-            }
-            if (g.personID && g.phoneNumber) {
-              localStorage.setItem(
-                `guestPhoneNumber_${g.personID}`,
-                g.phoneNumber
-              );
-              console.log(
-                `נשמר guestPhoneNumber_${g.personID}:`,
-                g.phoneNumber
-              );
-            }
+      function (guests) {
+        if (Array.isArray(guests) && guests.length > 0) {
+          // For each guest, generate a link and send WhatsApp message
+          guests.forEach((g) => {
+            // Use the same link logic as in openInviteLinksForGuests
+            const link = `http://127.0.0.1:5500/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
+            // Send WhatsApp message to each guest
+            sendWhatsAppMessage(g.phoneNumber, g.fullName, link);
           });
-          openInviteLinksForGuests(data);
+          alert("ההודעות נשלחו לכל האורחים!");
         } else {
-          alert("אין אורחים מוזמנים לאירוע זה.");
+          alert("לא נמצאו אורחים לאירוע");
         }
       },
       function (err) {
@@ -226,26 +210,25 @@ $(document).ready(function () {
   }
 });
 // WhatsApp message sending via UltraMsg (client-side, for demo/college use only) - using ajaxCall
-function sendWhatsAppMessage(phone, message) {
+function sendWhatsAppMessage(phone, name, link) {
   var instanceId = "instance125498";
-  var token = "p0nh304uqoyrth5a";
-  // Make sure there are no extra slashes and the URL is correct
-  var url = "https://api.ultramsg.com/" + instanceId + "/messages/chat";
+  var token = "p0nh304uqqyth5a";
+  var url =
+    "https://api.ultramsg.com/" + instanceId + "/messages/chat?token=" + token;
+
+  // Compose a personalized message in Hebrew
+  var message = `היי ${name} ! 🎉\n\nאת/ה מוזמנ/ת לאירוע שלנו – וזה קורה ממש בקרוב!\nכדי שנדע להתארגן כמו שצריך, נשמח אם תאשר/י הגעה דרך הקישור:\n\n👉 ${link}\n\nבמערכת שלנו תוכל לבחור את הדרך שלך להגיע לאירוע, והכל בכמה לחיצות 🙌\nמחכים לראות אותך! 🥳`;
 
   var data = {
-    token: token, // UltraMsg sometimes requires token in both URL and body for legacy reasons
-    to: "+972502280902", // e.g. 972501234567
-    body: "איצי ביצלך", // message body
+    to: phone,
+    body: message,
     priority: 10,
   };
-
-  // Add token as a GET parameter in the URL
-  url += "?token=" + token;
 
   ajaxCall(
     "POST",
     url,
-    $.param(data), // Use jQuery's param to serialize the data
+    $.param(data),
     function (result) {
       console.log(result);
     },
@@ -255,6 +238,12 @@ function sendWhatsAppMessage(phone, message) {
     "application/x-www-form-urlencoded"
   );
 }
+
+// Example usage for all guests (call this after you get the guests array):
+// guests.forEach(g => {
+//   const link = `http://127.0.0.1:5500/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
+//   sendWhatsAppMessage(g.phoneNumber, g.fullName, link);
+// });
 
 function ajaxCall(
   method,
