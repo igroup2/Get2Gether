@@ -65,127 +65,207 @@ document.addEventListener("DOMContentLoaded", function () {
 
 $(function () {
   // ודא שהקוד רץ רק פעם אחת
-  console.log('homePage.js loaded');
+  console.log("homePage.js loaded");
   // שמור את מצב הכפתור ב-localStorage (האם יש תמונה אחרונה)
   function setInviteImageUrl(url) {
     if (url) {
-      localStorage.setItem('inviteImageUrl', url);
-      $('#showInviteBtn').show().data('img', url);
+      localStorage.setItem("inviteImageUrl", url);
+      $("#showInviteBtn").show().data("img", url);
     } else {
-      localStorage.removeItem('inviteImageUrl');
-      $('#showInviteBtn').hide().data('img', null);
+      localStorage.removeItem("inviteImageUrl");
+      $("#showInviteBtn").hide().data("img", null);
     }
   }
 
   // בעת טעינת הדף - אם יש תמונה אחרונה, הצג את הכפתור
-  var lastImg = localStorage.getItem('inviteImageUrl');
+  var lastImg = localStorage.getItem("inviteImageUrl");
   if (lastImg) {
     // ודא שתמיד נשמרת כתובת מלאה עם השרת
-    if (!lastImg.startsWith('http')) {
-      lastImg = 'https://localhost:7035' + lastImg;
-    } else if (lastImg.startsWith('http://127.0.0.1:5500')) {
+    if (!lastImg.startsWith("http")) {
+      lastImg = "https://localhost:7035" + lastImg;
+    } else if (lastImg.startsWith("http://127.0.0.1:5500")) {
       // תקן כתובת לא נכונה שנשמרה בעבר
-      lastImg = lastImg.replace('http://127.0.0.1:5500', 'https://localhost:7035');
+      lastImg = lastImg.replace(
+        "http://127.0.0.1:5500",
+        "https://localhost:7035"
+      );
     }
-    $('#showInviteBtn').show().data('img', lastImg);
+    $("#showInviteBtn").show().data("img", lastImg);
   } else {
-    $('#showInviteBtn').hide().data('img', null);
+    $("#showInviteBtn").hide().data("img", null);
   }
 
-  $('#uploadInviteBtn').off('click').on('click', function (e) {
-    e.preventDefault();
-    var fileInput = document.getElementById('inviteImageInput');
-    if (!fileInput.files || fileInput.files.length === 0) {
-      alert('אנא בחר תמונה להעלאה');
+  $("#uploadInviteBtn")
+    .off("click")
+    .on("click", function (e) {
+      e.preventDefault();
+      var fileInput = document.getElementById("inviteImageInput");
+      if (!fileInput.files || fileInput.files.length === 0) {
+        alert("אנא בחר תמונה להעלאה");
+        return;
+      }
+      var file = fileInput.files[0];
+      var eventID = localStorage.getItem("eventID");
+      if (!eventID) {
+        alert("לא נמצא EventID");
+        return;
+      }
+      var formData = new FormData();
+      formData.append("inviteImage", file);
+      formData.append("fileName", file.name);
+      formData.append("eventID", eventID);
+      $.ajax({
+        url: api + "Events/UploadInviteImage",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          alert("התמונה הועלתה בהצלחה!");
+          if (response && response.inviteImageUrl) {
+            // תמיד שמור כתובת עם השרת הנכון
+            var imgUrl = "https://localhost:7035" + response.inviteImageUrl;
+            $("#inviteImagePreview").html(
+              '<img src="' +
+                imgUrl +
+                '" alt="הזמנה" style="max-width:300px;max-height:300px;border-radius:12px;box-shadow:0 2px 8px #0002;" />'
+            );
+            setInviteImageUrl(imgUrl);
+          }
+        },
+        error: function (xhr, status, error) {
+          alert("שגיאה בהעלאת התמונה: " + (xhr.responseText || error));
+        },
+      });
+    });
+
+  $("#showInviteBtn")
+    .off("click")
+    .on("click", function () {
+      var imgUrl = $(this).data("img");
+      if (!imgUrl) {
+        alert("לא קיימת תמונה להצגה");
+        return;
+      }
+      // הוסף פרמטר ייחודי כדי לעקוף cache
+      const urlWithTimestamp =
+        imgUrl + (imgUrl.includes("?") ? "&" : "?") + "v=" + Date.now();
+      window.open(urlWithTimestamp, "_blank");
+    });
+});
+
+$(document).ready(function () {
+  $("#sendInviteBtn2").on("click", function () {
+    // שליפת eventID מתוך eventGuest ב-localStorage
+    let eventId = 15;
+    const eventGuestStr = localStorage.getItem("eventGuest");
+    if (eventGuestStr) {
+      try {
+        const eventGuestObj = JSON.parse(eventGuestStr);
+        eventId = eventGuestObj.eventID;
+      } catch (e) {
+        console.error("שגיאה בפיענוח eventGuest:", e);
+      }
+    }
+    if (!eventId) {
+      alert("לא נמצא eventID ב-localStorage");
       return;
     }
-    var file = fileInput.files[0];
-    var eventID = localStorage.getItem('eventID');
-    if (!eventID) {
-      alert('לא נמצא EventID');
-      return;
-    }
-    var formData = new FormData();
-    formData.append('inviteImage', file);
-    formData.append('fileName', file.name);
-    formData.append('eventID', eventID);
-    $.ajax({
-      url: api + "Events/UploadInviteImage",
-      type: 'POST',
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function (response) {
-        alert('התמונה הועלתה בהצלחה!');
-        if (response && response.inviteImageUrl) {
-          // תמיד שמור כתובת עם השרת הנכון
-          var imgUrl = 'https://localhost:7035' + response.inviteImageUrl;
-          $('#inviteImagePreview').html('<img src="' + imgUrl + '" alt="הזמנה" style="max-width:300px;max-height:300px;border-radius:12px;box-shadow:0 2px 8px #0002;" />');
-          setInviteImageUrl(imgUrl);
+    // קריאת AJAX לשרת לקבלת פרטי האורח לפי eventID מ-GuestInEventController
+    ajaxCall(
+      "GET",
+      `https://localhost:7035/api/GuestInEvents/GetInviteDetails?eventId=${eventId}`,
+      null,
+      function (data) {
+        // הצגת קישורים להזמנות לכל אורח בחלון חדש
+        if (Array.isArray(data) && data.length > 0) {
+          openInviteLinksForGuests(data);
+          sendWhatsAppMessage(
+            "972501234567",
+            "Welcome to our event! Click here to login: https://yourdomain.com/pages/login.html"
+          );
+        } else {
+          alert("לא נמצאו אורחים לאירוע");
         }
       },
-      error: function (xhr, status, error) {
-        alert('שגיאה בהעלאת התמונה: ' + (xhr.responseText || error));
+      function (err) {
+        console.error("Invite details (ERROR):", err);
+        alert("שגיאה בשליפת פרטי ההזמנה");
       }
-    });
+    );
   });
-
-  $('#showInviteBtn').off('click').on('click', function () {
-    var imgUrl = $(this).data('img');
-    if (!imgUrl) {
-      alert('לא קיימת תמונה להצגה');
-      return;
-    }
-    // הוסף פרמטר ייחודי כדי לעקוף cache
-    const urlWithTimestamp = imgUrl + (imgUrl.includes('?') ? '&' : '?') + 'v=' + Date.now();
-    window.open(urlWithTimestamp, '_blank');
-  });
+  // פונקציה ליצירת קישורים להזמנות לכל אורח בחלון חדש
+  function openInviteLinksForGuests(guests) {
+    let links = guests
+      .map((g) => {
+        const url = `http://127.0.0.1:5500/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
+        return `<div style='margin:10px;'><a href="${url}" target="_blank">${url}</a></div>`;
+      })
+      .join("");
+    const win = window.open("", "_blank", "width=700,height=600");
+    win.document.write(`<h2>קישורי הזמנות לאורחים</h2>${links}`);
+    win.document.close();
+  }
 });
 
-$(document).ready(function() {
-    $('#sendInviteBtn2').on('click', function() {
-        // שליפת eventID מתוך eventGuest ב-localStorage
-        let eventId = null;
-        const eventGuestStr = localStorage.getItem('eventGuest');
-        if (eventGuestStr) {
-            try {
-                const eventGuestObj = JSON.parse(eventGuestStr);
-                eventId = eventGuestObj.eventID;
-            } catch (e) {
-                console.error('שגיאה בפיענוח eventGuest:', e);
-            }
-        }
-        if (!eventId) {
-            alert('לא נמצא eventID ב-localStorage');
-            return;
-        }
-        // קריאת AJAX לשרת לקבלת פרטי האורח לפי eventID מ-GuestInEventController
-        ajaxCall(
-            'GET',
-            `https://localhost:7035/api/GuestInEvents/GetInviteDetails?eventId=${eventId}`,
-            null,
-            function(data) {
-                // הצגת קישורים להזמנות לכל אורח בחלון חדש
-                if (Array.isArray(data) && data.length > 0) {
-                    openInviteLinksForGuests(data);
-                } else {
-                    alert('לא נמצאו אורחים לאירוע');
-                }
-            },
-            function(err) {
-                console.error('Invite details (ERROR):', err);
-                alert('שגיאה בשליפת פרטי ההזמנה');
-            }
-        );
-    });
-    // פונקציה ליצירת קישורים להזמנות לכל אורח בחלון חדש
-    function openInviteLinksForGuests(guests) {
-        let links = guests.map(g => {
-            const url = `http://127.0.0.1:5500/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
-            return `<div style='margin:10px;'><a href="${url}" target="_blank">${url}</a></div>`;
-        }).join('');
-        const win = window.open('', '_blank', 'width=700,height=600');
-        win.document.write(`<h2>קישורי הזמנות לאורחים</h2>${links}`);
-        win.document.close();
-    }
-});
+// WhatsApp message sending via UltraMsg (client-side, for demo/college use only) - using ajaxCall
+function sendWhatsAppMessage(phone, message) {
+  var instanceId = "instance125498";
+  var token = "p0nh304uqoyrth5a";
+  // Make sure there are no extra slashes and the URL is correct
+  var url = "https://api.ultramsg.com/" + instanceId + "/messages/chat";
+
+  var data = {
+    token: token, // UltraMsg sometimes requires token in both URL and body for legacy reasons
+    to: "+972502280902", // e.g. 972501234567
+    body: "איצי ביצלך", // message body
+    priority: 10,
+  };
+
+  // Add token as a GET parameter in the URL
+  url += "?token=" + token;
+
+  ajaxCall(
+    "POST",
+    url,
+    $.param(data), // Use jQuery's param to serialize the data
+    function (result) {
+      console.log(result);
+    },
+    function (xhr, status, error) {
+      console.error(error, xhr.responseText);
+    },
+    "application/x-www-form-urlencoded"
+  );
+}
+
+function ajaxCall(
+  method,
+  api,
+  data,
+  successCB,
+  errorCB,
+  contentType,
+  dataType
+) {
+  $.ajax({
+    type: method,
+    url: api,
+    data: data,
+    cache: false,
+    contentType: contentType || false, // false lets jQuery set it automatically (good for form data)
+    processData:
+      contentType === "application/x-www-form-urlencoded"
+        ? true
+        : contentType === false
+        ? false
+        : true,
+    dataType:
+      dataType ||
+      (contentType === "application/x-www-form-urlencoded"
+        ? undefined
+        : "json"),
+    success: successCB,
+    error: errorCB,
+  });
+}

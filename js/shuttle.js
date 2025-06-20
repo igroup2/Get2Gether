@@ -1,4 +1,3 @@
-const api = "https://localhost:7035/api/";
 const eventID = 1077; // ← הארדקוד לפי בקשה
 
 let selectedCoordinates = { latitude: 0, longitude: 0 };
