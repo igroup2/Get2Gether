@@ -11,6 +11,8 @@ namespace Get2Gether.Models
         public string? RsvpStatus { get; set; }
         public string? SideInWedding { get; set; }
         public string? RelationToCouple { get; set; }       
+        public string? FullName { get; set; }
+        public string? PhoneNumber { get; set; }
         public GuestInEvent()
 		{
 		}
@@ -47,7 +49,11 @@ namespace Get2Gether.Models
             DBservices db = new DBservices();
             return db.GetInviteDetails(eventId);
         }
-
+        public static int UpdateRSVPStatus(int eventId, int personId, string rsvpStatus)
+        {
+            DBservices db = new DBservices();
+            return db.UpdateGuestRSVPStatus(eventId, personId, rsvpStatus);
+        }
     }
 }
 

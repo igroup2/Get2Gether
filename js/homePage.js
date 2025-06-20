@@ -123,7 +123,7 @@ $(function () {
         success: function (response) {
           alert("התמונה הועלתה בהצלחה!");
           if (response && response.inviteImageUrl) {
-            // תמיד שמור כתובת עם השרת הנכון
+            // תמיד שמור כתובת עם השרת הנכון (כולל הסיומת הנכונה)
             var imgUrl = "https://localhost:7035" + response.inviteImageUrl;
             $("#inviteImagePreview").html(
               '<img src="' +
@@ -156,8 +156,9 @@ $(function () {
 
 $(document).ready(function () {
   $("#sendInviteBtn2").on("click", function () {
-    // שליפת eventID מתוך eventGuest ב-localStorage
-    let eventId = 15;
+    console.log("נלחץ כפתור שלח הזמנה לאורחים!");
+    // שליפת eventID מתוך eventGuest או ישירות מה-localStorage
+    let eventId = null;
     const eventGuestStr = localStorage.getItem("eventGuest");
     if (eventGuestStr) {
       try {
@@ -167,8 +168,12 @@ $(document).ready(function () {
         console.error("שגיאה בפיענוח eventGuest:", e);
       }
     }
+    // אם לא נמצא ב-eventGuest, ננסה ישירות מה-localStorage
     if (!eventId) {
-      alert("לא נמצא eventID ב-localStorage");
+      eventId = localStorage.getItem("eventID");
+    }
+    if (!eventId) {
+      alert("לא נמצא eventID ב-localStorage. לא ניתן לשלוח הזמנות.");
       return;
     }
     // קריאת AJAX לשרת לקבלת פרטי האורח לפי eventID מ-GuestInEventController
@@ -177,15 +182,28 @@ $(document).ready(function () {
       `https://localhost:7035/api/GuestInEvents/GetInviteDetails?eventId=${eventId}`,
       null,
       function (data) {
-        // הצגת קישורים להזמנות לכל אורח בחלון חדש
         if (Array.isArray(data) && data.length > 0) {
+          console.log("🔎 GuestInEvent data:", data);
+          // שמור לכל אורח את השם המלא והטלפון ב-localStorage
+          data.forEach((g) => {
+            if (g.personID && g.fullName) {
+              localStorage.setItem(`guestFullName_${g.personID}`, g.fullName);
+              console.log(`נשמר guestFullName_${g.personID}:`, g.fullName);
+            }
+            if (g.personID && g.phoneNumber) {
+              localStorage.setItem(
+                `guestPhoneNumber_${g.personID}`,
+                g.phoneNumber
+              );
+              console.log(
+                `נשמר guestPhoneNumber_${g.personID}:`,
+                g.phoneNumber
+              );
+            }
+          });
           openInviteLinksForGuests(data);
-          sendWhatsAppMessage(
-            "972501234567",
-            "Welcome to our event! Click here to login: https://yourdomain.com/pages/login.html"
-          );
         } else {
-          alert("לא נמצאו אורחים לאירוע");
+          alert("אין אורחים מוזמנים לאירוע זה.");
         }
       },
       function (err) {
@@ -207,7 +225,6 @@ $(document).ready(function () {
     win.document.close();
   }
 });
-
 // WhatsApp message sending via UltraMsg (client-side, for demo/college use only) - using ajaxCall
 function sendWhatsAppMessage(phone, message) {
   var instanceId = "instance125498";
