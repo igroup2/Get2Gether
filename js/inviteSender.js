@@ -29,6 +29,7 @@ $(function () {
     $("#showInviteBtn").hide().data("img", null);
   }
 
+  // --- Upload Invite Image and Send WhatsApp Message ---
   $("#uploadInviteBtn")
     .off("click")
     .on("click", function (e) {
@@ -48,14 +49,14 @@ $(function () {
       formData.append("inviteImage", file);
       formData.append("fileName", file.name);
       formData.append("eventID", eventID);
+      // Upload image to college server
       $.ajax({
-        url: api + "Events/UploadInviteImage",
+        url: "https://proj.ruppin.ac.il/igroup2/test2/tar5/",
         type: "POST",
         data: formData,
         processData: false,
         contentType: false,
         success: function (response) {
-          alert("התמונה הועלה בהצלחה!");
           if (response && response.inviteImageUrl) {
             //https://proj.ruppin.ac.il/igroup2/test1/pages/map.html
             var imgUrl =
@@ -67,14 +68,47 @@ $(function () {
                 imgUrl +
                 '" alt="הזמנה" style="max-width:300px;max-height:300px;border-radius:12px;box-shadow:0 2px 8px #0002;" />'
             );
-
-            setInviteImageUrl(imgUrl);
+            // Save the URL for later use
+            localStorage.setItem("inviteImageUrl", imgUrl);
+            alert("התמונה הועלתה בהצלחה! כעת תוכל לשלוח אותה בוואטסאפ.");
           }
         },
         error: function (xhr, status, error) {
           alert("שגיאה בהעלאת התמונה: " + (xhr.responseText || error));
         },
       });
+    });
+
+  // Send WhatsApp message to all guests with the uploaded image
+  $("#sendInviteBtn2")
+    .off("click")
+    .on("click", function () {
+      let eventId = localStorage.getItem("eventID") || 6;
+      var imgUrl = localStorage.getItem("inviteImageUrl");
+      if (!imgUrl) {
+        alert("לא קיימת תמונה ציבורית לשליחה. העלה תמונה קודם.");
+        return;
+      }
+      ajaxCall(
+        "GET",
+        `https://localhost:7035/api/GuestInEvents/GetInviteDetails?eventId=${eventId}`,
+        null,
+        function (guests) {
+          if (guests && guests.length > 0) {
+            guests.forEach((g) => {
+              const link = `https://proj.ruppin.ac.il/igroup2/test2/tar5/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
+              sendWhatsAppMessage(g.phoneNumber, g.fullName, link, imgUrl);
+            });
+            alert("ההודעות נשלחו לכל האורחים!");
+          } else {
+            alert("לא נמצאו אורחים לאירוע");
+          }
+        },
+        function (err) {
+          console.error("Invite details (ERROR):", err);
+          alert("שגיאה בשליפת פרטי ההזמנה");
+        }
+      );
     });
 
   $("#showInviteBtn")
