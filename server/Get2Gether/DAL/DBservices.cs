@@ -842,9 +842,9 @@ public void CreateNewPerson(Person person)
                             RsvpStatus = reader["RsvpStatus"] as string,
                             SideInWedding = reader["SideInWedding"] as string,
                             RelationToCouple = reader["RelationToCouple"] as string,
-                            FullName = reader["FullName"] as string,
-                            PhoneNumber = reader["PhoneNumber"] as string
-                        };
+                            FullName = Convert.ToString(reader["FullName"]),
+                            PhoneNumber = Convert.ToString(reader["PhoneNumber"]),
+                        }; 
                         guests.Add(guest);
                     }
                 }
