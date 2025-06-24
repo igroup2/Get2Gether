@@ -1,4 +1,5 @@
 let selectedCoordinates = { latitude: 0, longitude: 0 };
+const api = "https://localhost:7035/api/";
 
 function initAutocomplete() {
   const input = document.getElementById("location");
