@@ -157,7 +157,7 @@ main {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  padding-left: 100px;
+  padding-left: 10px;
 }
 
 .site-logo {
