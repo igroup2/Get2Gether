@@ -25,7 +25,7 @@ $(document).ready(function () {
         datasets: [
           {
             data: counts,
-            backgroundColor: ["#4CAF50", "#F44336", "#FFC107"],
+            backgroundColor: ["#f06292", "#c0c0c0", "#000000"],
             borderColor: "#ffffff",
             borderWidth: 2,
           },

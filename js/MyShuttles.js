@@ -1,5 +1,3 @@
-
-
 console.log("🚀 MyShuttles.js loaded");
 
 let isEditMode = false;

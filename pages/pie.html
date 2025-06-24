@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>תרשים פאי דינמי</title>
+
+    <link rel="stylesheet" href="../css/headerFooter.css" />
+    <link rel="stylesheet" href="../css/SideBar.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- flatpickr -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/confetti.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="../js/sideBar.js"></script>
+    <script src="../js/ajaxcalls.js"></script>
+    <style>
+      body {
+        font-family: "Alef", sans-serif;
+        margin: 0;
+        background-color: #f5f5f5;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      header {
+        background-color: white;
+        padding: 10px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      nav ul li {
+        margin: 5px 10px;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: #5c2e1f;
+        font-weight: bold;
+      }
+
+      .container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .chart-container {
+        width: 90%;
+        max-width: 400px;
+        margin-bottom: 20px;
+      }
+
+      #myPieChart {
+        width: 100%;
+        height: auto;
+      }
+
+      .back-button {
+        background-color: #5c2e1f;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .back-button:hover {
+        background-color: #3e1c13;
+      }
+
+      footer {
+        background-color: black;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+
+      footer p {
+        margin-bottom: 10px;
+      }
+
+      footer a img {
+        margin: 0 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page-wrapper">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-container">
+          <div class="branding">
+            <img src="../images/logo.png" class="site-logo" alt="logo" />
+            <h1 class="site-title">Get2Gether</h1>
+          </div>
+          <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">
+            ☰
+          </button>
+          <nav class="main-nav">
+            <ul>
+              <li>
+                <a href="#" id="actionsToggle">הפעולות שלי</a>
+              </li>
+              <li><a href="dashboard.html">דשבורד</a></li>
+              <li><a href="Events.html">האירועים שלי</a></li>
+              <li><a href="map.html">מפת האורחים</a></li>
+              <li><a href="#" onclick="logout()">התנתקות</a></li>
+            </ul>
+          </nav>
+
+          <!-- תפריט צדדי -->
+          <div id="actionsSidebar">
+            <span class="close-sidebar" onclick="toggleSidebar()">×</span>
+            <ul>
+              <li><a href="editEvent.html">✏️ עריכת פרטי אירוע</a></li>
+              <li><a href="up.html">😊 קובץ מוזמנים</a></li>
+              <li><a href="shuttle.html">🚌 הקמת הסעה</a></li>
+              <li><a href="MyShuttle.html">👁️ צפייה בהסעה קיימת</a></li>
+              <li><a href="profile.html">👤 אזור אישי</a></li>
+              <li><a href="login.html">🔴 התנתקות</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <div class="container">
+        <div class="chart-container">
+          <canvas id="myPieChart"></canvas>
+        </div>
+
+        <button class="back-button" onclick="location.href='Dashboard.html'">
+          חזור לדשבורד
+        </button>
+      </div>
+
+      <footer class="main-footer">
+        <div class="footer-container">
+          <p>צור קשר:</p>
+          <div class="footer-links">
+            <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
+            <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
+            <a href="mailto:igroup2project@gmail.com">אימייל</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script>
+      const api = "https://localhost:7035/api/";
+      const eventID = 15;
+
+      $(document).ready(function () {
+        ajaxCall(
+          "GET",
+          api + `GuestInEvents/RSVPChartData?eventID=${eventID}`,
+          null,
+          function (data) {
+            console.log("✅ נתונים שהתקבלו:", data);
+            const labels = data.map((item) => item.status);
+            const counts = data.map((item) => item.count);
+            drawPieChart(labels, counts);
+          },
+          function (err) {
+            console.error("❌ שגיאה בטעינת תרשים פאי:", err);
+          }
+        );
+
+        function drawPieChart(labels, counts) {
+          const ctx = document.getElementById("myPieChart").getContext("2d");
+          new Chart(ctx, {
+            type: "pie",
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  data: counts,
+                  backgroundColor: ["#4CAF50", "#F44336", "#FFC107"],
+                  borderColor: "#ffffff",
+                  borderWidth: 2,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: "bottom",
+                },
+              },
+            },
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
