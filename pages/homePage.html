@@ -19,6 +19,23 @@
     <script src="../js/sideBar.js"></script>
     <script src="../js/homePage.js"></script>
 
+    <script src="../js/inviteSender.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+      .dashboard-container {
+        max-width: 500px;
+        margin: 40px auto;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .dashboard-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 30px;
+      }
+
+
     <!-- Styles -->
     <link rel="stylesheet" href="../css/headerFooter.css" />
     <link rel="stylesheet" href="../css/SideBar.css" />
@@ -90,6 +107,47 @@
           >
             הצג הזמנת אירוע נוכחית
           </button>
+        </form>
+        <button
+          type="button"
+          id="showInviteBtn"
+          style="display: none; margin-right: 10px"
+        >
+          הצג הזמנת אירוע נוכחית
+        </button>
+        <div id="inviteImagePreview" style="margin-top: 10px"></div>
+      </div>
+
+      <div class="dashboard-container">
+        <div class="dashboard-title"></div>
+
+        <button class="dashboard-btn" onclick="location.href='editEvent.html'">
+          ✏️ עריכת פרטי אירוע
+        </button>
+
+        <button
+          class="dashboard-btn"
+          onclick="location.href='inviteSender.html'"
+        >
+          📩 שליחת הזמנה לאורחים
+        </button>
+        <button class="dashboard-btn" onclick="location.href='guests.html'">
+          😊 קובץ מוזמנים
+        </button>
+
+        <button
+          class="dashboard-btn"
+          onclick="location.href='create-ride.html'"
+        >
+          🚌 הקמת הסעה
+        </button>
+        <button class="dashboard-btn" onclick="location.href='view-rides.html'">
+          👁️ צפייה בהסעה קיימת
+        </button>
+        <button class="dashboard-btn" onclick="location.href='profile.html'">
+          👤 לאזור האישי
+        </button>
+
           <div id="inviteImagePreview" class="image-preview"></div>
         </div>
       </section>

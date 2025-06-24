@@ -1,4 +1,4 @@
-const api = "https://localhost:7035/api/"; // API URL
+// const api = "https://localhost:7035/api/"; // REMOVED to avoid duplicate declaration. Use the global one from js.js
 
 //const eventID = localStorage.getItem("eventID");
 $(document).ready(function () {

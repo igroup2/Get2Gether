@@ -818,4 +818,56 @@ public void CreateNewPerson(Person person)
 
 
 
+    public List<GuestInEvent> GetInviteDetails(int eventId)
+    {
+        List<GuestInEvent> guests = new List<GuestInEvent>();
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+            {
+                { "@EventID", eventId }
+            };
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_GetGuestsForEvent", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        GuestInEvent guest = new GuestInEvent
+                        {
+                            PersonID = Convert.ToInt32(reader["PersonID"]),
+                            EventID = Convert.ToInt32(reader["EventID"]),
+                            RoleInEvent = Convert.ToString(reader["RoleInEvent"]),
+                            NumOfGuest = Convert.ToInt32(reader["NumOfGuest"]),
+                            RsvpStatus = Convert.ToString(reader["RsvpStatus"]),
+                            SideInWedding = Convert.ToString(reader["SideInWedding"]),
+                            RelationToCouple = Convert.ToString(reader["RelationToCouple"]),                     
+                            FullName = Convert.ToString(reader["FullName"]),
+                            PhoneNumber = Convert.ToString(reader["PhoneNumber"]),
+                        }; 
+                        guests.Add(guest);
+                    }
+                }
+            }
+        }
+        return guests;
+    }
+
+    public int UpdateGuestRSVPStatus(int eventId, int personId, string rsvpStatus)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+            {
+                { "@eventID", eventId },
+                { "@personID", personId },
+                { "@RSVPstatus", rsvpStatus }
+            };
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("UpdateGuestRSVPStatus", con, paramDic))
+            {
+                return cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
 }
