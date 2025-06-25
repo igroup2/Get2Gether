@@ -29,6 +29,7 @@ if (!eventId || !personId) {
   }
   localStorage.setItem("personID", personId);
   localStorage.setItem("eventID", eventId);
+  localStorage.setItem("Role", "Guest"); // שמירת Role כ-GUEST
 
   const fullName = localStorage.getItem(`guestFullName_${personId}`);
   const phoneNumber = localStorage.getItem(`guestPhoneNumber_${personId}`);
@@ -103,7 +104,7 @@ function updateRSVPStatus(status) {
     Swal.fire({
       icon: "success",
       title: "איזה כיף!",
-      text: "נתראה באירוע בשמחה גדולה 🎉 מחכים לראותך!",
+      html: "נתראה באירוע בשמחה גדולה 🎉 מחכים לראותך!<br><br><span style='color:#b85b8b;font-weight:bold;'>רוצה לקחת חלק במערך הטרמפים? תוכל להציע או לבקש טרמפ בעמוד הבא!</span>",
       confirmButtonText: "מחכה כבר!",
     }).then((result) => {
       if (result.isConfirmed) {
