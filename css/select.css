@@ -1,0 +1,45 @@
+.hero-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 20px 60px;
+  text-align: center;
+}
+
+.titles h1 {
+  font-size: 2.5rem;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.titles h2 {
+  font-size: 1.5rem;
+  color: #333333;
+  margin-bottom: 30px;
+}
+
+.option-buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.option-buttons button {
+  background-color: #f06292;
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.option-buttons button:hover {
+  background-color: #e05585;
+  transform: scale(1.05);
+}

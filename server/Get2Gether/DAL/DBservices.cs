@@ -837,14 +837,14 @@ public void CreateNewPerson(Person person)
                         {
                             PersonID = Convert.ToInt32(reader["PersonID"]),
                             EventID = Convert.ToInt32(reader["EventID"]),
-                            RoleInEvent = reader["RoleInEvent"] as string,
+                            RoleInEvent = Convert.ToString(reader["RoleInEvent"]),
                             NumOfGuest = Convert.ToInt32(reader["NumOfGuest"]),
-                            RsvpStatus = reader["RsvpStatus"] as string,
-                            SideInWedding = reader["SideInWedding"] as string,
-                            RelationToCouple = reader["RelationToCouple"] as string,
-                            FullName = reader["FullName"] as string,
-                            PhoneNumber = reader["PhoneNumber"] as string
-                        };
+                            RsvpStatus = Convert.ToString(reader["RsvpStatus"]),
+                            SideInWedding = Convert.ToString(reader["SideInWedding"]),
+                            RelationToCouple = Convert.ToString(reader["RelationToCouple"]),                     
+                            FullName = Convert.ToString(reader["FullName"]),
+                            PhoneNumber = Convert.ToString(reader["PhoneNumber"]),
+                        }; 
                         guests.Add(guest);
                     }
                 }

@@ -6,6 +6,8 @@
     <title>הקמת הסעה</title>
     <link rel="stylesheet" href="../css/shuttle.css" />
     <link rel="stylesheet" href="../css/headerFooter.css" />
+    <link rel="stylesheet" href="../css/SideBar.css" />
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
@@ -27,6 +29,7 @@
     <!-- קבצים שלך -->
     <script src="../js/ajaxcalls.js"></script>
     <script src="../js/shuttle.js"></script>
+    <script src="../js/SideBar.js"></script>
 
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places&callback=initAutocomplete"
@@ -36,30 +39,39 @@
   </head>
   <body>
     <div class="page-wrapper">
+      <!-- HEADER -->
       <header class="main-header">
         <div class="header-container">
-        <div class="branding">
-          <img src="../images/logo.png" class="site-logo" />
-          <h1 class="site-title">Get2Gether</h1>
-        </div>
-          <!-- כפתור המבורגר -->
+          <div class="branding">
+            <img src="../images/logo.png" class="site-logo" alt="logo" />
+            <h1 class="site-title">Get2Gether</h1>
+          </div>
           <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">
             ☰
           </button>
-
-          <!-- תפריט ניווט -->
           <nav class="main-nav">
             <ul>
+              <li><a href="#" id="actionsToggle">הפעולות שלי</a></li>
               <li><a href="dashboard.html">דשבורד</a></li>
               <li><a href="Events.html">האירועים שלי</a></li>
               <li><a href="map.html">מפת האורחים</a></li>
-              <li><a href="Activities.html">הפעולות שלי</a></li>
               <li><a href="#" onclick="logout()">התנתקות</a></li>
             </ul>
           </nav>
+
+          <!-- תפריט צדדי -->
+          <div id="actionsSidebar">
+            <span class="close-sidebar" onclick="toggleSidebar()">×</span>
+            <ul>
+              <li><a href="editEvent.html">✏️ עריכת פרטי אירוע</a></li>
+              <li><a href="UpPage.html">😊 קובץ מוזמנים</a></li>
+              <li><a href="shuttle.html">🚌 הקמת הסעה</a></li>
+              <li><a href="MyShuttle.html">👁️ צפייה בהסעה קיימת</a></li>
+              <li><a href="login.html">🔴 התנתקות</a></li>
+            </ul>
+          </div>
         </div>
       </header>
-
       <main class="main-content">
         <form class="ride-form">
           <h2>פרטי ההסעה</h2>

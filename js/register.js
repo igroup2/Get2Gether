@@ -1,3 +1,5 @@
+const api = "https://localhost:7035/api/";
+
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -20,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       window.location.href = "register-step2.html";
     });
-    x;
   }
 
   // עמוד שלב 2: כפתור "הצטרפות"
@@ -222,4 +223,8 @@ function submitFinalStep() {
       alert("שגיאה ביצירת האירוע\nבדוק שכל השדות מלאים ותקינים");
     }
   );
+}
+function toggleMenu() {
+  const nav = document.querySelector(".main-nav");
+  nav.classList.toggle("active");
 }

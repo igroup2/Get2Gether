@@ -32,14 +32,14 @@ select {
   border: 1px solid #b0b0b0;
   border-radius: 5px;
   background-color: #f9f9f9;
-  color: #000000;
+  color: #f06292;
 }
 
 button {
   width: 100%;
   padding: 10px;
   margin-top: 15px;
-  background-color: #000000;
+  background-color: #f06292;
   color: white;
   border: none;
   border-radius: 5px;
@@ -49,7 +49,7 @@ button {
 }
 
 button:hover {
-  background-color: #333333;
+  background-color: #e91e63;
 }
 /* קונטיינר לשני בני הזוג */
 .couple-container {

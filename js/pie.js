@@ -1,4 +1,5 @@
-const eventID = 15;
+//const eventID = 15;
+const eventID = localStorage.getItem("eventID");
 
 $(document).ready(function () {
   ajaxCall(
@@ -7,6 +8,16 @@ $(document).ready(function () {
     null,
     function (data) {
       console.log("✅ נתונים שהתקבלו:", data);
+
+      if (!data || data.length === 0) {
+        $("#myPieChart")
+          .parent()
+          .html(
+            '<div style="text-align:center; padding:2em;">אין נתונים להצגה</div>'
+          );
+        return;
+      }
+
       const labels = data.map((item) => item.status);
       const counts = data.map((item) => item.count);
       drawPieChart(labels, counts);
@@ -25,7 +36,7 @@ $(document).ready(function () {
         datasets: [
           {
             data: counts,
-            backgroundColor: ["#4CAF50", "#F44336", "#FFC107"],
+            backgroundColor: ["#f06292", "#c0c0c0", "#000000"],
             borderColor: "#ffffff",
             borderWidth: 2,
           },

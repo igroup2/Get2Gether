@@ -1,121 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Choose Ride Option</title>
+    <title>בחירת אופציית נסיעה</title>
 
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="../js/js.js"></script>
-    <script src="../js/ajaxcalls.js"></script>
-    <script src="../js/map.js"></script>
-    <link rel="stylesheet" href="../css/style.css" />
 
-    <style>
-      .option-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 40px;
-        margin-top: 40px;
-        flex-wrap: wrap;
-      }
-      .option-buttons button {
-        background-color: #cacaca;
-        color: white;
-        font-size: 1.5em;
-        padding: 30px 40px;
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        width: 250px;
-        height: 150px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        transition: 0.3s;
-      }
-      .option-buttons button:hover {
-        background-color: #cacaca;
-      }
-      .titles {
-        text-align: center;
-        margin-top: 40px;
-      }
-      .titles h1,
-      .titles h2 {
-        margin-bottom: 20px;
-      }
-    </style>
+    <!-- Scripts -->
+    <script src="../js/headerFooter.js"></script>
+    <script src="../js/sideBar.js"></script>
+    <script src="../js/ajaxcalls.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/headerFooter.css" />
+    <link rel="stylesheet" href="../css/select.css" />
   </head>
 
   <body>
-    <!-- HEADER -->
-    <header>
-      <div class="logo">
-        <img src="../images/logo.png" alt="הלוגו שלך" id="myLogo" />
-      </div>
-      <nav>
-        <ul>
-          <li><a href="index.html">בית</a></li>
-          <li><a href="login.html">התחברות</a></li>
-          <li><a href="register.html">הרשמה</a></li>
+    <div class="page-wrapper">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-container">
+          <div class="branding">
+            <img src="../images/logo.png" class="site-logo" alt="logo" />
+            <h1 class="site-title">Get2Gether</h1>
+          </div>
+          <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">
+            ☰
+          </button>
+          <nav class="main-nav">
+            <ul>
+              <li><a href="../pages/index.html#hero">בית</a></li>
+              <li><a href="../pages/index.html#feature">המוצרים שלנו</a></li>
+              <li><a href="../pages/index.html#about">עלינו</a></li>
+              <li><a href="../pages/index.html#how">צור קשר</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
 
-          <li><a href="map.html"> מפה </a></li>
-          <li><a href="Events.html"> Events </a></li>
-        </ul>
-      </nav>
-    </header>
+      <!-- HERO SECTION -->
+      <section class="hero-section">
+        <div class="titles">
+          <h1>בחר את הדרך שלך</h1>
+          <h2>נסיעה משותפת לאירוע מתחילה כאן</h2>
+        </div>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-      <div class="titles">
-        <h1>כותרת ראשית כאן</h1>
-        <h2>כותרת משנית כאן</h2>
-      </div>
+        <div class="option-buttons">
+          <button id="giveRideBtn">אני אשמח לאסוף טרמפיסט</button>
+          <button id="needRideBtn">אני צריך טרמפ</button>
+        </div>
+      </section>
 
-      <div class="option-buttons">
-        <button id="giveRideBtn">אני רוצה לאסוף טרמפ בכיף</button>
-        <button id="needRideBtn">אני צריך טרמפ</button>
-      </div>
-    </section>
+      <!-- FOOTER -->
+      <footer class="main-footer">
+        <div class="footer-container">
+          <p>צור קשר:</p>
+          <div class="footer-links">
+            <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
+            <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
+            <a href="mailto:igroup2project@gmail.com">אימייל</a>
+          </div>
+        </div>
+      </footer>
+    </div>
 
-    <!-- FOOTER -->
-    <footer>
-      <p>צור קשר:</p>
-      <a href="https://www.instagram.com" target="_blank">
-        <img
-          src="../images/instagram-icon.png"
-          alt="Instagram"
-          width="24"
-          height="24"
-        />
-      </a>
-      <a href="https://www.facebook.com" target="_blank">
-        <img
-          src="../images/facebook-icon.png"
-          alt="Facebook"
-          width="24"
-          height="24"
-        />
-      </a>
-      <a href="mailto:igroup2project@gmail.com">
-        <img
-          src="../images/google-icon.png"
-          alt="Google"
-          width="24"
-          height="24"
-        />
-      </a>
-    </footer>
-
-    <!-- JavaScript Actions if needed -->
+    <!-- Script להפניות -->
     <script>
-      // אפשר להוסיף פעולות בלחיצה על כפתור
-      $("#giveRideBtn").click(function () {
-        // לדוגמה מעבר לעמוד הצעת נסיעה
+      $("#giveRideBtn").click(() => {
         window.location.href = "giveRiderequest.html";
       });
 
-      $("#needRideBtn").click(function () {
-        // לדוגמה מעבר לעמוד בקשת נסיעה
+      $("#needRideBtn").click(() => {
         window.location.href = "request.html";
       });
     </script>
