@@ -5,13 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Enter Give Ride Request</title>
 
-    <!-- Google Maps API -->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places&callback=initAutocomplete"
-      async
-      defer
-    ></script>
-
     <!-- CSS -->
     <link rel="stylesheet" href="../css/headerFooter.css" />
     <link rel="stylesheet" href="../css/ride-request.css" />
@@ -19,6 +12,7 @@
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../js/ajaxcalls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
   <body>
@@ -47,7 +41,7 @@
 
       <!-- MAIN SECTION -->
       <section class="ride-request-section">
-        <h1 class="ride-request-title">להקים טרמפ בקלות</h1>
+        <h1 class="ride-request-title">איזה כיף שאתה יכול לתת טרמפ!</h1>
         <h2 class="ride-request-subtitle">
           כמה פרטים קטנים , כדי שנוכל לחבר אותך לטרמפיסט שהכי מתאים לך
         </h2>
@@ -78,27 +72,57 @@
             <h3>קצת עליך:</h3>
 
             <div class="radio-line">
-              <label>המגדר שלי:</label>
-              <input type="radio" name="gender" value="M" required /> גבר
-              <input type="radio" name="gender" value="F" /> אישה
+              <span class="required-label">המגדר שלי:</span><br />
+              <input type="radio" id="genderM" name="gender" value="M" required />
+              <label for="genderM">גבר</label>
+              <input type="radio" id="genderF" name="gender" value="F" />
+              <label for="genderF">אישה</label>
             </div>
 
             <div class="radio-line">
-              <label>האם אתה מעשן?</label>
-              <input type="radio" name="smoke" value="1" required /> כן
-              <input type="radio" name="smoke" value="0" /> לא
+              <span class="required-label">האם אתה מעשן?</span><br />
+              <input type="radio" id="smokeYes" name="smoke" value="1" required />
+              <label for="smokeYes">כן</label>
+              <input type="radio" id="smokeNo" name="smoke" value="0" />
+              <label for="smokeNo">לא</label>
             </div>
 
             <div class="radio-line">
-              <label>מעדיף לנסוע עם:</label>
-              <input type="radio" name="preferredGender" value="M" required />
-              גבר <input type="radio" name="preferredGender" value="F" /> אישה
+              <span class="required-label">מעדיף לנסוע עם:</span><br />
+              <input
+                type="radio"
+                id="prefMale"
+                name="preferredGender"
+                value="M"
+                required
+              />
+              <label for="prefMale">גבר</label>
+              <input
+                type="radio"
+                id="prefFemale"
+                name="preferredGender"
+                value="F"
+              />
+              <label for="prefFemale">אישה</label>
             </div>
 
             <div class="radio-line">
-              <label>מפריע לי עישון:</label>
-              <input type="radio" name="preferNoSmoking" value="1" required />
-              כן <input type="radio" name="preferNoSmoking" value="0" /> לא
+              <span class="required-label">מפריע לי עישון:</span><br />
+              <input
+                type="radio"
+                id="noSmokeYes"
+                name="preferNoSmoking"
+                value="1"
+                required
+              />
+              <label for="noSmokeYes">כן</label>
+              <input
+                type="radio"
+                id="noSmokeNo"
+                name="preferNoSmoking"
+                value="0"
+              />
+              <label for="noSmokeNo">לא</label>
             </div>
           </div>
 
@@ -176,8 +200,8 @@
           }
 
           const giveRideRequest = {
-            EventID: 15,
-            PersonID: 10,
+            EventID: parseInt(localStorage.getItem("eventID")),
+            PersonID: parseInt(localStorage.getItem("personID")),
             CarCapacity: parseInt($("#carCapacity").val()),
             RideExitPoint: $("#rideExitPoint").val(),
             PreferredGender: $("input[name='preferredGender']:checked").val(),
@@ -198,7 +222,16 @@
             JSON.stringify(giveRideRequest),
             (response) => {
               console.log("✅ Success submitting give ride request", response);
-              alert("הבקשה נשלחה בהצלחה!");
+              Swal.fire({
+                icon: "success",
+                title: "הבקשה נשלחה בהצלחה!",
+                text: "תוכל לצפות בכל האירועים שלך בעמוד האירועים.",
+                confirmButtonText: "לעמוד האירועים"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location.href = "Events.html";
+                }
+              });
             },
             (error) => {
               console.log("❌ Error submitting give ride request", error);
@@ -208,5 +241,11 @@
         });
       });
     </script>
+    <!-- Google Maps API (AFTER all scripts that define window.initAutocomplete) -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places&callback=initAutocomplete"
+      async
+      defer
+    ></script>
   </body>
 </html>
