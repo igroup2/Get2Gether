@@ -16,6 +16,7 @@ $(document).ready(function () {
       container.empty(); // נקה אם יש משהו
 
       events.forEach((event) => {
+        console.log("🔎 Event:", event.eventDesc, "RsvpStatus:", event.rsvpStatus);
         const date = new Date(event.eventDate).toLocaleDateString("he-IL");
        const status = event.rsvpStatus && event.rsvpStatus.trim() !== ""
         ? `<p><strong>סטטוס הגעה:</strong> ${event.rsvpStatus}</p>`
@@ -48,7 +49,7 @@ $(document).ready(function () {
               <button class="event-modal-close" onclick="$('#eventModal').remove()">×</button>
               <h2>אפשרויות לאירוע</h2>
               <a href="invite.html?eventID=${eventID}&personID=${personID}" class="event-modal-link">
-                צפייה בהזמנה לאירוע
+                שינוי סטטוס הגעה
               </a>
             </div>
           </div>
