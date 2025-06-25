@@ -13,11 +13,13 @@ namespace Get2Gether.Models
 		string eventLocation; //שם האולם
         double eventLatitude;
         double eventLongitude;
+        
+        string rsvpStatus;
 
 
         public Event()
-		{
-		}
+        {
+        }
 
         public Event(int eventID, int partnerID1, int partnerID2, string eventDesc, int numOfGuest, DateTime eventDate, string eventLocation, double eventLatitude, double eventLongitude)
         {
@@ -42,7 +44,7 @@ namespace Get2Gether.Models
         public double EventLatitude { get => eventLatitude; set => eventLatitude = value; }
         public double EventLongitude { get => eventLongitude; set => eventLongitude = value; }
 
-
+        public string RsvpStatus { get => rsvpStatus; set => rsvpStatus = value; }
         public static void createNewEvent(Event NewEvent)
         {
             DBservices dbs = new DBservices();

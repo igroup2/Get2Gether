@@ -17,11 +17,17 @@ $(document).ready(function () {
 
       events.forEach((event) => {
         const date = new Date(event.eventDate).toLocaleDateString("he-IL");
+       const status = event.rsvpStatus && event.rsvpStatus.trim() !== ""
+        ? `<p><strong>סטטוס הגעה:</strong> ${event.rsvpStatus}</p>`
+         : `<p><strong>סטטוס הגעה:</strong> טרם נבחר</p>`;
+        // יצירת כרטיס אירוע
         const cardHtml = `
           <div class="event-card" data-eventid="${event.eventID}" data-personid="${personID}">
             <h3>${event.eventDesc}</h3>
             <p><strong>תאריך:</strong> ${date}</p>
             <p><strong>מיקום:</strong> ${event.eventLocation}</p>
+            ${status}
+
           </div>
         `;
         container.append(cardHtml);
@@ -37,11 +43,13 @@ $(document).ready(function () {
         // אם כבר קיים מודאל – הסר אותו
         $("#eventModal").remove();
         const modalHtml = `
-          <div id="eventModal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);z-index:9999;display:flex;align-items:center;justify-content:center;">
-            <div style="background:#fff;border-radius:18px;max-width:350px;width:90vw;padding:32px 24px;box-shadow:0 8px 32px #0002;text-align:center;position:relative;">
-              <button onclick="$('#eventModal').remove()" style="position:absolute;top:12px;left:12px;font-size:1.5rem;background:none;border:none;cursor:pointer;color:#b85b8b;">×</button>
-              <h2 style="color:#b85b8b;margin-bottom:18px;">אפשרויות לאירוע</h2>
-              <a href="invite.html?eventID=${eventID}&personID=${personID}" style="display:inline-block;margin:12px 0 0 0;padding:12px 32px;background:#f8bbd0;color:#b85b8b;font-weight:bold;border-radius:8px;text-decoration:none;font-size:1.1rem;transition:background 0.2s;">הזמנה לאירוע</a>
+          <div id="eventModal" class="event-modal-overlay">
+            <div class="event-modal-content">
+              <button class="event-modal-close" onclick="$('#eventModal').remove()">×</button>
+              <h2>אפשרויות לאירוע</h2>
+              <a href="invite.html?eventID=${eventID}&personID=${personID}" class="event-modal-link">
+                צפייה בהזמנה לאירוע
+              </a>
             </div>
           </div>
         `;

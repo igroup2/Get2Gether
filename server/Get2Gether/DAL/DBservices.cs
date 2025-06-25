@@ -654,15 +654,17 @@ public void CreateNewPerson(Person person)
                     List<Event> events = new List<Event>();
                     while (reader.Read())
                     {
-                        events.Add(new Event
+                     events.Add(new Event
                         {
-                            EventID = Convert.ToInt32(reader["EventID"]),
-                            EventDesc = reader["EventDesc"].ToString(),
-                            EventDate = Convert.ToDateTime(reader["EventDate"]),
-                            EventLocation = reader["EventLocation"].ToString(),
-                            EventLatitude = Convert.ToDouble(reader["EventLatitude"]),
-                            EventLongitude = Convert.ToDouble(reader["EventLongitude"])
+                      EventID = Convert.ToInt32(reader["EventID"]),
+                      EventDesc = reader["EventDesc"].ToString(),
+                      EventDate = Convert.ToDateTime(reader["EventDate"]),
+                      EventLocation = reader["EventLocation"].ToString(),
+                      EventLatitude = Convert.ToDouble(reader["EventLatitude"]),
+                      EventLongitude = Convert.ToDouble(reader["EventLongitude"]),
+                      RsvpStatus = reader["RsvpStatus"] == DBNull.Value ? null : reader["RsvpStatus"].ToString()
                         });
+
                     }
                     return events;
                 }
