@@ -1,5 +1,4 @@
-const eventID = 15;
-
+//const eventID = 15
 $(document).ready(function () {
   ajaxCall(
     "GET",
