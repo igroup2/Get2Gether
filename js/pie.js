@@ -1,4 +1,5 @@
 //const eventID = 15
+const eventID = localStorage.getItem("eventID");
 $(document).ready(function () {
   ajaxCall(
     "GET",

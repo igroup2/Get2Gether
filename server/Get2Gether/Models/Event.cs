@@ -58,6 +58,12 @@ namespace Get2Gether.Models
             DBservices dbs = new DBservices();
             dbs.updateEvent(NewEvent);
         }
+        public static Event GetEventDetails(int eventID)
+        {
+            DBservices db =new DBservices();
+            return db.GetEventDetails(eventID);
+        }
+
     }
 }
 

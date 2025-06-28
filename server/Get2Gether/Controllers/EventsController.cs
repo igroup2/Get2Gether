@@ -18,7 +18,12 @@ namespace Get2Gether.Controllers
 
             return Event.GetEvents(PersonID);
         }
+        [HttpGet]
+        public Event GetEventDetails(int eventID)
+        {
 
+            return Event.GetEventDetails(eventID);
+        }
 
         // POST api/<EventsController>/createNewEvent
         [HttpPost]

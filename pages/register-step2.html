@@ -77,7 +77,14 @@
             <input type="text" id="partner2" name="partner2" required />
 
             <label for="partner2">פלאפון בת הזוג</label>
-            <input type="text" id="phone2" name="phone2" required />
+            <input
+              type="text"
+              id="phone2"
+              name="phone2"
+              pattern="^05\d{8}$"
+              title="יש להזין מספר פלאפון ישראלי תקין (למשל: 0501234567)"
+              required
+            />
 
             <label for="gender2">מגדר:</label>
             <select

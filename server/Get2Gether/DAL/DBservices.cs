@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data.SqlClient;
-using System.Data;
-using System.Text;
+﻿using Get2Gether.Models;
 using Microsoft.AspNetCore.Mvc;
-using Get2Gether.Models;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Web;
+using static Microsoft.IO.RecyclableMemoryStreamManager;
 
 public class DBservices
 {
@@ -790,16 +791,6 @@ public void CreateNewPerson(Person person)
         }
     }
 
-
-    //--------------------------------------------------------------------------------------------------
-    // This method return a person 
-    //--------------------------------------------------------------------------------------------------
-    //
-   
-    //
-
-    //---------------------------------------------------------------------------------
-    // Create the SqlCommand
     public void UpdateInviteImageName(int eventID, string imageName)
     {
         using (SqlConnection con = connect("myProjDB"))
@@ -816,7 +807,41 @@ public void CreateNewPerson(Person person)
         }
     }
 
+    public Event GetEventDetails(int eventID)
+    {
+        Event eventDetails = new Event();
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+        {
+            { "@EventID", eventID }
+        };
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_GetEventDetails", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
 
+                        eventDetails.PartnerID1 = Convert.ToInt32(reader["PartnerID1"]);
+                        eventDetails.EventID = Convert.ToInt32(reader["EventID"]);
+                        eventDetails.PartnerID2 = Convert.ToInt32(reader["PartnerID2"]);
+                        eventDetails.EventDesc = Convert.ToString(reader["EventDesc"]);
+                        eventDetails.NumOfGuest = Convert.ToInt32(reader["NumOfGuest"]);
+                        eventDetails.EventDate = Convert.ToDateTime(reader["EventDate"]);
+                        eventDetails.EventLocation = Convert.ToString(reader["EventLocation"]);
+
+                        eventDetails.EventLatitude = Convert.ToDouble(reader["EventLatitude"]);
+                        eventDetails.EventLongitude = Convert.ToDouble(reader["EventLongitude"]);
+
+                    }
+                    ;
+                }
+            }
+        }
+
+        return eventDetails;
+    }
 
     public List<GuestInEvent> GetInviteDetails(int eventId)
     {
