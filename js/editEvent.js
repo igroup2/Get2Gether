@@ -21,6 +21,31 @@ function initAutocomplete() {
   });
 }
 document.addEventListener("DOMContentLoaded", function () {
+  const eventID = localStorage.getItem("eventID");
+  if (eventID) {
+    ajaxCall(
+      "GET",
+      `https://localhost:7035/api/Events?eventID=${eventID}`,
+      null,
+      function (data) {
+        console.log(data);
+        document.getElementById("date").value =
+          data.eventDate?.split("T")[0] || "";
+        document.getElementById("location").value = data.eventLocation || "";
+        if (document.getElementById("guestNumber"))
+          document.getElementById("guestNumber").value = data.numOfGuest || "";
+        if (document.getElementById("description"))
+          document.getElementById("description").value = data.eventDesc || "";
+        // שמירת קואורדינטות
+        selectedCoordinates.latitude = data.eventLatitude || 0;
+        selectedCoordinates.longitude = data.eventLongitude || 0;
+      },
+      function (err) {
+        console.error("❌ Error loading event data:", err);
+        alert("שגיאה בטעינת פרטי האירוע");
+      }
+    );
+  }
   document
     .getElementById("editSubmit")
     ?.addEventListener("click", function (e) {
@@ -45,19 +70,19 @@ document.addEventListener("DOMContentLoaded", function () {
         eventLongitude: selectedCoordinates.longitude,
       };
       console.log("📋 New Event Data:", newEvent);
+
       ajaxCall(
         "PUT",
         api + "Events",
         JSON.stringify(newEvent),
-        function () {
+        function (data) {
+          console.log("✅ Success Response:", data);
           alert("✅ האירוע עודכן בהצלחה!");
-          return ok();
-          window.location.href = "homePage.html";
+          //window.location.href = "homePage.html";
         },
-        function () {
-          console.error("❌ Error during event update");
+        function (err) {
+          console.error("❌ Error Response:", err);
           alert("שגיאה בעדכון האירוע");
-          window.location.href = "homePage.html";
         }
       );
     });

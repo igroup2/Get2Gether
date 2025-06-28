@@ -1,9 +1,9 @@
-const api = "https://localhost:7035/api/";
+const api = "https://localhost:7035/api/"; // REMOVED to avoid duplicate declaration. Use the global one from js.js
+
 const eventID = localStorage.getItem("eventID");
 $(document).ready(function () {
   // אם יש צורך, ניתן להוסיף כאן קוד שירוץ כשדף ה־HTML נטען
 
-  //const eventID = 15;
   if (!eventID) {
     console.error("❌ לא נמצא eventID בלוקאל סטורג'");
   } else {
