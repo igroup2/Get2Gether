@@ -9,7 +9,7 @@
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
       crossorigin="anonymous"
     ></script>
-    <script src="../js/js.js"></script>
+    <script src="../js/sideBar.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <script src="../js/homePage.js"></script>
     <script
@@ -17,75 +17,101 @@
       async
       defer
     ></script>
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/SideBar.css" />
+    <link rel="stylesheet" href="../css/headerFooter.css" />
     <link rel="stylesheet" href="../css/register.css" />
   </head>
   <body>
     <!-- HEADER -->
-    <header>
-      <div class="logo">
-        <img src="../images/logo.png" alt="הלוגו שלך" id="myLogo" />
-      </div>
-      <nav>
-        <ul>
-          <li><a href="index.html">בית</a></li>
-          <li><a href="login.html">התחברות</a></li>
-          <li><a href="register-step1.html">הרשמה</a></li>
-          <li><a href="select.html">בחירה</a></li>
-          <li><a href="map.html">מפה</a></li>
-          <li><a href="Events.html">אירועים</a></li>
-        </ul>
-      </nav>
-    </header>
-
-    <!-- MAIN FORM -->
-    <div class="container">
-      <h2>עריכת פרטי האירוע שלכם</h2>
-
-      <form id="eventForm">
-        <label for="date">תאריך האירוע:</label>
-        <input type="date" id="date" name="eventDate" required />
-
-        <label for="location">מיקום האירוע:</label>
-        <input
-          type="text"
-          id="location"
-          name="eventLocation"
-          placeholder="עיר, רחוב, מספר"
-          required
-        />
-
-        <label for="guestNumber">כמות מוזמנים:</label>
-        <input
-          type="number"
-          id="guestNumber"
-          name="guestNumber"
-          min="1"
-          required
-        />
-        <label for="description"> הערות נוספות </label>
-        <input type="text" id="description" name="eventDesc" />
-
-        <div>
-          <button
-            type="button"
-            onclick="window.location.href='homePage.html'"
-            id="backButton"
-            class="back-button"
-          >
-            חזור
+    <div class="page-wrapper">
+      <!-- HEADER -->
+      <header class="main-header">
+        <div class="header-container">
+          <div class="branding">
+            <img src="../images/logo.png" class="site-logo" alt="logo" />
+            <h1 class="site-title">Get2Gether</h1>
+          </div>
+          <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">
+            ☰
           </button>
-          <button type="submit" id="editSubmit">עדכן פרטים</button>
-        </div>
-      </form>
-    </div>
+          <nav class="main-nav">
+            <ul>
+              <li><a href="#" id="actionsToggle">הפעולות שלי</a></li>
+              <li><a href="dashboard.html">דשבורד</a></li>
+              <li><a href="Events.html">האירועים שלי</a></li>
+              <li><a href="map.html">מפת האורחים</a></li>
+              <li><a href="#" onclick="logout()">התנתקות</a></li>
+            </ul>
+          </nav>
 
-    <!-- FOOTER -->
-    <footer>
-      <p>צור קשר:</p>
-      <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
-      <a href="https://wa.me/" target="_blank">ווצטאפ</a> |
-      <a href="mailto:igroup2project@gmail.com">גוגל</a>
-    </footer>
+          <!-- תפריט צדדי -->
+          <div id="actionsSidebar">
+            <span class="close-sidebar" onclick="toggleSidebar()">×</span>
+            <ul>
+              <li><a href="editEvent.html">✏️ עריכת פרטי אירוע</a></li>
+              <li><a href="up.html">😊 קובץ מוזמנים</a></li>
+              <li><a href="shuttle.html">🚌 הקמת הסעה</a></li>
+              <li><a href="MyShuttle.html">👁️ צפייה בהסעה קיימת</a></li>
+              <li><a href="profile.html">👤 אזור אישי</a></li>
+              <li><a href="login.html">🔴 התנתקות</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <!-- MAIN FORM -->
+      <div class="container">
+        <h2>עריכת פרטי האירוע שלכם</h2>
+
+        <form id="eventForm">
+          <label for="date">תאריך האירוע:</label>
+          <input type="date" id="date" name="eventDate" required />
+
+          <label for="location">מיקום האירוע:</label>
+          <input
+            type="text"
+            id="location"
+            name="eventLocation"
+            placeholder="עיר, רחוב, מספר"
+            required
+          />
+
+          <label for="guestNumber">כמות מוזמנים:</label>
+          <input
+            type="number"
+            id="guestNumber"
+            name="guestNumber"
+            min="1"
+            required
+          />
+          <label for="description"> הערות נוספות </label>
+          <input type="text" id="description" name="eventDesc" />
+
+          <div>
+            <button
+              type="button"
+              onclick="window.location.href='homePage.html'"
+              id="backButton"
+              class="back-button"
+            >
+              חזור
+            </button>
+            <button type="submit" id="editSubmit">עדכן פרטים</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- FOOTER -->
+      <footer class="main-footer">
+        <div class="footer-container">
+          <p>צור קשר:</p>
+          <div class="footer-links">
+            <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
+            <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
+            <a href="mailto:igroup2project@gmail.com">אימייל</a>
+          </div>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>

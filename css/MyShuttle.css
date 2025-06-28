@@ -6,6 +6,10 @@ body {
   direction: rtl;
   text-align: right;
 }
+html,
+body {
+  overflow-x: hidden;
+}
 
 .page-wrapper {
   min-height: 100vh;
@@ -269,3 +273,6 @@ body {
   direction: rtl;
   font-family: "Assistant", sans-serif;
 }
+
+/* עיצוב תפריט צד */
+
