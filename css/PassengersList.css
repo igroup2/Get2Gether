@@ -1,0 +1,63 @@
+
+.passenger-card {
+  background-color: #fefefe;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 20px;
+  padding-bottom: 60px; /* מרווח לכפתורים בתחתית */
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: "Assistant", sans-serif;
+  position: relative;
+}
+
+.passenger-card h3 {
+  margin-top: 0;
+  color: #f06292;
+}
+
+.passenger-card p {
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #444;
+}
+.passenger-actions {
+  display: flex;
+  justify-content: flex-start; /* להציב בצד שמאל */
+  gap: 10px;
+  margin-top: 20px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.approve-offer-btn,
+.decline-offer-btn {
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.approve-offer-btn {
+  background-color: #f06292;
+  color: white;
+}
+
+.approve-offer-btn:hover {
+      transform: translateY(-2px);
+  background-color: #e91e63;
+}
+
+.decline-offer-btn {
+  background-color: #cccccc;
+  color: #333;
+}
+
+.decline-offer-btn:hover {
+  background-color: #999999;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}

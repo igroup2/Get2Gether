@@ -5,123 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Events Page</title>
 
+    <link rel="stylesheet" href="../css/headerFooter.css" />
+    <link rel="stylesheet" href="../css/SideBar.css" />
+    <link rel="stylesheet" href="../css/events.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <script src="../js/map.js"></script>
-
-    <link rel="stylesheet" href="../css/headerFooter.css" />
-    <link rel="stylesheet" href="../css/SideBar.css" />
-
-    <style>
-      .events-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 24px;
-        padding: 40px 20px;
-      }
-
-      .event-card {
-        background: linear-gradient(to top left, #ffffff, #f8f8f8);
-        border: 1px solid #ccc;
-        border-radius: 16px;
-        flex: 0 0 300px;
-        padding: 24px;
-        text-align: right;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        cursor: pointer;
-      }
-
-      .event-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-      }
-
-      .event-card h3 {
-        margin-bottom: 12px;
-        font-size: 1.6rem;
-        color: #333;
-      }
-
-      .event-card p {
-        margin: 6px 0;
-        color: #555;
-        font-size: 1rem;
-      }
-
-      @media (max-width: 768px) {
-        .event-card {
-          flex: 0 0 90%;
-        }
-      }
-
-      .hero {
-        text-align: center;
-        padding-top: 140px;
-        padding-bottom: 30px;
-        background: #ffffff;
-      }
-
-      .hero h1 {
-        font-size: 2.2rem;
-        margin-bottom: 0.5rem;
-        color: #222;
-      }
-
-      .hero p {
-        font-size: 1.2rem;
-        color: #666;
-      }
-
-      .about {
-        padding: 0 20px 60px;
-        text-align: center;
-      }
-
-      .about h2 {
-        font-size: 1.8rem;
-        color: #444;
-        margin-bottom: 20px;
-      }
-    </style>
+    <script src="../js/events.js"></script>
   </head>
-  <script>
-    $(document).ready(function () {
-      const api = "https://localhost:7035/api/";
-      ajaxCall(
-        "GET",
-        api + "Events/4",
-        null,
-        function (events) {
-          console.log("✅ Events loaded");
-          const container = $("#eventsContainer");
-          container.empty(); // נקה אם יש משהו
-
-          events.forEach((event) => {
-            const date = new Date(event.eventDate).toLocaleDateString("he-IL");
-
-            const status = event.numOfGuest > 30 ? "אושר" : "ממתין לאישור";
-
-            const cardHtml = `
-            <div class="event-card">
-              <h3>${event.eventDesc}</h3>
-              <p><strong>תאריך:</strong> ${date}</p>
-              <p><strong>מיקום:</strong> ${event.eventLocation}</p>
-
-            </div>
-          `;
-
-            container.append(cardHtml);
-          });
-        },
-        function (err) {
-          console.error("❌ Error loading events", err);
-          $("#eventsContainer").html("<p>אירעה שגיאה בטעינת האירועים</p>");
-        }
-      );
-    });
-  </script>
 
   <body>
     <!-- HEADER -->
@@ -137,7 +28,7 @@
             ☰
           </button>
           <nav class="main-nav">
-            <ul>
+            <ul id="mainNavLinks">
               <li><a href="#" id="actionsToggle">הפעולות שלי</a></li>
               <li><a href="dashboard.html">דשבורד</a></li>
               <li><a href="Events.html">האירועים שלי</a></li>
@@ -151,10 +42,9 @@
             <span class="close-sidebar" onclick="toggleSidebar()">×</span>
             <ul>
               <li><a href="editEvent.html">✏️ עריכת פרטי אירוע</a></li>
-              <li><a href="up.html">😊 קובץ מוזמנים</a></li>
+              <li><a href="UpPage.html">😊 קובץ מוזמנים</a></li>
               <li><a href="shuttle.html">🚌 הקמת הסעה</a></li>
               <li><a href="MyShuttle.html">👁️ צפייה בהסעה קיימת</a></li>
-              <li><a href="profile.html">👤 אזור אישי</a></li>
               <li><a href="login.html">🔴 התנתקות</a></li>
             </ul>
           </div>
@@ -164,7 +54,7 @@
       <!-- HERO BANNER -->
       <section class="hero">
         <h1>האירועים שלי</h1>
-        <p> Get2Gether תמצאו את כל האירועים שהוזמנת אליהם דרך </p>
+        <p>Get2Gether תמצאו את כל האירועים שהוזמנת אליהם דרך</p>
       </section>
 
       <!-- רשימת האירועים -->
@@ -188,44 +78,19 @@
     </div>
 
     <script>
-      $(document).ready(function () {
-        const PersonID = 4;
-
-        ajaxCall(
-          "GET",
-          api + `Events/${PersonID}`,
-          null,
-          function (events) {
-            console.log("✅ Events loaded");
-            const container = $("#eventsContainer");
-            container.empty(); // נקה אם יש משהו
-
-            events.forEach((event) => {
-              const date = new Date(event.eventDate).toLocaleDateString(
-                "he-IL"
-              );
-
-              const status = event.numOfGuest > 30 ? "אושר" : "ממתין לאישור";
-
-              const cardHtml = `
-                <div class="event-card">
-                  <h3>${event.eventDesc}</h3>
-                  <p><strong>תאריך:</strong> ${date}</p>
-                  <p><strong>מיקום:</strong> ${event.eventLocation}</p>
-            
-                </div>
-              `;
-
-              container.append(cardHtml);
-            });
-          },
-          function (err) {
-            console.error("❌ Error loading events", err);
-            $("#eventsContainer").html("<p>אירעה שגיאה בטעינת האירועים</p>");
-          }
-        );
+      document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('Role') === 'Guest') {
+          document.getElementById('mainNavLinks').innerHTML = `
+            <li><a href="index.html#hero">בית</a></li>
+            <li><a href="index.html#feature">המוצרים שלנו</a></li>
+            <li><a href="index.html#about">עלינו</a></li>
+            <li><a href="index.html#how">צור קשר</a></li>
+          `;
+          // הסתרת תפריט צדדי אם קיים
+          var sidebar = document.getElementById('actionsSidebar');
+          if (sidebar) sidebar.style.display = 'none';
+        }
       });
-      //
     </script>
   </body>
 </html>

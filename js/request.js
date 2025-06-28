@@ -34,8 +34,8 @@ $(document).ready(function () {
     }
 
     const rideRequest = {
-      EventID: 15,
-      PersonID: 10,
+      EventID: parseInt(localStorage.getItem("eventID")),
+      PersonID: parseInt(localStorage.getItem("personID")),
       NumOfGuest: parseInt($("#guestNumber").val()),
       PickUpLocation: $("#location").val(),
       PreferredGender: $("input[name='preferredGender']:checked").val(),
@@ -53,7 +53,16 @@ $(document).ready(function () {
       JSON.stringify(rideRequest),
       (response) => {
         console.log("✅ Success submitting ride request", response);
-        alert("הבקשה נשלחה בהצלחה!");
+        Swal.fire({
+          icon: "success",
+          title: "הבקשה נשלחה בהצלחה!",
+          text: "תוכל לצפות בכל האירועים שלך בעמוד האירועים.",
+          confirmButtonText: "לעמוד האירועים",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "Events.html";
+          }
+        });
       },
       (error) => {
         console.log("❌ Error submitting ride request", error);
