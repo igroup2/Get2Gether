@@ -14,7 +14,6 @@ namespace Get2Gether.Models
         double eventLatitude;
         double eventLongitude;
         
-        string rsvpStatus;
 
 
         public Event()
@@ -44,13 +43,12 @@ namespace Get2Gether.Models
         public double EventLatitude { get => eventLatitude; set => eventLatitude = value; }
         public double EventLongitude { get => eventLongitude; set => eventLongitude = value; }
 
-        public string RsvpStatus { get => rsvpStatus; set => rsvpStatus = value; }
         public static void createNewEvent(Event NewEvent)
         {
             DBservices dbs = new DBservices();
              dbs.CreateNewEvent(NewEvent);
         }
-        public static  List<Event> GetEvents(int PersonID)
+        public static List<dynamic> GetEvents(int PersonID)
         {
             DBservices dbs = new DBservices();
             return dbs.GetEvents(PersonID);

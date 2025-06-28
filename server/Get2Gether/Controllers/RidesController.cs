@@ -9,12 +9,12 @@ namespace Get2Gether.Controllers
     [ApiController]
     public class RidesController : ControllerBase
     {
-        [HttpGet("{eventID}/{driverID}")]
-        public IActionResult Get(int eventID, int driverID)
+        [HttpGet("{PersonID}")]
+        public IActionResult Get(int PersonID)
         {
             try
             {
-                var passengers = Ride.GetPassengerDetails(eventID, driverID);
+                var passengers = Ride.GetRidesByPerson(PersonID);
                 return Ok(passengers);
             }
             catch (Exception ex)
@@ -24,12 +24,6 @@ namespace Get2Gether.Controllers
         }
 
 
-        // GET api/<RidesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/<RidesController>
         [HttpPost]
@@ -48,9 +42,21 @@ namespace Get2Gether.Controllers
         }
 
         // DELETE api/<RidesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{driverID}/{passengerID}/{eventID}")]
+        public IActionResult deletePassengerByDriver(int driverID, int passengerID, int eventID)
         {
+            try
+            {
+                Ride ride = new Ride();
+                ride.deletePassengerByDriver(driverID, passengerID, eventID);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message); // ✅ תגובה במקרה שגיאה
+            }
         }
+
+
     }
 }

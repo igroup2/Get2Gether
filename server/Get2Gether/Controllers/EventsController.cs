@@ -13,7 +13,7 @@ namespace Get2Gether.Controllers
     {
         // GET: api/<EventsController>
         [HttpGet("{PersonID}")]
-        public List<Event> GetEvents(int PersonID)
+        public List<dynamic> GetEvents(int PersonID)
         {
 
             return Event.GetEvents(PersonID);
