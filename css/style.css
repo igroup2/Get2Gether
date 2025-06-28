@@ -421,3 +421,47 @@ footer a:hover {
 .back-home-btn:hover {
   background: #333;
 }
+
+/* כפתור אישור ורוד וכפתור ביטול אפור */
+.approve-offer-btn {
+  background-color: #f06292;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.approve-offer-btn:hover {
+  background-color: #e0407a;
+}
+.decline-offer-btn {
+  background-color: #c0c0c0;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.decline-offer-btn:hover {
+  background-color: #a0a0a0;
+}
+
+/* מיקום הכפתורים בכרטיס הנוסע */
+.passenger-actions {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 8px;
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+}
+.passenger-card {
+  position: relative;
+  /* ...existing card styles... */
+}
