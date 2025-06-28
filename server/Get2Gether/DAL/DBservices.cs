@@ -294,12 +294,69 @@ public void CreateNewPerson(Person person)
         return person.PersonID;
     }
 
-   
 
-    /// <summary>
-    /// create guest in event 
-    /// </summary>
-    /// <returns></returns>
+    public void insertPassengers(List<Ride> Rides)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+
+            foreach (var p in Rides)
+            {
+                Dictionary<string, object> parameters = new Dictionary<string, object>();
+                parameters.Add("@DriverID", p.DriverID);
+                parameters.Add("@passengerID", p.PassengerID);
+                parameters.Add("@eventID", p.EventID);
+
+
+                SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_InsertRide", con, parameters);
+                try
+                {
+                    int rows = cmd.ExecuteNonQuery();
+                    Console.WriteLine($"✅ שיבוץ: DriverID={p.DriverID}, PassengerID={p.PassengerID}, EventID={p.EventID}, נשמר? {rows > 0}");
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine($"⚠️ שגיאה בהכנסת שיבוץ: {ex.Message}");
+                }
+            }
+
+        }
+
+    }
+
+
+
+    public List<Dictionary<string, object>> GetPassengerDetails(int eventID, int driverID)
+    {
+        List<Dictionary<string, object>> results = new List<Dictionary<string, object>>();
+
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            SqlCommand cmd = new SqlCommand("SP_GetPassengersByDriver", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@EventID", eventID);
+            cmd.Parameters.AddWithValue("@DriverID", driverID);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                Dictionary<string, object> row = new Dictionary<string, object>();
+
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    string colName = reader.GetName(i);
+                    object colValue = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                    row[colName] = colValue;
+                }
+
+                results.Add(row);
+            }
+        }
+
+        return results;
+    }
+
+
     public int CreateGuestsInEvent(List<GuestInEvent> guestList)
     {
         int rowsAffected = 0;
