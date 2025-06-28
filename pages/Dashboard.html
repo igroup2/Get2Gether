@@ -55,6 +55,24 @@
       </header>
 
     <div class="dashboard-map-wrapper">
+      <!-- צד שמאל: מפה -->
+      <div class="map-container">
+        <div id="map"></div>
+        <div class="marker-buttons">
+          <button class="green" onclick="selectMarkerType('rideRequest')">
+            פין ירוק (נוסע)
+          </button>
+          <button class="blue" onclick="selectMarkerType('giveRideRequest')">
+            פין כחול (נהג)
+          </button>
+          <button class="orange" onclick="selectMarkerType('eventLocation')">
+            פין כתום (אירוע)
+          </button>
+          <div class="algoButton" onclick="filterAlgo()">
+            <button>הפעלת אלגוריתם</button>
+          </div>
+        </div>
+      </div>
       <!-- צד ימין: הדשבורד -->
       <div class="dashboard-content">
         <!-- כל התוכן הקיים של הדשבורד -->
@@ -108,25 +126,6 @@
               />
             </a>
           </footer>
-        </div>
-      </div>
-      <!-- צד שמאל: מפה -->
-      <div class="map-container">
-        <div id="map"></div>
-        <!-- 🔵🔵 כפתורי בחירת סוג פין 🔵🔵 -->
-        <div class="marker-buttons">
-          <button class="green" onclick="selectMarkerType('rideRequest')">
-            פין ירוק (נוסע)
-          </button>
-          <button class="blue" onclick="selectMarkerType('giveRideRequest')">
-            פין כחול (נהג)
-          </button>
-          <button class="orange" onclick="selectMarkerType('eventLocation')">
-            פין כתום (אירוע)
-          </button>
-          <div class="algoButton" onclick="filterAlgo()">
-            <button>הפעלת אלגוריתם</button>
-          </div>
         </div>
       </div>
     </div>
