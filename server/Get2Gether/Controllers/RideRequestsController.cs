@@ -25,13 +25,20 @@ namespace Get2Gether.Controllers
 
         // POST api/<RideRequestsController>
         [HttpPost]
-        public void Post([FromBody] RideRequest request)
+        public void Post(
+            [FromBody] RideRequest request,
+            [FromQuery] string gender,
+            [FromQuery] bool smoke)
         {
+            Console.WriteLine($"Gender: {gender}, Smoke: {smoke}");
+
             RideRequest r = new RideRequest();
-            r.CreateNewRequest(request);
+            r.CreateNewRequest(request, gender,smoke); 
+
             HttpContext.Response.ContentType = "application/json";
             HttpContext.Response.WriteAsync("{}");
         }
+
 
         // PUT api/<RideRequestsController>/5
         [HttpPut("{id}")]

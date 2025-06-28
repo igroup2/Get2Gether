@@ -16,23 +16,28 @@ $(document).ready(function () {
       container.empty(); // נקה אם יש משהו
 
       events.forEach((event) => {
-        console.log("🔎 Event:", event.eventDesc, "RsvpStatus:", event.rsvpStatus);
-        const date = new Date(event.eventDate).toLocaleDateString("he-IL");
-       const status = event.rsvpStatus && event.rsvpStatus.trim() !== ""
-        ? `<p><strong>סטטוס הגעה:</strong> ${event.rsvpStatus}</p>`
-         : `<p><strong>סטטוס הגעה:</strong> טרם נבחר</p>`;
-        // יצירת כרטיס אירוע
-        const cardHtml = `
-          <div class="event-card" data-eventid="${event.eventID}" data-personid="${personID}">
-            <h3>${event.eventDesc}</h3>
-            <p><strong>תאריך:</strong> ${date}</p>
-            <p><strong>מיקום:</strong> ${event.eventLocation}</p>
-            ${status}
+        const evt = event.event; // ← שליפת האובייקט הפנימי
+        const rsvp = event.rsvpStatus;
 
-          </div>
-        `;
+        console.log("🔎 Event:", evt.eventDesc, "RsvpStatus:", rsvp);
+
+        const date = new Date(evt.eventDate).toLocaleDateString("he-IL");
+        const status =
+          rsvp && rsvp.trim() !== ""
+            ? `<p><strong>סטטוס הגעה:</strong> ${rsvp}</p>`
+            : `<p><strong>סטטוס הגעה:</strong> טרם נבחר</p>`;
+
+        const cardHtml = `
+    <div class="event-card" data-eventid="${evt.eventID}" data-personid="${personID}">
+      <h3>${evt.eventDesc}</h3>
+      <p><strong>תאריך:</strong> ${date}</p>
+      <p><strong>מיקום:</strong> ${evt.eventLocation}</p>
+      ${status}
+    </div>
+  `;
         container.append(cardHtml);
       });
+
       // האזנה לפתיחת מודאל בלחיצה על אירוע
       $(document).on("click", ".event-card", function () {
         const eventID = $(this).data("eventid");

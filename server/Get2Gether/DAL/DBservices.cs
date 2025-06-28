@@ -157,6 +157,34 @@ public class DBservices
 
 
 
+    public void DeletePassengerByDriver(int driverID, int passengerID, int eventID)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+        {
+            { "@DriverID", driverID },
+            { "@PassengerID", passengerID },
+            { "@EventID", eventID }
+        };
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_DeletePassengerByDriver", con, paramDic))
+            {
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    // אפשר להוסיף לוג או להחזיר הודעת שגיאה
+                    throw new Exception("שגיאה במחיקת נוסע מהסעה: " + ex.Message);
+                }
+            }
+        }
+    }
+
+
+
 
     public void CreateNewEvent(Event e)
     {
@@ -327,16 +355,15 @@ public void CreateNewPerson(Person person)
 
 
 
-    public List<Dictionary<string, object>> GetPassengerDetails(int eventID, int driverID)
+    public List<Dictionary<string, object>> GetRidesByPerson(int PersonID)
     {
         List<Dictionary<string, object>> results = new List<Dictionary<string, object>>();
 
         using (SqlConnection con = connect("myProjDB"))
         {
-            SqlCommand cmd = new SqlCommand("SP_GetPassengersByDriver", con);
+            SqlCommand cmd = new SqlCommand("SP_GetRidesByPerson", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@EventID", eventID);
-            cmd.Parameters.AddWithValue("@DriverID", driverID);
+            cmd.Parameters.AddWithValue("@PersonID", PersonID);
 
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -638,34 +665,35 @@ public void CreateNewPerson(Person person)
         }
     }
 
-
-    public void CreateNewRequest(RideRequest request)
+    public void CreateNewRequest(RideRequest request, string gender, bool smoke)
     {
         using (SqlConnection con = connect("myProjDB"))
         {
             Dictionary<string, object> paramDic = new Dictionary<string, object>
-            {
-                { "@personID", request.PersonID },
-                { "@eventID", request.EventID },
-                { "@numOfGuest", request.NumOfGuest },
-                { "@pickUpLocation", request.PickUpLocation },
-                { "@preferredGender", request.PreferredGender },
-                { "@preferredSmoker", request.PreferredSmoker },
-                { "@latitude", request.Latitude },
-                { "@longitude", request.Longitude },
-                { "@note", (object?)request.Note ?? DBNull.Value }
-
-            };
+        {
+            { "@personID", request.PersonID },
+            { "@eventID", request.EventID },
+            { "@numOfGuest", request.NumOfGuest },
+            { "@pickUpLocation", request.PickUpLocation },
+            { "@preferredGender", request.PreferredGender },
+            { "@preferredSmoker", request.PreferredSmoker },
+            { "@latitude", request.Latitude },
+            { "@longitude", request.Longitude },
+            { "@note", (object?)request.Note ?? DBNull.Value },
+            { "@actualGender", gender },
+            { "@isSmoker", smoke }
+        };
 
             using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_insertRideRequest", con, paramDic))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    // אין פלט
+                  
                 }
             }
         }
     }
+
 
     public void CreateNewGiveRideRequest(GiveRideRequest giveRide)
     {
@@ -696,39 +724,44 @@ public void CreateNewPerson(Person person)
     }
 
 
-    public List<Event> GetEvents(int PersonID)
+    public List<dynamic> GetEvents(int PersonID)
     {
         using (SqlConnection con = connect("myProjDB"))
         {
             Dictionary<string, object> paramDic = new Dictionary<string, object>
-            {
-                { "@PersonID", PersonID }
-            };
+        {
+            { "@PersonID", PersonID }
+        };
 
             using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_GetEvents", con, paramDic))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    List<Event> events = new List<Event>();
+                    List<dynamic> results = new List<dynamic>();
                     while (reader.Read())
                     {
-                     events.Add(new Event
+                        var evt = new Event
                         {
-                      EventID = Convert.ToInt32(reader["EventID"]),
-                      EventDesc = reader["EventDesc"].ToString(),
-                      EventDate = Convert.ToDateTime(reader["EventDate"]),
-                      EventLocation = reader["EventLocation"].ToString(),
-                      EventLatitude = Convert.ToDouble(reader["EventLatitude"]),
-                      EventLongitude = Convert.ToDouble(reader["EventLongitude"]),
-                      RsvpStatus = reader["RsvpStatus"] == DBNull.Value ? null : reader["RsvpStatus"].ToString()
-                        });
+                            EventID = Convert.ToInt32(reader["EventID"]),
+                            EventDesc = reader["EventDesc"].ToString(),
+                            EventDate = Convert.ToDateTime(reader["EventDate"]),
+                            EventLocation = reader["EventLocation"].ToString(),
+                            EventLatitude = Convert.ToDouble(reader["EventLatitude"]),
+                            EventLongitude = Convert.ToDouble(reader["EventLongitude"])
+                        };
 
+                        results.Add(new
+                        {
+                            Event = evt,
+                            RsvpStatus = reader["RsvpStatus"].ToString()
+                        });
                     }
-                    return events;
+                    return results;
                 }
             }
         }
     }
+
 
     public Person GetPerson(int personID)
     {

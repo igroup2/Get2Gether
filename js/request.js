@@ -18,7 +18,6 @@ window.initAutocomplete = function () {
     }
   });
 };
-
 $(document).ready(function () {
   const api = "https://localhost:7035/api/";
 
@@ -33,6 +32,15 @@ $(document).ready(function () {
       return;
     }
 
+    // שליפת ערכי מגדר ועישון מהטופס
+    const gender = $("input[name='gender']:checked").val();
+    const smoke = $("input[name='smoke']:checked").val() === "1" ? true : false;
+
+    if (!gender || !smoke) {
+      alert("אנא בחר מגדר והאם אתה מעשן.");
+      return;
+    }
+
     const rideRequest = {
       EventID: parseInt(localStorage.getItem("eventID")),
       PersonID: parseInt(localStorage.getItem("personID")),
@@ -43,13 +51,15 @@ $(document).ready(function () {
         $("input[name='preferNoSmoking']:checked").val() === "0" ? false : true,
       latitude: selectedCoordinates.latitude,
       longitude: selectedCoordinates.longitude,
-      note: $("#notes").val(), // הוספת הערות נוספות
+      note: $("#notes").val(),
     };
 
     console.log("📩 Ride request data:", rideRequest);
+
+    // שליחה עם פרמטרים ב-URL
     ajaxCall(
       "POST",
-      api + "RideRequests",
+      api + `RideRequests?gender=${encodeURIComponent(gender)}&smoke=${smoke}`,
       JSON.stringify(rideRequest),
       (response) => {
         console.log("✅ Success submitting ride request", response);
@@ -71,6 +81,7 @@ $(document).ready(function () {
     );
   });
 });
+
 function toggleMenu() {
   const nav = document.querySelector(".main-nav");
   nav.classList.toggle("active");

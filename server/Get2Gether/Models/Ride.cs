@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
+
 namespace Get2Gether.Models
 {
     public class Ride
@@ -35,11 +37,18 @@ namespace Get2Gether.Models
         }
 
 
-        public static List<Dictionary<string, object>> GetPassengerDetails(int eventID, int driverID)
+        public static List<Dictionary<string, object>> GetRidesByPerson(int PersonID)
         {
             DBservices dbs = new DBservices();
-            return dbs.GetPassengerDetails(eventID, driverID);
+            return dbs.GetRidesByPerson(PersonID);
         }
+
+        public void deletePassengerByDriver(int driverID, int passengerID, int eventID)
+        {
+            DBservices dbs = new DBservices();
+            dbs.DeletePassengerByDriver(driverID,passengerID,eventID);
+        }
+
 
     }
 

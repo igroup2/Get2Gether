@@ -1,6 +1,14 @@
 const api = "https://localhost:7035/api/";
 
 let selectedCoordinates = { latitude: 0, longitude: 0 };
+document.addEventListener("DOMContentLoaded", function () {
+  const currentPage = window.location.pathname;
+
+  if (currentPage.endsWith("register-step1.html")) {
+    localStorage.clear();
+    console.log("🧹 localStorage נמחק כי העמוד הוא register-step1.html");
+  }
+});
 
 document.addEventListener("DOMContentLoaded", function () {
   const firstSubmitBtn = document.getElementById("firstSubmit");
