@@ -43,9 +43,10 @@
       <header class="main-header">
         <div class="header-container">
           <div class="branding">
-            <img src="../images/logo.png" class="site-logo" alt="logo" />
+            <img src="../images/logo.png" class="site-logo" />
             <h1 class="site-title">Get2Gether</h1>
           </div>
+          <!-- כפתור המבורגר -->
           <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">
             ☰
           </button>
@@ -54,7 +55,8 @@
               <li><a href="#" id="actionsToggle">הפעולות שלי</a></li>
               <li><a href="dashboard.html">דשבורד</a></li>
               <li><a href="Events.html">האירועים שלי</a></li>
-              <li><a href="map.html">מפת האורחים</a></li>
+
+              <li><a href="Activities.html">הפעולות שלי</a></li>
               <li><a href="#" onclick="logout()">התנתקות</a></li>
             </ul>
           </nav>
@@ -114,6 +116,9 @@
             id="contactPhone"
             name="contactPhone"
             placeholder="לדוגמה: 050-0001122"
+            pattern="^05\d{8}$"
+            title="יש להזין מספר פלאפון ישראלי תקין (למשל: 0501234567)"
+            required
           />
 
           <button type="submit">אישור הקמה</button>

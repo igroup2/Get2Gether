@@ -138,8 +138,9 @@ function updateRSVPStatus(status) {
   const data = JSON.stringify({
     eventID: parseInt(eventId),
     personID: parseInt(personId),
-    RsvpStatus: status,
+    rsvpStatus: status,
   });
+console.log("RSVP Payload:", JSON.parse(data));
 
   ajaxCall(
     "PUT",

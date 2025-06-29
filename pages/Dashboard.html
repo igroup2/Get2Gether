@@ -54,42 +54,107 @@
         </div>
       </header>
 
-      <div class="container">
-        <h1>מצב האירוע שלנו</h1>
-
-        <div class="status-box">
-          <div class="label">סה\"כ בקשות:</div>
-          <div class="count-circle" id="totalRequests">0</div>
-        </div>
-
-        <div class="status-box">
-          <div class="label">בקשות טרמפ</div>
-          <div class="count-circle" id="rideRequestsCount">0</div>
-        </div>
-
-        <div class="status-box">
-          <div class="label">נסיעות הסעה</div>
-          <div class="count-circle" id="GiveRideRequestsCount">0</div>
-        </div>
-
-        <div class="chart-container">
-          <canvas id="myPieChart"></canvas>
-        </div>
-
-        <a href="homePage.html" class="back-home-btn">חזרה למסך הבית</a>
-      </div>
-
-      <!-- FOOTER -->
-      <footer class="main-footer">
-        <div class="footer-container">
-          <p>צור קשר:</p>
-          <div class="footer-links">
-            <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
-            <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
-            <a href="mailto:igroup2project@gmail.com">אימייל</a>
+    <div class="dashboard-map-wrapper">
+      <!-- צד שמאל: מפה -->
+      <div class="map-container">
+        <div id="map"></div>
+        <div class="marker-buttons">
+          <button class="green" onclick="selectMarkerType('rideRequest')">
+            פין ירוק (נוסע)
+          </button>
+          <button class="blue" onclick="selectMarkerType('giveRideRequest')">
+            פין כחול (נהג)
+          </button>
+          <button class="orange" onclick="selectMarkerType('eventLocation')">
+            פין כתום (אירוע)
+          </button>
+          <div class="algoButton" onclick="filterAlgo()">
+            <button>הפעלת אלגוריתם</button>
           </div>
         </div>
-      </footer>
+      </div>
+      <!-- צד ימין: הדשבורד -->
+      <div class="dashboard-content">
+        <!-- כל התוכן הקיים של הדשבורד -->
+        <div class="container">
+          <h1>מצב האירוע שלנו</h1>
+
+          <div class="status-box">
+            <div class="label">סה"כ בקשות:</div>
+            <div class="count-circle" id="totalRequests">0</div>
+          </div>
+
+          <div class="status-box">
+            <div class="label">בקשות טרמפ</div>
+            <div class="count-circle" id="rideRequestsCount">0</div>
+          </div>
+
+          <div class="status-box">
+            <div class="label">בקשות טרמפ</div>
+            <div class="count-circle" id="GiveRideRequestsCount">0</div>
+          </div>
+          <a href="homePage.html" class="back-home-btn">חזרה למסך הבית</a>
+
+          <div class="chart-container">
+            <canvas id="myPieChart"></canvas>
+          </div>
+
+          <footer>
+            <p>צור קשר:</p>
+            <a href="https://www.instagram.com" target="_blank">
+              <img
+                src="../images/instagram-icon.png"
+                alt="Instagram"
+                width="24"
+                height="24"
+              />
+            </a>
+            <a href="https://www.facebook.com" target="_blank">
+              <img
+                src="../images/facebook-icon.png"
+                alt="Facebook"
+                width="24"
+                height="24"
+              />
+            </a>
+            <a href="mailto:igroup2project@gmail.com">
+              <img
+                src="../images/google-icon.png"
+                alt="Google"
+                width="24"
+                height="24"
+              />
+            </a>
+          </footer>
+        </div>
+      </div>
     </div>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
+      async
+      defer
+    ></script>
+        <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+    <!-- Google Maps API -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places"
+      async
+      defer
+    ></script>
+
+    <!-- Custom Map Logic -->
+    <script src="../js/map.js"></script>
+    <script>
+      function initMap() {
+        const center = { lat: 32.08, lng: 34.78 };
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 11,
+          center: center,
+        });
+      }
+    </script>
   </body>
 </html>

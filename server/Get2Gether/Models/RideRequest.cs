@@ -30,10 +30,10 @@
             Note = note;
         }
 
-        public void CreateNewRequest(RideRequest request)
+        public void CreateNewRequest(RideRequest request,string gender, bool smoke)
         {
             DBservices db = new DBservices();
-            db.CreateNewRequest(request);
+            db.CreateNewRequest(request, gender,smoke);
         }
     }
 }

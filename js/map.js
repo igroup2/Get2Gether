@@ -320,9 +320,46 @@ function sendDetourResultsToServer(results) {
     (data) => {
       console.log("✅ שיבוץ סופי התקבל:", data);
       renderMatchResultsTable(data);
+      insertPassengersToDataBase(data);
     },
     (err) => {
       console.error("❌ שגיאה בשיבוץ:", err);
+    }
+  );
+}
+
+function insertPassengersToDataBase(data) {
+  const passengersInRideList = [];
+
+  data.forEach((match) => {
+    if (match.giveRideRequests?.id && match.rideRequests?.personID) {
+      passengersInRideList.push({
+        DriverID: match.giveRideRequests.personID,
+        passengerID: match.rideRequests.personID,
+        eventID: eventID, // ✅ הוספנו את מספר האירוע
+      });
+    }
+  });
+
+  console.log("📤 שולח לשמירה ב-DB:", passengersInRideList);
+
+  ajaxCall(
+    "POST",
+    api + "Rides",
+    JSON.stringify(passengersInRideList),
+    (res) => {
+      console.log("✅ נשמרו שיבוצים במסד:", res);
+      Swal.fire("הצלחה!", "השיבוץ הסופי נשמר במסד הנתונים.", "success");
+    },
+    (err) => {
+      console.error("❌ שגיאה בשמירה:", err);
+
+      // הוספת שורת פענוח השגיאה
+      if (err?.responseText) {
+        console.warn("📄 תוכן השגיאה:", err.responseText);
+      }
+
+      Swal.fire("שגיאה", "לא ניתן לשמור את השיבוצים.", "error");
     }
   );
 }
@@ -335,8 +372,8 @@ function renderInitialResultsTable(results) {
 
   for (let match of results) {
     const row = [
-      match.GiveRideRequests?.id || "—",
-      match.RideRequests?.id || "—",
+      match.GiveRideRequests?.personID || "—",
+      match.RideRequests?.personID || "—",
       typeof match.detourMinutes === "number"
         ? match.detourMinutes.toFixed(2)
         : "—",
@@ -355,8 +392,8 @@ function renderMatchResultsTable(results) {
 
   for (let match of results) {
     const row = [
-      match.giveRideRequests?.id || "—",
-      match.rideRequests?.id || "—",
+      match.giveRideRequests?.personID || "—",
+      match.rideRequests?.personID || "—",
       typeof match.detourMinutes === "number"
         ? match.detourMinutes.toFixed(2)
         : "—",

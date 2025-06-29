@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Get2Gether.Models;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,25 +9,31 @@ namespace Get2Gether.Controllers
     [ApiController]
     public class RidesController : ControllerBase
     {
-        // GET: api/<RidesController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("{PersonID}")]
+        public IActionResult Get(int PersonID)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var passengers = Ride.GetRidesByPerson(PersonID);
+                return Ok(passengers);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"שגיאה: {ex.Message}");
+            }
         }
 
-        // GET api/<RidesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+
 
         // POST api/<RidesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] List<Ride> NewRides)
         {
+            Ride ride = new Ride();
+            ride.insertPassengers(NewRides);
+            return Ok(new { message = "Saved successfully" });
         }
+
 
         // PUT api/<RidesController>/5
         [HttpPut("{id}")]
@@ -34,10 +41,40 @@ namespace Get2Gether.Controllers
         {
         }
 
-        // DELETE api/<RidesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // PUT api/<RidesController>/ApproveRide/5
+        [HttpPut("ApproveRide/{rideID}")]
+        public IActionResult ApproveRide(int rideID, [FromBody] string role)
         {
+            try
+            {
+                bool result = Ride.ApproveRide(rideID, role);
+                if (result)
+                    return Ok(new { message = "Ride status updated" });
+                else
+                    return BadRequest("Ride not found or not active");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
+
+        // DELETE api/<RidesController>/5
+        [HttpDelete("{driverID}/{passengerID}/{eventID}")]
+        public IActionResult deletePassengerByDriver(int driverID, int passengerID, int eventID)
+        {
+            try
+            {
+                Ride ride = new Ride();
+                ride.deletePassengerByDriver(driverID, passengerID, eventID);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message); // ✅ תגובה במקרה שגיאה
+            }
+        }
+
+
     }
 }

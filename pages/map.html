@@ -25,11 +25,19 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
     />
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../js/sideBar.js"></script>
     <script src="../js/ajaxcalls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
   <body>
@@ -95,10 +103,6 @@
                 סמן כתום – מיקום האירוע
               </button>
             </div>
-          </div>
-
-          <div class="algoButton" onclick="filterAlgo()">
-            <button>הפעלת אלגוריתם</button>
           </div>
 
           <div class="tabs-wrapper">
