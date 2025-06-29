@@ -149,6 +149,12 @@ $(document).ready(function () {
         $(".passenger-table tbody tr").filter(function () {
           $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
         });
+        // אם החיפוש ריק, סגור את כל שורות הפרטים הנוספים והחזר כפתורים ל+
+        if (!value) {
+          $("tr.details-row").hide();
+          $(".toggle-details-btn").text("+");
+          $(".extra-details-mobile").hide();
+        }
       });
 
       // האזנה לכפתור ביטול הצעה

@@ -10,9 +10,18 @@
     <link rel="stylesheet" href="../css/ride-request.css" />
 
     <!-- JS -->
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../js/GiveRideRequest.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Google Maps API -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places&callback=initAutocomplete"
+      async
+      defer
+    ></script>
   </head>
 
   <body>
@@ -73,7 +82,13 @@
 
             <div class="radio-line">
               <span class="required-label">המגדר שלי:</span><br />
-              <input type="radio" id="genderM" name="gender" value="M" required />
+              <input
+                type="radio"
+                id="genderM"
+                name="gender"
+                value="M"
+                required
+              />
               <label for="genderM">גבר</label>
               <input type="radio" id="genderF" name="gender" value="F" />
               <label for="genderF">אישה</label>
@@ -81,7 +96,13 @@
 
             <div class="radio-line">
               <span class="required-label">האם אתה מעשן?</span><br />
-              <input type="radio" id="smokeYes" name="smoke" value="1" required />
+              <input
+                type="radio"
+                id="smokeYes"
+                name="smoke"
+                value="1"
+                required
+              />
               <label for="smokeYes">כן</label>
               <input type="radio" id="smokeNo" name="smoke" value="0" />
               <label for="smokeNo">לא</label>
@@ -104,6 +125,13 @@
                 value="F"
               />
               <label for="prefFemale">אישה</label>
+              <input
+                type="radio"
+                id="prefOther"
+                name="preferredGender"
+                value="N"
+              />
+              <label for="prefOther">אין העדפה</label>
             </div>
 
             <div class="radio-line">
@@ -161,91 +189,5 @@
         </div>
       </footer>
     </div>
-
-    <!-- SCRIPT: Google Autocomplete + Submit -->
-    <script>
-      let selectedCoordinates = { latitude: 0, longitude: 0 };
-
-      function initAutocomplete() {
-        const input = document.getElementById("rideExitPoint");
-        const autocomplete = new google.maps.places.Autocomplete(input, {
-          types: ["geocode"],
-          componentRestrictions: { country: "il" },
-        });
-
-        autocomplete.addListener("place_changed", function () {
-          const place = autocomplete.getPlace();
-          if (place.geometry && place.geometry.location) {
-            selectedCoordinates.latitude = place.geometry.location.lat();
-            selectedCoordinates.longitude = place.geometry.location.lng();
-            console.log("📍 Ride exit selected:", selectedCoordinates);
-          } else {
-            console.warn("⚠️ כתובת לא תקינה או לא נבחרה מרשימה");
-          }
-        });
-      }
-
-      $(document).ready(function () {
-        const api = "https://localhost:7035/api/";
-
-        $("form").on("submit", function (event) {
-          event.preventDefault();
-
-          if (
-            selectedCoordinates.latitude === 0 &&
-            selectedCoordinates.longitude === 0
-          ) {
-            alert("אנא בחר נקודת יציאה מתוך ההשלמה של גוגל");
-            return;
-          }
-
-          const giveRideRequest = {
-            EventID: parseInt(localStorage.getItem("eventID")),
-            PersonID: parseInt(localStorage.getItem("personID")),
-            CarCapacity: parseInt($("#carCapacity").val()),
-            RideExitPoint: $("#rideExitPoint").val(),
-            PreferredGender: $("input[name='preferredGender']:checked").val(),
-            PreferredSmoker:
-              $("input[name='preferNoSmoking']:checked").val() === "0"
-                ? false
-                : true,
-            latitude: selectedCoordinates.latitude,
-            longitude: selectedCoordinates.longitude,
-            note: $("#notes").val(),
-          };
-
-          console.log("📩 Give ride request data:", giveRideRequest);
-
-          ajaxCall(
-            "POST",
-            api + "GiveRideRequests",
-            JSON.stringify(giveRideRequest),
-            (response) => {
-              console.log("✅ Success submitting give ride request", response);
-              Swal.fire({
-                icon: "success",
-                title: "הבקשה נשלחה בהצלחה!",
-                text: "תוכל לצפות בכל האירועים שלך בעמוד האירועים.",
-                confirmButtonText: "לעמוד האירועים"
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  window.location.href = "Events.html";
-                }
-              });
-            },
-            (error) => {
-              console.log("❌ Error submitting give ride request", error);
-              alert("שגיאה בשליחת הבקשה.");
-            }
-          );
-        });
-      });
-    </script>
-    <!-- Google Maps API (AFTER all scripts that define window.initAutocomplete) -->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places&callback=initAutocomplete"
-      async
-      defer
-    ></script>
   </body>
 </html>
