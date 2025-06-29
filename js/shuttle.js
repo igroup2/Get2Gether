@@ -111,7 +111,7 @@ function sendShuttleWhatsAppMessage(phone, name) {
     "https://api.ultramsg.com/" + instanceId + "/messages/chat?token=" + token;
   var message = `היי ${name}!\nנוספה הסעה חדשה לאירוע שלך:\n לפרטים נוספים היכנסו לאתר שלנו !`;
   var data = {
-    to: "0502280902",
+    to: phone,
     body: message,
     priority: 10,
   };
