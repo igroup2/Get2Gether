@@ -36,6 +36,13 @@
       async
       defer
     ></script>
+
+    <script>
+      function logout() {
+        localStorage.clear();
+        window.location.href = "index.html";
+      }
+    </script>
   </head>
   <body>
     <div class="page-wrapper">
@@ -69,7 +76,7 @@
               <li><a href="UpPage.html">😊 קובץ מוזמנים</a></li>
               <li><a href="shuttle.html">🚌 הקמת הסעה</a></li>
               <li><a href="MyShuttle.html">👁️ צפייה בהסעה קיימת</a></li>
-              <li><a href="login.html">🔴 התנתקות</a></li>
+              <li><a href="#" onclick="logout()">🔴 התנתקות</a></li>
             </ul>
           </div>
         </div>
