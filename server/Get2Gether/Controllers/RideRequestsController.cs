@@ -30,7 +30,6 @@ namespace Get2Gether.Controllers
             [FromQuery] string gender,
             [FromQuery] bool smoke)
         {
-            Console.WriteLine($"Gender: {gender}, Smoke: {smoke}");
 
             RideRequest r = new RideRequest();
             r.CreateNewRequest(request, gender,smoke); 

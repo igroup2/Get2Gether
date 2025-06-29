@@ -695,7 +695,7 @@ public void CreateNewPerson(Person person)
     }
 
 
-    public void CreateNewGiveRideRequest(GiveRideRequest giveRide)
+    public void CreateNewGiveRideRequest(GiveRideRequest giveRide, string gender, bool smoke)
     {
         using (SqlConnection con = connect("myProjDB"))
         {
@@ -709,7 +709,9 @@ public void CreateNewPerson(Person person)
                 { "@preferredSmoker", giveRide.PreferredSmoker },
                 { "@latitude", giveRide.Latitude },
                 { "@longitude", giveRide.Longitude },
-                { "@note", (object?)giveRide.Note ?? DBNull.Value }
+                { "@note", (object?)giveRide.Note ?? DBNull.Value },
+            { "@actualGender", gender },
+            { "@isSmoker", smoke }
 
             };
 

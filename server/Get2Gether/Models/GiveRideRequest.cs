@@ -30,10 +30,10 @@
             Note = note;
         }
 
-        public static void CreateNewGiveRideRequest(GiveRideRequest giveRide)
+        public static void CreateNewGiveRideRequest(GiveRideRequest giveRide, string gender, bool smoke)
         {
             DBservices db = new DBservices();
-            db.CreateNewGiveRideRequest(giveRide);
+            db.CreateNewGiveRideRequest(giveRide, gender, smoke);
         }
     }
 }

@@ -1,7 +1,7 @@
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 
 window.initAutocomplete = function () {
-  const input = document.getElementById("location");
+  const input = document.getElementById("rideExitPoint");
   const autocomplete = new google.maps.places.Autocomplete(input, {
     types: ["geocode"],
     componentRestrictions: { country: "il" },
@@ -18,6 +18,7 @@ window.initAutocomplete = function () {
     }
   });
 };
+
 $(document).ready(function () {
   const api = "https://localhost:7035/api/";
 
@@ -28,19 +29,23 @@ $(document).ready(function () {
       selectedCoordinates.latitude === 0 &&
       selectedCoordinates.longitude === 0
     ) {
-      alert("אנא בחר כתובת מתוך ההשלמה של גוגל");
+      alert("אנא בחר נקודת יציאה מתוך ההשלמה של גוגל");
       return;
     }
 
-    // שליפת ערכי מגדר ועישון מהטופס
     const gender = $("input[name='gender']:checked").val();
     const smoke = $("input[name='smoke']:checked").val() === "1" ? true : false;
 
-    const rideRequest = {
+    if (!gender || smoke === null) {
+      alert("אנא בחר מגדר והאם אתה מעשן.");
+      return;
+    }
+
+    const giveRideRequest = {
       EventID: parseInt(localStorage.getItem("eventID")),
       PersonID: parseInt(localStorage.getItem("personID")),
-      NumOfGuest: parseInt($("#guestNumber").val()),
-      PickUpLocation: $("#location").val(),
+      CarCapacity: parseInt($("#carCapacity").val()),
+      RideExitPoint: $("#rideExitPoint").val(),
       PreferredGender: $("input[name='preferredGender']:checked").val(),
       PreferredSmoker:
         $("input[name='preferNoSmoking']:checked").val() === "0" ? false : true,
@@ -49,15 +54,16 @@ $(document).ready(function () {
       note: $("#notes").val(),
     };
 
-    console.log("📩 Ride request data:", rideRequest);
+    console.log("📩 Give ride request data:", giveRideRequest);
 
     // שליחה עם פרמטרים ב-URL
     ajaxCall(
       "POST",
-      api + `RideRequests?gender=${encodeURIComponent(gender)}&smoke=${smoke}`,
-      JSON.stringify(rideRequest),
+      api +
+        `GiveRideRequests?gender=${encodeURIComponent(gender)}&smoke=${smoke}`,
+      JSON.stringify(giveRideRequest),
       (response) => {
-        console.log("✅ Success submitting ride request", response);
+        console.log("✅ Success submitting give ride request", response);
         Swal.fire({
           icon: "success",
           title: "הבקשה נשלחה בהצלחה!",
@@ -70,14 +76,9 @@ $(document).ready(function () {
         });
       },
       (error) => {
-        console.log("❌ Error submitting ride request", error);
-        alert("אירעה שגיאה בשליחה");
+        console.log("❌ Error submitting give ride request", error);
+        alert("שגיאה בשליחת הבקשה.");
       }
     );
   });
 });
-
-function toggleMenu() {
-  const nav = document.querySelector(".main-nav");
-  nav.classList.toggle("active");
-}
