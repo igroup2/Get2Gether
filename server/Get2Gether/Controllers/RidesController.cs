@@ -41,6 +41,24 @@ namespace Get2Gether.Controllers
         {
         }
 
+        // PUT api/<RidesController>/ApproveRide/5
+        [HttpPut("ApproveRide/{rideID}")]
+        public IActionResult ApproveRide(int rideID, [FromBody] string role)
+        {
+            try
+            {
+                bool result = Ride.ApproveRide(rideID, role);
+                if (result)
+                    return Ok(new { message = "Ride status updated" });
+                else
+                    return BadRequest("Ride not found or not active");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         // DELETE api/<RidesController>/5
         [HttpDelete("{driverID}/{passengerID}/{eventID}")]
         public IActionResult deletePassengerByDriver(int driverID, int passengerID, int eventID)
