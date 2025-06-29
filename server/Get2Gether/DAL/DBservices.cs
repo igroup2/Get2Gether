@@ -989,4 +989,20 @@ public void CreateNewPerson(Person person)
         }
     }
 
+    public bool ApproveRide(int rideID, string role)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            var paramDic = new Dictionary<string, object>
+            {
+                {"RideID", rideID},
+                {"Role", role}
+            };
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_ApproveRide", con, paramDic))
+            {
+                int rows = cmd.ExecuteNonQuery();
+                return rows > 0;
+            }
+        }
+    }
 }

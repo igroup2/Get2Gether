@@ -187,6 +187,43 @@ $(document).ready(function () {
           }
         });
       });
+
+      // האזנה לכפתור אישור הצעה
+      container.on("click", ".approve-offer-btn", function () {
+        const row = $(this).closest("tr");
+        const passengerID = row.data("passenger-id");
+        const rideID = row.data("ride-id") || row.attr("data-ride-id");
+        const personID = localStorage.getItem("personID");
+        const isDriver =
+          /* קבע אם המשתמש הוא נהג או נוסע */ row
+            .find("td[data-label='כתובת']")
+            .text() === "לא צוינה";
+        const role = isDriver ? "Driver" : "Passenger";
+        Swal.fire({
+          title: "לאשר את הטרמפ?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonText: "אישור",
+          cancelButtonText: "ביטול",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            ajaxCall(
+              "PUT",
+              api + `Rides/ApproveRide/${rideID}`,
+              JSON.stringify(role),
+              function () {
+                Swal.fire("בוצע!", "הטרמפ אושר.", "success");
+                // רענון או עדכון שורה
+                row.find(".approve-offer-btn").prop("disabled", true);
+              },
+              function (err) {
+                Swal.fire("שגיאה", "לא ניתן היה לאשר את הטרמפ", "error");
+                console.error("❌ שגיאה באישור טרמפ", err);
+              }
+            );
+          }
+        });
+      });
     },
     (err) => {
       $("#passengersContainer").html("<p>שגיאה בטעינת הנוסעים.</p>");
