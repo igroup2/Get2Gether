@@ -58,10 +58,14 @@ $(document).ready(function () {
       $(document).on("click", ".event-card", function () {
         const eventID = $(this).data("eventid");
         const personID = $(this).data("personid");
-        showEventModal(eventID, personID);
+        if (localStorage.getItem("Role") === "Host") {
+          showHostEventModal(eventID);
+        } else {
+          showGuestEventModal(eventID, personID);
+        }
       });
 
-      function showEventModal(eventID, personID) {
+      function showGuestEventModal(eventID, personID) {
         // אם כבר קיים מודאל – הסר אותו
         $("#eventModal").remove();
         const modalHtml = `
@@ -76,6 +80,25 @@ $(document).ready(function () {
           </div>
         `;
         $("body").append(modalHtml);
+      }
+
+      function showHostEventModal(eventID) {
+        $("#eventModal").remove();
+        const modalHtml = `
+          <div id="eventModal" class="event-modal-overlay">
+            <div class="event-modal-content">
+              <button class="event-modal-close" onclick="$('#eventModal').remove()">×</button>
+              <h2>אפשרויות לאירוע</h2>
+              <button id="selectEventBtn" class="event-modal-link">בחר אירוע</button>
+            </div>
+          </div>
+        `;
+        $("body").append(modalHtml);
+        // האזנה לכפתור "בחר אירוע"
+        $("#selectEventBtn").on("click", function () {
+          localStorage.setItem("eventID", eventID);
+          window.location.href = "Dashboard.html";
+        });
       }
     },
     function (err) {
