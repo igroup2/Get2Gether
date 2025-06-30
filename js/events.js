@@ -1,11 +1,22 @@
 $(document).ready(function () {
-  // שליפת personID מה-localStorage
+  // שליפת personID ו-Role מה-localStorage
   const personID = localStorage.getItem("personID");
+  const role = localStorage.getItem("Role");
+
   if (!personID) {
     $("#eventsContainer").html("<p>לא נמצא מזהה משתמש במערכת</p>");
     return;
   }
   const api = "https://localhost:7035/api/";
+
+   if (localStorage.getItem("Role") === "Host") {
+    const style = document.createElement("style");
+    style.innerHTML = `#myRidesBtn { display: none !important; }`;
+    document.head.appendChild(style);
+  }
+  // הסתרת כפתור "הבקשות וההסעות שלי" אם Role=Host (אות גדולה) מיד בטעינת הדף
+  
+
   ajaxCall(
     "GET",
     api + `Events/${personID}`,
@@ -16,25 +27,30 @@ $(document).ready(function () {
       container.empty(); // נקה אם יש משהו
 
       events.forEach((event) => {
-        const evt = event.event; // ← שליפת האובייקט הפנימי
+        const evt = event.event;
         const rsvp = event.rsvpStatus;
 
         console.log("🔎 Event:", evt.eventDesc, "RsvpStatus:", rsvp);
 
         const date = new Date(evt.eventDate).toLocaleDateString("he-IL");
-        const status =
-          rsvp && rsvp.trim() !== ""
-            ? `<p><strong>סטטוס הגעה:</strong> ${rsvp}</p>`
-            : `<p><strong>סטטוס הגעה:</strong> טרם נבחר</p>`;
+        let status;
+        if (localStorage.getItem("Role") === "Host") {
+          status = `<p><strong>סטטוס הגעה:</strong> בעל האירוע</p>`;
+        } else {
+          status =
+            rsvp && rsvp.trim() !== ""
+              ? `<p><strong>סטטוס הגעה:</strong> ${rsvp}</p>`
+              : `<p><strong>סטטוס הגעה:</strong> טרם נבחר</p>`;
+        }
 
         const cardHtml = `
-    <div class="event-card" data-eventid="${evt.eventID}" data-personid="${personID}">
-      <h3>${evt.eventDesc}</h3>
-      <p><strong>תאריך:</strong> ${date}</p>
-      <p><strong>מיקום:</strong> ${evt.eventLocation}</p>
-      ${status}
-    </div>
-  `;
+      <div class="event-card" data-eventid="${evt.eventID}" data-personid="${personID}">
+        <h3>${evt.eventDesc}</h3>
+        <p><strong>תאריך:</strong> ${date}</p>
+        <p><strong>מיקום:</strong> ${evt.eventLocation}</p>
+        ${status}
+      </div>
+    `;
         container.append(cardHtml);
       });
 
@@ -67,4 +83,5 @@ $(document).ready(function () {
       $("#eventsContainer").html("<p>אירעה שגיאה בטעינת האירועים</p>");
     }
   );
+
 });

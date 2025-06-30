@@ -20,7 +20,10 @@ if (!eventId || !personId) {
     `guestPhoneNumber_${personId}`,
     "fullName",
     "phoneNumber",
+    "Role"
   ];
+  // שמור תמיד Role=Guest כשנכנסים לעמוד זה (לפני מחיקת מפתחות אחרים)
+  localStorage.setItem("Role", "Guest");
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
     if (!allowedKeys.includes(key)) {
@@ -29,7 +32,6 @@ if (!eventId || !personId) {
   }
   localStorage.setItem("personID", personId);
   localStorage.setItem("eventID", eventId);
-  localStorage.setItem("Role", "Guest"); // שמירת Role כ-GUEST
 
   const fullName = localStorage.getItem(`guestFullName_${personId}`);
   const phoneNumber = localStorage.getItem(`guestPhoneNumber_${personId}`);

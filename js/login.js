@@ -1,4 +1,3 @@
-// login.js
 const api = "https://localhost:7035/api/";
 
 $(document).ready(function () {
@@ -13,7 +12,8 @@ function Login() {
     phone: $("#phone").val(),
     password: $("#password").val(),
   };
-  if (user.phone == "" || user.password == "") {
+
+  if (user.phone === "" || user.password === "") {
     Swal.fire({
       position: "center",
       icon: "error",
@@ -22,31 +22,58 @@ function Login() {
     });
     return;
   }
+
   ajaxCall(
     "GET",
     api + `Persons/login?phone=${user.phone}&password=${user.password}`,
     null,
     (response) => {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "התחברת בהצלחה",
-        showConfirmButton: false,
-        timer: 2000,
-      }).then(() => {
-        if (response == 1) {
+      console.log("🔐 תשובת התחברות:", response);
+
+      if (response === 1) {
+        // התחברות כאדמין
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "התחברת כאדמין",
+          showConfirmButton: false,
+          timer: 2000,
+        }).then(() => {
           window.location.href = "Admin.html";
-        } else {
-          window.location.href = "index.html";
-        }
-      });
+        });
+
+      } else if (response > 1) {
+        // התחברות כמשתמש רגיל
+        // שמור personID ו-Role=Host
+        localStorage.setItem("personID", response);
+        localStorage.setItem("Role", "Host");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "התחברת בהצלחה",
+          showConfirmButton: false,
+          timer: 2000,
+        }).then(() => {
+          window.location.href = "events.html";
+        });
+
+      } else {
+        // שגיאת התחברות
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "פרטים שגויים",
+          text: "משתמש לא קיים או סיסמה שגויה",
+          showConfirmButton: true,
+        });
+      }
     },
     (error) => {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "התחברות נכשלה",
-        text: "בדוק את הפרטים ונסה שוב.",
+        title: "שגיאת שרת",
+        text: "לא ניתן להתחבר כרגע. נסה שוב מאוחר יותר.",
         showConfirmButton: true,
       });
     }
