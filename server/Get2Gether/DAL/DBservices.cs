@@ -697,7 +697,7 @@ public void CreateNewPerson(Person person)
     }
 
 
-    public void CreateNewGiveRideRequest(GiveRideRequest giveRide)
+    public void CreateNewGiveRideRequest(GiveRideRequest giveRide, string gender, bool smoke)
     {
         using (SqlConnection con = connect("myProjDB"))
         {
@@ -711,7 +711,9 @@ public void CreateNewPerson(Person person)
                 { "@preferredSmoker", giveRide.PreferredSmoker },
                 { "@latitude", giveRide.Latitude },
                 { "@longitude", giveRide.Longitude },
-                { "@note", (object?)giveRide.Note ?? DBNull.Value }
+                { "@note", (object?)giveRide.Note ?? DBNull.Value },
+            { "@actualGender", gender },
+            { "@isSmoker", smoke }
 
             };
 
@@ -989,4 +991,20 @@ public void CreateNewPerson(Person person)
         }
     }
 
+    public bool ApproveRide(int rideID, string role)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            var paramDic = new Dictionary<string, object>
+            {
+                {"RideID", rideID},
+                {"Role", role}
+            };
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_ApproveRide", con, paramDic))
+            {
+                int rows = cmd.ExecuteNonQuery();
+                return rows > 0;
+            }
+        }
+    }
 }
