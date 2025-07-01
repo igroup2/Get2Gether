@@ -1,49 +1,78 @@
 const api = "https://localhost:7035/api/";
-//const eventID = 1077; // הארדקוד לפי בקשה
-const eventID = localStorage.getItem("eventID");
-
 let loadedData = null;
+let map; // משתנה גלובלי למפת Google
+let markers = []; // נשמור את כל הפינים שהוספנו כדי לנקות אם נרצה
 
-const map = L.map("map", {
-  center: [31.0461, 34.8516],
-  zoom: 7,
-});
+// אתחול Google Maps
+window.initMap = function () {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 32.0853, lng: 34.7818 },
+    zoom: 10,
+  });
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: "",
-}).addTo(map);
-
-const markersCluster = L.markerClusterGroup();
-
-const icons = {
-  rideRequest: new L.Icon({
-    iconUrl: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -30],
-  }),
-  giveRideRequest: new L.Icon({
-    iconUrl: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -30],
-  }),
-  eventLocation: new L.Icon({
-    iconUrl: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -30],
-  }),
+  const eventID = localStorage.getItem("eventID");
+  if (eventID) {
+    loadRideData(eventID);
+  } else {
+    console.error("❌ eventID לא נמצא בלוקאל סטורג'");
+  }
 };
 
+// אייקונים מותאמים לפי סוג
+const icons = {
+  rideRequest: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+  giveRideRequest: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+  eventLocation: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+};
+
+// הוספת פין למפה
 function addMarker(lat, lng, label, type) {
-  const marker = L.marker([lat, lng], { icon: icons[type] }).bindPopup(label);
-  markersCluster.addLayer(marker);
+  const marker = new google.maps.Marker({
+    position: { lat, lng },
+    map: map,
+    icon: icons[type],
+    title: label.replace(/<br>/g, "\n"),
+  });
+
+  const infowindow = new google.maps.InfoWindow({
+    content: `<div style="direction: rtl;">${label}</div>`,
+  });
+
+  marker.addListener("click", () => {
+    infowindow.open(map, marker);
+  });
+
+  markers.push(marker);
 }
+
+// גיאוקוד לפי כתובת
+function geocodeAndAddMarker(address, label, type) {
+  const geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ address }, function (results, status) {
+    if (status === "OK") {
+      const location = results[0].geometry.location;
+      addMarker(location.lat(), location.lng(), label, type);
+    } else {
+      console.warn(`⚠️ לא ניתן למקם כתובת: ${address}`, status);
+    }
+  });
+}
+
+// יצירת הפינים
+function addRideRequestMarkers(rideRequests) {
+  rideRequests.forEach((ride) => {
+    const label = `🧑 נוסע<br>📄 Request ID: ${ride.id}<br>🧍 Person ID: ${ride.personID}`;
+    if (ride.Latitude && ride.Longitude) {
+      addMarker(ride.Latitude, ride.Longitude, label, "rideRequest");
+    } else {
+      geocodeAndAddMarker(ride.pickUpLocation, label, "rideRequest");
+    }
+  });
+}
+
 function addGiveRideMarkers(giveRideRequests) {
   giveRideRequests.forEach((giveRide) => {
     const label = `🚙 נהג<br>📄 Request ID: ${giveRide.id}<br>🧍 Person ID: ${giveRide.personID}`;
-
     if (giveRide.Latitude && giveRide.Longitude) {
       addMarker(
         giveRide.Latitude,
@@ -56,35 +85,9 @@ function addGiveRideMarkers(giveRideRequests) {
     }
   });
 }
-function addRideRequestMarkers(rideRequests) {
-  rideRequests.forEach((ride) => {
-    const label = `🧑 נוסע<br>📄 Request ID: ${ride.id}<br>🧍 Person ID: ${ride.personID}`;
-
-    if (ride.Latitude && ride.Longitude) {
-      addMarker(ride.Latitude, ride.Longitude, label, "rideRequest");
-    } else {
-      geocodeAndAddMarker(ride.pickUpLocation, label, "rideRequest");
-    }
-  });
-}
-
-function geocodeAndAddMarker(address, label, type) {
-  const geocoder = new google.maps.Geocoder();
-
-  geocoder.geocode({ address: address }, function (results, status) {
-    if (status === "OK") {
-      const location = results[0].geometry.location;
-      addMarker(location.lat(), location.lng(), label, type);
-    } else {
-      console.warn(`⚠️ לא ניתן למקם כתובת: ${address}`, status);
-    }
-  });
-}
 
 function addEventMarker(eventCoordinates, eventLocation) {
   const label = `🎉 אירוע<br>📍 מיקום: ${eventLocation}`;
-
-  // בדיקה לפי eventLatitude / eventLongitude שהגיעו מ־loadedData
   if (loadedData.eventLatitude && loadedData.eventLongitude) {
     addMarker(
       loadedData.eventLatitude,
@@ -97,6 +100,7 @@ function addEventMarker(eventCoordinates, eventLocation) {
   }
 }
 
+// שליפת מידע מהשרת
 function loadRideData(eventID) {
   $("#loading").show();
   $("#c").hide();
@@ -109,7 +113,6 @@ function loadRideData(eventID) {
       console.log("✅ Success loading data", data);
       loadedData = data;
 
-      // הוספת קואורדינטות ישירות ל-loadedData עבור שימוש נוח בהמשך
       if (data.eventCoordinates) {
         loadedData.eventLatitude = data.eventCoordinates.y;
         loadedData.eventLongitude = data.eventCoordinates.x;
@@ -127,7 +130,6 @@ function loadRideData(eventID) {
       addRideRequestMarkers(data.rideRequests);
       addEventMarker(data.eventCoordinates, data.eventLocation);
 
-      map.addLayer(markersCluster);
       $("#loading").hide();
       $("#c").show();
     },
@@ -136,348 +138,4 @@ function loadRideData(eventID) {
       $("#loading").text("❌ שגיאה בטעינת הנתונים.");
     }
   );
-}
-
-// אלגוריתם:
-function filterAlgo() {
-  sendToServer();
-}
-
-function sendToServer() {
-  const rideMatcher = {
-    giveRideRequests: loadedData.giveRideRequests,
-    rideRequests: loadedData.rideRequests,
-    eventLocation: loadedData.eventLocation,
-    EventLongitude: loadedData.eventLongitude,
-    EventLatitude: loadedData.eventLatitude,
-  };
-
-  ajaxCall(
-    "POST",
-    api + "RideMatchers/Filter",
-    JSON.stringify(rideMatcher),
-    (data) => {
-      console.log("🎯 סינון ראשוני הושלם:", data);
-      runAlgorithm(data);
-    },
-    (err) => {
-      console.error("❌ שגיאה בסינון:", err);
-    }
-  );
-}
-
-function runAlgorithm(data) {
-  console.log("🚀 הפעלת אלגוריתם חישוב סטייה...");
-
-  const eventCoords = {
-    lat: parseFloat(loadedData.eventLatitude), // Latitude → lat (✔️)
-    lng: parseFloat(loadedData.eventLongitude), // Longitude → lng (✔️)
-  };
-
-  console.log("📍 מיקום האירוע:", eventCoords);
-
-  const detourResults = [];
-  let pairsCompleted = 0;
-
-  const totalPairs = data.reduce(
-    (sum, match) => sum + (match.potentialRiders?.length || 0),
-    0
-  );
-
-  if (totalPairs === 0) {
-    console.warn("⚠️ אין מספיק צמדים לחישוב");
-    return;
-  }
-
-  data.forEach((matchResult) => {
-    const driver = matchResult.driver;
-    const origin = {
-      lat: parseFloat(driver.latitude),
-      lng: parseFloat(driver.longitude),
-    };
-
-    const destination = {
-      lat: parseFloat(loadedData.eventLatitude), // latitude
-      lng: parseFloat(loadedData.eventLongitude), // longitude
-    };
-
-    // בדיקת קואורדינטות נהג ויעד
-    if (
-      isNaN(origin.lat) ||
-      isNaN(origin.lng) ||
-      isNaN(destination.lat) ||
-      isNaN(destination.lng)
-    ) {
-      console.warn("⚠️ קואורדינטות נהג/אירוע לא תקינות!", {
-        origin,
-        destination,
-      });
-      return;
-    }
-
-    console.log(
-      `🚗 נהג: ${driver.id} (${driver.latitude}, ${driver.longitude})`
-    );
-
-    calculateBaseRouteTime(origin, destination, (baseTime) => {
-      (matchResult.potentialRiders || []).forEach((rider) => {
-        const waypoint = {
-          lat: parseFloat(rider.latitude),
-          lng: parseFloat(rider.longitude),
-        };
-
-        // בדיקת קואורדינטות נוסע
-        if (isNaN(waypoint.lat) || isNaN(waypoint.lng)) {
-          console.warn("⚠️ קואורדינטות נוסע לא תקינות!", waypoint);
-          return;
-        }
-
-        console.log("🚀 בדיקה מהירה");
-        console.log("eventCoords:", eventCoords);
-        console.log("origin:", origin);
-        console.log("waypoint:", waypoint);
-
-        calculateRouteWithWaypoint(
-          origin,
-          waypoint,
-          destination,
-          (detourTime) => {
-            let detourMinutes = detourTime - baseTime;
-            if (detourMinutes < 0) detourMinutes = 0;
-
-            detourResults.push({
-              GiveRideRequests: driver,
-              RideRequests: rider,
-              detourMinutes: detourMinutes,
-            });
-
-            pairsCompleted++;
-            if (pairsCompleted === totalPairs) {
-              console.log("📦 סיימנו חישוב סטיות, שולחים תוצאות...");
-              sendDetourResultsToServer(detourResults);
-            }
-          }
-        );
-      });
-    });
-  });
-}
-
-function calculateBaseRouteTime(origin, destination, callback) {
-  const service = new google.maps.DirectionsService();
-  service.route(
-    {
-      origin,
-      destination,
-      travelMode: google.maps.TravelMode.DRIVING,
-      drivingOptions: { departureTime: new Date() },
-    },
-    (response, status) => {
-      if (status === "OK") {
-        const duration = response.routes[0].legs[0].duration.value;
-        callback(duration / 60);
-      } else {
-        console.error("❌ שגיאה במסלול רגיל:", status);
-        callback(0);
-      }
-    }
-  );
-}
-
-function calculateRouteWithWaypoint(origin, waypoint, destination, callback) {
-  const service = new google.maps.DirectionsService();
-  service.route(
-    {
-      origin,
-      destination,
-      waypoints: [{ location: waypoint }],
-      travelMode: google.maps.TravelMode.DRIVING,
-      drivingOptions: { departureTime: new Date() },
-    },
-    (response, status) => {
-      if (status === "OK") {
-        let totalSeconds = 0;
-        response.routes[0].legs.forEach((leg) => {
-          totalSeconds += leg.duration.value;
-        });
-        callback(totalSeconds / 60);
-      } else {
-        console.error("❌ שגיאה במסלול עם עצירה:", status);
-        callback(0);
-      }
-    }
-  );
-}
-
-function sendDetourResultsToServer(results) {
-  renderInitialResultsTable(results);
-  console.log("📦 שולחים סטיות לשרת:", results);
-
-  ajaxCall(
-    "POST",
-    api + `Algos/RunAlgo?Eventid=${eventID}`,
-    JSON.stringify(results),
-    (data) => {
-      console.log("✅ שיבוץ סופי התקבל:", data);
-      renderMatchResultsTable(data);
-      insertPassengersToDataBase(data);
-    },
-    (err) => {
-      console.error("❌ שגיאה בשיבוץ:", err);
-    }
-  );
-}
-
-function insertPassengersToDataBase(data) {
-  const passengersInRideList = [];
-
-  data.forEach((match) => {
-    if (match.giveRideRequests?.id && match.rideRequests?.personID) {
-      passengersInRideList.push({
-        DriverID: match.giveRideRequests.personID,
-        passengerID: match.rideRequests.personID,
-        eventID: eventID, // ✅ הוספנו את מספר האירוע
-      });
-    }
-  });
-
-  console.log("📤 שולח לשמירה ב-DB:", passengersInRideList);
-
-  ajaxCall(
-    "POST",
-    api + "Rides",
-    JSON.stringify(passengersInRideList),
-    (res) => {
-      console.log("✅ נשמרו שיבוצים במסד:", res);
-      Swal.fire("הצלחה!", "השיבוץ הסופי נשמר במסד הנתונים.", "success");
-    },
-    (err) => {
-      console.error("❌ שגיאה בשמירה:", err);
-
-      // הוספת שורת פענוח השגיאה
-      if (err?.responseText) {
-        console.warn("📄 תוכן השגיאה:", err.responseText);
-      }
-
-      Swal.fire("שגיאה", "לא ניתן לשמור את השיבוצים.", "error");
-    }
-  );
-}
-
-function renderInitialResultsTable(results) {
-  const container = document.getElementById("initialResultsContainer");
-  container.innerHTML = "";
-
-  const table = createTable(["מזהה נהג", "מזהה נוסע", "סטייה בדקות"]);
-
-  for (let match of results) {
-    const row = [
-      match.GiveRideRequests?.personID || "—",
-      match.RideRequests?.personID || "—",
-      typeof match.detourMinutes === "number"
-        ? match.detourMinutes.toFixed(2)
-        : "—",
-    ];
-    addRowToTable(table, row);
-  }
-
-  container.appendChild(table);
-}
-
-function renderMatchResultsTable(results) {
-  const container = document.getElementById("matchResultsContainer");
-  container.innerHTML = "";
-
-  const table = createTable(["מזהה נהג", "מזהה נוסע", "סטייה בדקות"]);
-
-  for (let match of results) {
-    const row = [
-      match.giveRideRequests?.personID || "—",
-      match.rideRequests?.personID || "—",
-      typeof match.detourMinutes === "number"
-        ? match.detourMinutes.toFixed(2)
-        : "—",
-    ];
-    addRowToTable(table, row);
-  }
-
-  container.appendChild(table);
-}
-
-function createTable(headers) {
-  const table = document.createElement("table");
-  table.style.borderCollapse = "collapse";
-  table.style.width = "100%";
-  table.style.marginTop = "10px";
-
-  const headerRow = document.createElement("tr");
-  headers.forEach((header) => {
-    const th = document.createElement("th");
-    th.innerText = header;
-    th.style.border = "1px solid #ccc";
-    th.style.padding = "8px";
-    th.style.backgroundColor = "#f2f2f2";
-    headerRow.appendChild(th);
-  });
-  table.appendChild(headerRow);
-
-  return table;
-}
-
-function addRowToTable(table, rowData) {
-  const row = document.createElement("tr");
-  rowData.forEach((cellData) => {
-    const td = document.createElement("td");
-    td.innerText = cellData;
-    td.style.border = "1px solid #ccc";
-    td.style.padding = "8px";
-    row.appendChild(td);
-  });
-  table.appendChild(row);
-}
-
-// טעינה עם מפת ישראל בלבד + Google Maps
-function waitForGoogleMapsReady(callback) {
-  if (typeof google !== "undefined" && typeof google.maps !== "undefined") {
-    callback();
-  } else {
-    console.log("🕒 ממתין לטעינת Google Maps...");
-    setTimeout(() => waitForGoogleMapsReady(callback), 300);
-  }
-}
-
-$(document).ready(function () {
-  map.whenReady(function () {
-    waitForGoogleMapsReady(() => {
-      console.log("🗺️ המפה + Google Maps מוכנים - טוען מוזמנים...");
-      loadRideData(eventID);
-    });
-  });
-});
-
-function showTab(tabName) {
-  const initialTab = document.getElementById("initialTab");
-  const finalTab = document.getElementById("finalTab");
-
-  // הסתר את שניהם
-  initialTab.style.display = "none";
-  finalTab.style.display = "none";
-
-  // הסר highlight מהכפתורים
-  document.querySelectorAll(".tab-button").forEach((btn) => {
-    btn.classList.remove("active");
-  });
-
-  // הצג את הטאב שנבחר והדגש את הכפתור שלו
-  if (tabName === "initial") {
-    initialTab.style.display = "block";
-    document
-      .querySelector("button[onclick=\"showTab('initial')\"]")
-      .classList.add("active");
-  } else if (tabName === "final") {
-    finalTab.style.display = "block";
-    document
-      .querySelector("button[onclick=\"showTab('final')\"]")
-      .classList.add("active");
-  }
 }
