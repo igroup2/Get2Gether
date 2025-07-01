@@ -37,7 +37,6 @@ $(document).ready(function () {
     const smoke = $("input[name='smoke']:checked").val() === "1" ? true : false;
 
     if (!gender || smoke === null) {
-      alert("אנא בחר מגדר והאם אתה מעשן.");
       return;
     }
 
@@ -69,6 +68,7 @@ $(document).ready(function () {
           title: "הבקשה נשלחה בהצלחה!",
           text: "תוכל לצפות בכל האירועים שלך בעמוד האירועים.",
           confirmButtonText: "לעמוד האירועים",
+          reverseButtons: true,
         }).then((result) => {
           if (result.isConfirmed) {
             window.location.href = "Events.html";

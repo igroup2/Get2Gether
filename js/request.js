@@ -63,6 +63,9 @@ $(document).ready(function () {
           title: "הבקשה נשלחה בהצלחה!",
           text: "תוכל לצפות בכל האירועים שלך בעמוד האירועים.",
           confirmButtonText: "לעמוד האירועים",
+          confirmButtonColor: "#f06292",
+          cancelButtonColor: "#e0e0e0",
+          reverseButtons: true,
         }).then((result) => {
           if (result.isConfirmed) {
             window.location.href = "Events.html";

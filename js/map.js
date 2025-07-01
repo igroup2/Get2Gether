@@ -337,6 +337,7 @@ function insertPassengersToDataBase(data) {
         DriverID: match.giveRideRequests.personID,
         passengerID: match.rideRequests.personID,
         eventID: eventID, // ✅ הוספנו את מספר האירוע
+        RideStatus: "PendingDriver", // ✅ הוספה חובה כדי למנוע שגיאה
       });
     }
   });
@@ -349,7 +350,10 @@ function insertPassengersToDataBase(data) {
     JSON.stringify(passengersInRideList),
     (res) => {
       console.log("✅ נשמרו שיבוצים במסד:", res);
-      Swal.fire("הצלחה!", "השיבוץ הסופי נשמר במסד הנתונים.", "success");
+      Swal.fire("הצלחה!", "השיבוץ הסופי נשמר במסד הנתונים.", "success", {
+        confirmButtonColor: "#f06292",
+        reverseButtons: true,
+      });
     },
     (err) => {
       console.error("❌ שגיאה בשמירה:", err);
@@ -359,7 +363,10 @@ function insertPassengersToDataBase(data) {
         console.warn("📄 תוכן השגיאה:", err.responseText);
       }
 
-      Swal.fire("שגיאה", "לא ניתן לשמור את השיבוצים.", "error");
+      Swal.fire("שגיאה", "לא ניתן לשמור את השיבוצים.", "error", {
+        confirmButtonColor: "#f06292",
+        reverseButtons: true,
+      });
     }
   );
 }
@@ -463,8 +470,8 @@ function showTab(tabName) {
   initialTab.style.display = "none";
   finalTab.style.display = "none";
 
-  // הסר highlight מהכפתורים
-  document.querySelectorAll(".tab-button").forEach((btn) => {
+  // הסר highlight מהטאבים העדינים
+  document.querySelectorAll(".table-tab").forEach((btn) => {
     btn.classList.remove("active");
   });
 
@@ -472,12 +479,12 @@ function showTab(tabName) {
   if (tabName === "initial") {
     initialTab.style.display = "block";
     document
-      .querySelector("button[onclick=\"showTab('initial')\"]")
+      .querySelector(".table-tab[onclick=\"showTab('initial')\"]")
       .classList.add("active");
   } else if (tabName === "final") {
     finalTab.style.display = "block";
     document
-      .querySelector("button[onclick=\"showTab('final')\"]")
+      .querySelector(".table-tab[onclick=\"showTab('final')\"]")
       .classList.add("active");
   }
 }
