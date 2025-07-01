@@ -1,4 +1,4 @@
-const api = "https://localhost:7035/api/"; // הוספת הגדרת קבוע גלובלית
+const api = "https://localhost:7035/api/"; // API URL
 
 document.addEventListener("DOMContentLoaded", function () {
   const loginForm = document.getElementById("loginForm");
@@ -134,10 +134,3 @@ document.addEventListener("DOMContentLoaded", function () {
   setInterval(createFirework, 2000); // יצירת זיקוקים כל 2 שניות
   animate();
 });
-
-
-
-
-
-
-

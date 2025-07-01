@@ -3,7 +3,7 @@ function getQueryParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
 }
-
+const api = "https://localhost:7035/api/"; // API URL
 // שליפת eventID ו-personID מה-URL
 const eventId = getQueryParam("eventID");
 const personId = getQueryParam("personID");
@@ -20,6 +20,10 @@ if (!eventId || !personId) {
     `guestPhoneNumber_${personId}`,
     "fullName",
     "phoneNumber",
+<<<<<<< HEAD:js/invite.js
+=======
+    "Role",
+>>>>>>> origin/main:Client/js/invite.js
   ];
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
@@ -131,10 +135,14 @@ function updateRSVPStatus(status) {
     personID: parseInt(personId),
     RsvpStatus: status,
   });
+<<<<<<< HEAD:js/invite.js
+=======
+  console.log("RSVP Payload:", JSON.parse(data));
+>>>>>>> origin/main:Client/js/invite.js
 
   ajaxCall(
     "PUT",
-    "https://localhost:7035/api/GuestInEvents/UpdateRSVPStatus",
+    api + "GuestInEvents/UpdateRSVPStatus",
     data,
     function (res) {
       // הצלחה - פופאפ כבר הוצג

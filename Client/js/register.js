@@ -1,4 +1,4 @@
-const api = "https://localhost:7035/api/";
+const api = "https://localhost:7035/api/"; // API URL
 
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 document.addEventListener("DOMContentLoaded", function () {

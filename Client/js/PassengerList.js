@@ -1,7 +1,7 @@
 $(document).ready(function () {
   console.log("📦 Passenger List Document ready");
   const personID = localStorage.getItem("personID");
-  const api = "https://localhost:7035/api/"; // ← הארדקוד לפי בקשה
+  const api = "https://localhost:7035/api/"; // API URL
   const eventID = localStorage.getItem("eventID");
   console.log("🚀 personID ID:", personID);
   console.log("🚀 Event ID:", eventID);

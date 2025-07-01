@@ -1,4 +1,4 @@
-const api = "https://localhost:7035/api/";
+const api = "https://localhost:7035/api/"; // API URL
 
 const eventID = localStorage.getItem("eventID");
 

@@ -1,6 +1,7 @@
 // inviteSender.js
 // Handles uploading invite image and sending WhatsApp messages
-
+//const api = "https://proj.ruppin.ac.il/igroup2/test2/tar1/api/";
+const api = "https://localhost:7035/api/"; // API URL
 // --- Upload Invite Image ---
 function setInviteImageUrl(url) {
   if (url) {
@@ -91,7 +92,7 @@ $(function () {
       }
       ajaxCall(
         "GET",
-        `https://localhost:7035/api/GuestInEvents/GetInviteDetails?eventId=${eventId}`,
+        api + `GuestInEvents/GetInviteDetails?eventId=${eventId}`,
         null,
         function (guests) {
           if (guests && guests.length > 0) {
@@ -163,7 +164,7 @@ $(document).ready(function () {
     }
     ajaxCall(
       "GET",
-      `https://localhost:7035/api/GuestInEvents/GetInviteDetails?eventId=${eventId}`,
+      api + `GuestInEvents/GetInviteDetails?eventId=${eventId}`,
       null,
       function (guests) {
         if (guests && guests.length > 0) {

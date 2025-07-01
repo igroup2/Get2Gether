@@ -1,3 +1,5 @@
+const api = "https://localhost:7035/api/"; // API URL
+
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 
 window.initAutocomplete = function () {
@@ -20,8 +22,6 @@ window.initAutocomplete = function () {
 };
 
 $(document).ready(function () {
-  const api = "https://localhost:7035/api/";
-
   $("form").on("submit", function (event) {
     event.preventDefault();
 
