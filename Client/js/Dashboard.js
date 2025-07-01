@@ -1,3 +1,5 @@
+const api = "https://localhost:7035/api/"; // API URL
+
 // REMOVED to avoid duplicate declaration. Use the global one from js.js
 
 $(document).ready(function () {

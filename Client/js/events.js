@@ -7,16 +7,14 @@ $(document).ready(function () {
     $("#eventsContainer").html("<p>לא נמצא מזהה משתמש במערכת</p>");
     return;
   }
-  const api = "https://proj.ruppin.ac.il/igroup2/test2/tar1/swagger/";
-  //"https://localhost:7035/api/";
+  const api = "https://localhost:7035/api/"; // API URL
 
-   if (localStorage.getItem("Role") === "Host") {
+  if (localStorage.getItem("Role") === "Host") {
     const style = document.createElement("style");
     style.innerHTML = `#myRidesBtn { display: none !important; }`;
     document.head.appendChild(style);
   }
   // הסתרת כפתור "הבקשות וההסעות שלי" אם Role=Host (אות גדולה) מיד בטעינת הדף
-  
 
   ajaxCall(
     "GET",
@@ -107,5 +105,4 @@ $(document).ready(function () {
       $("#eventsContainer").html("<p>אירעה שגיאה בטעינת האירועים</p>");
     }
   );
-
 });
