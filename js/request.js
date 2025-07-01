@@ -18,6 +18,7 @@ window.initAutocomplete = function () {
     }
   });
 };
+
 $(document).ready(function () {
   const api = "https://localhost:7035/api/";
 
@@ -32,13 +33,9 @@ $(document).ready(function () {
       return;
     }
 
-    // שליפת ערכי מגדר ועישון מהטופס
-    const gender = $("input[name='gender']:checked").val();
-    const smoke = $("input[name='smoke']:checked").val() === "1" ? true : false;
-
     const rideRequest = {
-      EventID: parseInt(localStorage.getItem("eventID")),
-      PersonID: parseInt(localStorage.getItem("personID")),
+      EventID: 15,
+      PersonID: 10,
       NumOfGuest: parseInt($("#guestNumber").val()),
       PickUpLocation: $("#location").val(),
       PreferredGender: $("input[name='preferredGender']:checked").val(),
@@ -46,28 +43,17 @@ $(document).ready(function () {
         $("input[name='preferNoSmoking']:checked").val() === "0" ? false : true,
       latitude: selectedCoordinates.latitude,
       longitude: selectedCoordinates.longitude,
-      note: $("#notes").val(),
+      note: $("#notes").val(), // הוספת הערות נוספות
     };
 
     console.log("📩 Ride request data:", rideRequest);
-
-    // שליחה עם פרמטרים ב-URL
     ajaxCall(
       "POST",
-      api + `RideRequests?gender=${encodeURIComponent(gender)}&smoke=${smoke}`,
+      api + "RideRequests",
       JSON.stringify(rideRequest),
       (response) => {
         console.log("✅ Success submitting ride request", response);
-        Swal.fire({
-          icon: "success",
-          title: "הבקשה נשלחה בהצלחה!",
-          text: "תוכל לצפות בכל האירועים שלך בעמוד האירועים.",
-          confirmButtonText: "לעמוד האירועים",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = "Events.html";
-          }
-        });
+        alert("הבקשה נשלחה בהצלחה!");
       },
       (error) => {
         console.log("❌ Error submitting ride request", error);
@@ -76,7 +62,6 @@ $(document).ready(function () {
     );
   });
 });
-
 function toggleMenu() {
   const nav = document.querySelector(".main-nav");
   nav.classList.toggle("active");

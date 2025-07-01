@@ -11,6 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <script src="../js/events.js"></script>
+    <script src="../js/SideBar.js"></script>
   </head>
 
   <body>
@@ -44,7 +45,7 @@
               <li><a href="UpPage.html">😊 קובץ מוזמנים</a></li>
               <li><a href="shuttle.html">🚌 הקמת הסעה</a></li>
               <li><a href="MyShuttle.html">👁️ צפייה בהסעה קיימת</a></li>
-              <li><a href="login.html">🔴 התנתקות</a></li>
+              <li><a href="#" onclick="logout()">🔴 התנתקות</a></li>
             </ul>
           </div>
         </div>
@@ -84,6 +85,10 @@
     </div>
 
     <script>
+      function logout() {
+        localStorage.clear();
+        window.location.href = "index.html";
+      }
       document.addEventListener("DOMContentLoaded", function () {
         if (localStorage.getItem("Role") === "Guest") {
           document.getElementById("mainNavLinks").innerHTML = `

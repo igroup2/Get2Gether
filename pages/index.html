@@ -31,8 +31,8 @@
         <nav class="main-nav">
           <ul>
             <li><a href="#hero">בית</a></li>
-            <li><a href="#feature">המוצרים שלנו</a></li>
-            <li><a href="#about">עלינו</a></li>
+            <li><a href="#feature-title">המוצרים שלנו</a></li>
+            <li><a href="#about-title">עלינו</a></li>
             <li><a href="#how">צור קשר</a></li>
           </ul>
         </nav>
@@ -52,7 +52,7 @@
     </section>
 
     <section id="feature" class="features">
-      <h1>המוצרים שלנו</h1>
+      <h1 id="feature-title">המוצרים שלנו</h1>
       <div class="features-list">
         <div class="feature-item">
           <h3>אישורי הגעה דינאמיים</h3>
@@ -73,7 +73,7 @@
     </section>
 
     <section id="about" class="about">
-      <h1>מי אנחנו?</h1>
+      <h1 id="about-title">מי אנחנו?</h1>
       <div class="about-content">
         <div class="about-text">
           <p>
@@ -99,31 +99,56 @@
       </div>
     </section>
 
-      <!-- FOOTER -->
-      <footer class="main-footer">
-        <div class="footer-container">
-          <p>צור קשר:</p>
-          <div class="footer-links">
-            <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
-            <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
-            <a href="mailto:igroup2project@gmail.com">אימייל</a>
-          </div>
+    <!-- FOOTER -->
+    <footer class="main-footer" id="how">
+      <div class="footer-container">
+        <p>צור קשר:</p>
+        <div class="footer-links">
+          <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
+          <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
+          <a href="mailto:igroup2project@gmail.com">אימייל</a>
         </div>
-      </footer>
+      </div>
+    </footer>
     </div>
 
     <script>
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            window.scrollTo({
-              top: target.offsetTop - 50,
-              behavior: "smooth",
-            });
+      // מחיקת localStorage בכל טעינה של עמוד הבית
+      window.localStorage.clear();
+      // גלילה חלקה לכל קישור anchor ב-navbar
+      function scrollToTarget(hash, updateHash = true) {
+        const target = document.querySelector(hash);
+        if (!target) return;
+        const nav = document.querySelector('.main-header');
+        const offset = nav ? nav.offsetHeight : 0;
+        const targetY = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({
+          top: targetY,
+          behavior: 'smooth',
+        });
+        if (updateHash && window.location.hash !== hash) {
+          history.pushState(null, '', hash);
+        }
+      }
+
+      // טיפול בלחיצה על קישורי navbar
+      document.querySelectorAll('.main-nav a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function (e) {
+          const hash = this.getAttribute('href');
+          if (document.querySelector(hash)) {
+            e.preventDefault();
+            scrollToTarget(hash, true);
           }
         });
+      });
+
+      // גלילה אוטומטית אם יש hash בטעינה (כולל רענון/כניסה ישירה)
+      window.addEventListener('DOMContentLoaded', function () {
+        if (window.location.hash && document.querySelector(window.location.hash)) {
+          setTimeout(() => {
+            scrollToTarget(window.location.hash, false);
+          }, 100);
+        }
       });
     </script>
   </body>

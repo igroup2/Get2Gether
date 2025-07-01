@@ -32,14 +32,13 @@ namespace Get2Gether.Controllers
 
 
         // POST api/<PersonsController>
-        [HttpGet("login")]
-        public int Login(string phone, string password)
-        {
-            Person p = new Person();
-            int id = p.logInUser(password, phone);
-            return id; 
+          [HttpGet("login")]
+             public int Login(string phone, string password)
+             {
+                  Person p = new Person();
+                  return p.logInUser(phone, password);
+             }
 
-        }
 
             // PUT api/<PersonsController>/5
             [HttpPut("{id}")]

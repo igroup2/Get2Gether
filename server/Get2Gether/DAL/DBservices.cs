@@ -462,31 +462,36 @@ public void CreateNewPerson(Person person)
         return CreateCommandWithStoredProcedureGENERAL(spName, con, paramDic);
     }
 
-    public int logInUser(string phone, string password)
-    {
-        using (SqlConnection con = connect("myProjDB"))
-        {
-            Dictionary<string, object> paramDic = new Dictionary<string, object>
-            {
-                { "@password", phone },
-                { "@phoneNumber", password }
-            };
+public int logInUser(string phone, string password)
+{
+    // בדיקת אדמין לפני פנייה ל־DB
+    if (phone == "Admin" && password == "Admin")
+        return 1;
 
-            using (SqlCommand cmd = CreateCommandWithStoredProcedure("SP_logInUser", con, paramDic))
+    using (SqlConnection con = connect("myProjDB"))
+    {
+        Dictionary<string, object> paramDic = new Dictionary<string, object>
+        {
+            { "@phoneNumber", phone },
+            { "@password", password }
+        };
+
+        using (SqlCommand cmd = CreateCommandWithStoredProcedure("SP_logInUser", con, paramDic))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                if (reader.Read())
                 {
-                    int isAdmin = 0;  
-                    if (reader.Read())
-                    {
-                        isAdmin = Convert.ToInt32(reader["isAdmin"]);
-                        
-                    }
-                    return isAdmin; 
+                    return Convert.ToInt32(reader["PersonID"]);
+                }
+                else
+                {
+                    return -1;
                 }
             }
         }
     }
+}
 
     private SqlCommand CreateCommandWithStoredProcedureGetALLRequests(String spName, SqlConnection con, Dictionary<string, object> paramDic)
     {
