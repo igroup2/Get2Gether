@@ -7,7 +7,8 @@ $(document).ready(function () {
     $("#eventsContainer").html("<p>לא נמצא מזהה משתמש במערכת</p>");
     return;
   }
-  const api = "https://localhost:7035/api/";
+  const api = "https://proj.ruppin.ac.il/igroup2/test2/tar1/swagger/";
+  //"https://localhost:7035/api/";
 
    if (localStorage.getItem("Role") === "Host") {
     const style = document.createElement("style");

@@ -20,8 +20,9 @@ window.initAutocomplete = function () {
 };
 
 $(document).ready(function () {
-  const api = "https://localhost:7035/api/";
-
+  const api = "https://proj.ruppin.ac.il/igroup2/test2/tar1/swagger/";
+  // //"https://localhost:7035/api/"; // API URL
+  
   $("form").on("submit", function (event) {
     event.preventDefault();
 

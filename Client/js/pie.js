@@ -1,9 +1,11 @@
 //const eventID = 15
 const eventID = localStorage.getItem("eventID");
+const api = "https://proj.ruppin.ac.il/igroup2/test2/tar1/swagger/";
+// //"https://localhost:7035/api/"; // API URL
 $(document).ready(function () {
   ajaxCall(
     "GET",
-    `https://localhost:7035/api/GuestInEvents/RSVPChartData?eventID=${eventID}`,
+    api + `GuestInEvents/RSVPChartData?eventID=${eventID}`,
     null,
     function (data) {
       console.log("✅ נתונים שהתקבלו:", data);

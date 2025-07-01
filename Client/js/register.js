@@ -1,4 +1,6 @@
-const api = "https://localhost:7035/api/";
+const api = "https://proj.ruppin.ac.il/igroup2/test2/tar1/swagger/";
+// //  //"https://localhost:7035/api/"; // API URL
+//"https://localhost:7035/api/";
 
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 document.addEventListener("DOMContentLoaded", function () {

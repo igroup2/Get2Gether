@@ -1,3 +1,5 @@
+const api = "https://proj.ruppin.ac.il/igroup2/test2/tar1/swagger/";
+// //"https://localhost:7035/api/"; // API URL
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 
 function initAutocomplete() {
@@ -25,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (eventID) {
     ajaxCall(
       "GET",
-      `https://localhost:7035/api/Events?eventID=${eventID}`,
+      api + `Events?eventID=${eventID}`,
       null,
       function (data) {
         console.log(data);

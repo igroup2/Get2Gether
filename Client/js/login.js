@@ -1,4 +1,5 @@
-const api = "https://localhost:7035/api/";
+const api = "https://proj.ruppin.ac.il/igroup2/test2/tar1/swagger/";
+// //"https://localhost:7035/api/";
 
 $(document).ready(function () {
   $("#loginForm").submit((event) => {
@@ -41,7 +42,6 @@ function Login() {
         }).then(() => {
           window.location.href = "Admin.html";
         });
-
       } else if (response > 1) {
         // התחברות כמשתמש רגיל
         // שמור personID ו-Role=Host
@@ -56,7 +56,6 @@ function Login() {
         }).then(() => {
           window.location.href = "events.html";
         });
-
       } else {
         // שגיאת התחברות
         Swal.fire({

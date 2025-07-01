@@ -1,4 +1,5 @@
-const api = "https://localhost:7035/api/"; // API URL
+const api = "https://proj.ruppin.ac.il/igroup2/test2/tar1/swagger/";
+// //"https://localhost:7035/api/"; // API URL
 document
   .getElementById("loadSettingsBtn")
   .addEventListener("click", function () {
