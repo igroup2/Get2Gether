@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>מפת ישראל</title>
+    <title>מפת האורחים | Get2Gether</title>
 
-    <!-- CSS -->
+    <!-- עיצוב -->
     <link rel="stylesheet" href="../css/mapStyle.css" />
     <link rel="stylesheet" href="../css/headerFooter.css" />
     <link rel="stylesheet" href="../css/SideBar.css" />
 
-    <!-- Leaflet CSS -->
+    <!-- Leaflet -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
-
-    <!-- Marker Cluster CSS -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
@@ -25,25 +23,6 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
     />
-    <!-- Leaflet CSS -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <!-- JS -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="../js/sideBar.js"></script>
-    <script src="../js/ajaxcalls.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-      function logout() {
-        localStorage.clear();
-        window.location.href = "index.html";
-      }
-    </script>
   </head>
 
   <body>
@@ -68,7 +47,7 @@
             </ul>
           </nav>
 
-          <!-- תפריט צדדי -->
+          <!-- SIDEBAR -->
           <div id="actionsSidebar">
             <span class="close-sidebar" onclick="toggleSidebar()">×</span>
             <ul>
@@ -76,47 +55,31 @@
               <li><a href="UpPage.html">😊 קובץ מוזמנים</a></li>
               <li><a href="shuttle.html">🚌 הקמת הסעה</a></li>
               <li><a href="MyShuttle.html">👁️ צפייה בהסעה קיימת</a></li>
-              <li><a href="#" onclick="logout()">🔴 התנתקות</a></li>
+              <li><a href="login.html">🔴 התנתקות</a></li>
             </ul>
           </div>
         </div>
       </header>
 
-      <!-- MAP HEADER TITLE -->
+      <!-- MAP TITLE -->
       <section class="map-header">
         <h1 class="map-title">מפת המוזמנים</h1>
       </section>
 
       <!-- MAIN CONTENT -->
       <section class="map-page">
+        <!-- LEFT PANEL -->
         <div class="left-panel">
-          <div class="map-legend">
-            <h3>מקרא</h3>
-            <div class="legend-buttons">
-              <button class="green" onclick="selectMarkerType('rideRequest')">
-                סמן ירוק – נוסע
-              </button>
-              <button
-                class="blue"
-                onclick="selectMarkerType('giveRideRequest')"
-              >
-                סמן כחול – נהג
-              </button>
-              <button
-                class="orange"
-                onclick="selectMarkerType('eventLocation')"
-              >
-                סמן כתום – מיקום האירוע
-              </button>
-            </div>
+          <div class="algoButton">
+            <button onclick="filterAlgo()">הפעלת אלגוריתם</button>
           </div>
 
-          <div class="tabs-wrapper">
-            <button onclick="showTab('final')" class="tab-button">
-              שיבוץ סופי
-            </button>
-            <button onclick="showTab('initial')" class="tab-button active">
+          <div class="table-tabs">
+            <button onclick="showTab('initial')" class="table-tab active">
               סינון ראשוני
+            </button>
+            <button onclick="showTab('final')" class="table-tab">
+              שיבוץ סופי
             </button>
           </div>
 
@@ -129,7 +92,22 @@
           </div>
         </div>
 
+        <!-- RIGHT PANEL – MAP -->
         <div class="right-panel">
+          <!-- מקרא כצף -->
+          <div class="floating-legend">
+            <button class="green" onclick="selectMarkerType('rideRequest')">
+              🧍 נוסע
+            </button>
+            <button class="blue" onclick="selectMarkerType('giveRideRequest')">
+              🚗 נהג
+            </button>
+            <button class="orange" onclick="selectMarkerType('eventLocation')">
+              📍 אירוע
+            </button>
+          </div>
+
+          <!-- מפת Leaflet -->
           <div id="map"></div>
         </div>
       </section>
@@ -147,7 +125,8 @@
       </footer>
     </div>
 
-    <!-- Leaflet JS -->
+    <!-- JS + MAP -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
@@ -158,7 +137,10 @@
       defer
     ></script>
 
-    <!-- Custom Map Logic -->
+    <!-- Custom Scripts -->
+    <script src="../js/ajaxcalls.js"></script>
+    <script src="../js/sideBar.js"></script>
     <script src="../js/map.js"></script>
   </body>
 </html>
+ד

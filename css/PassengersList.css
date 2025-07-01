@@ -31,34 +31,62 @@
 }
 
 .approve-offer-btn,
-.decline-offer-btn {
+.decline-offer-btn,
+.approve-offer-btn.upgraded-btn,
+.decline-offer-btn.upgraded-btn {
   font-size: 0.85rem;
-  padding: 6px 12px;
-  border: none;
+  padding: 4px 12px;
   border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  border: 1px solid #f3e6ec;
+  background: #fff;
+  color: #e91e63;
+  font-weight: 500;
+  box-shadow: 0 1px 4px rgba(240, 98, 146, 0.05);
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s, border 0.18s;
+  min-width: 64px;
 }
 
-.approve-offer-btn {
-  background-color: #f06292;
-  color: white;
+.approve-offer-btn,
+.approve-offer-btn.upgraded-btn {
+  background: #22c55e; /* tailwind green-500 */
+  color: #fff;
+  border: 1.5px solid #16a34a; /* tailwind green-600 */
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(34, 197, 94, 0.1);
+  position: relative;
+  transition: background 0.18s, color 0.18s, border 0.18s, box-shadow 0.18s;
 }
 
-.approve-offer-btn:hover {
-  transform: translateY(-2px);
-  background-color: #e91e63;
+.approve-offer-btn::before,
+.approve-offer-btn.upgraded-btn::before {
+  content: none;
+}
+
+.approve-offer-btn:hover,
+.approve-offer-btn.upgraded-btn:hover {
+  background: #16a34a; /* tailwind green-600 */
+  color: #fff;
+  border: 1.5px solid #15803d; /* tailwind green-700 */
+  box-shadow: 0 2px 10px rgba(22, 163, 74, 0.18);
+}
+
+.approve-offer-btn:hover::before,
+.approve-offer-btn.upgraded-btn:hover::before {
+  color: #fff;
 }
 
 .decline-offer-btn {
-  background-color: #cccccc;
-  color: #333;
+  background: linear-gradient(90deg, #e0e0e0 0%, #fff 100%);
+  color: #222;
+  border: 1.5px solid #bdbdbd;
 }
 
-.decline-offer-btn:hover {
-  background-color: #999999;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+.decline-offer-btn:hover,
+.decline-offer-btn.upgraded-btn:hover {
+  background: #f8f8f8;
+  color: #ad1457;
+  border: 1.5px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(233, 30, 99, 0.08);
 }
 
 .table-responsive {
@@ -67,50 +95,110 @@
 }
 
 .passenger-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: "Assistant", sans-serif;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 10px rgba(236, 64, 122, 0.05);
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(240, 98, 146, 0.08);
-  margin-bottom: 16px;
-  direction: rtl;
+  overflow: hidden;
+  border: 1.5px solid #ec407a;
+  border-top: none; /* ביטול מסגרת עליונה - הטאב הנבחר מחליף אותה */
+  margin-top: 0;
+  position: relative;
+  z-index: 5;
+  width: 900px;
+  min-width: 900px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .passenger-table th,
 .passenger-table td {
-  padding: 10px 8px;
-  border-bottom: 1px solid #f06292;
-  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px 8px;
+  font-size: 1.05em;
 }
 .passenger-table th {
-  background: #bebebe;
-  color: #000000;
-  font-weight: 600;
-  font-size: 1.05rem;
+  background: #f7f7fa;
+  color: #444;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  border-bottom: 1.5px solid #f8bbd0;
+  font-size: 1.04em;
 }
 .passenger-table tr:last-child td {
   border-bottom: none;
 }
 .passenger-table tbody tr:hover {
-  background: #fce4ec;
+  background: #f9fafb;
+  transition: background 0.2s;
 }
 .table-filter-input {
-  border: 1px solid #f06292;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
-  padding: 6px 12px;
-  font-size: 1rem;
-  margin-bottom: 10px;
-  outline: none;
+  padding: 8px 14px;
+  font-size: 1em;
+  margin-bottom: 16px;
+  background: #f9fafb;
   transition: border 0.2s;
 }
 .table-filter-input:focus {
-  border: 2px solid #e91e63;
+  border: 2px solid #f06292;
+}
+
+.details-card {
+  background: #fcfcfc;
+  border-radius: 22px;
+  box-shadow: 0 1px 8px rgba(180, 180, 180, 0.04);
+  padding: 12px 14px;
+  margin: 10px 0;
+  border: 1px solid #ececec;
+  transition: box-shadow 0.16s, border 0.16s, background 0.16s;
+  font-size: 1.01em;
+  color: #666;
+  font-family: "Assistant", sans-serif;
+  position: relative;
+}
+.details-card:hover {
+  box-shadow: 0 2px 16px rgba(180, 180, 180, 0.09);
+  border-color: #e0e0e0;
+  background: #f7f7f7;
+}
+.details-card .details-row-icons {
+  color: #000000;
+  font-size: 0.98em;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+.details-card .icon-confetti {
+  display: none !important;
+}
+.details-card p,
+.details-card span,
+.details-card div {
+  font-size: 0.97em;
+  color: #888;
+  margin: 1px 0;
+}
+.details-card strong {
+  color: #444;
+  font-weight: 600;
+}
+
+.icon-user,
+.icon-phone,
+.icon-location {
+  margin-left: 4px;
+  font-size: 1.1em;
+  vertical-align: middle;
 }
 
 @media (max-width: 600px) {
   .table-responsive {
     padding: 0;
     overflow-x: unset;
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
+    margin: 0;
   }
   .passenger-table,
   .passenger-table thead,
@@ -119,10 +207,17 @@
   .passenger-table td,
   .passenger-table tr {
     display: block;
-    width: 100%;
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
+    box-sizing: border-box;
   }
-  .passenger-table thead {
-    display: none;
+  .passenger-table {
+    width: 100vw !important;
+    min-width: 0 !important;
+    max-width: 100vw !important;
+    border-radius: 0;
+    margin: 0;
   }
   .passenger-table tr.main-row {
     background: #fff;
@@ -132,9 +227,10 @@
     margin-bottom: 12px;
     padding: 0 0 8px 0;
     display: block;
-    width: 100%;
+    width: 100vw;
     min-width: 0;
     max-width: 100vw;
+    box-sizing: border-box;
   }
   .passenger-table td {
     border: none;
@@ -146,13 +242,13 @@
     box-shadow: none;
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
     position: relative;
     white-space: normal;
     overflow: visible;
     text-overflow: unset;
-    min-width: 0;
-    max-width: 100vw;
     box-sizing: border-box;
   }
   .passenger-table td[data-label]:before {
@@ -165,6 +261,7 @@
     display: inline-block;
     position: static;
     background: none;
+    background: none;
     white-space: nowrap;
   }
   .passenger-table td[data-label=""] {
@@ -175,7 +272,7 @@
   .passenger-table td:last-child {
     justify-content: flex-start;
     gap: 4px;
-    width: 100%;
+    width: 100vw;
   }
   .toggle-details-btn {
     margin: 0 2px;
@@ -204,22 +301,192 @@
     font-size: 0.98em;
     color: #333;
   }
+  .passenger-table thead {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 }
 .toggle-details-btn {
-  font-size: 1.3em;
-  font-weight: bold;
-  background: #f06292;
-  color: #fff;
-  border: none;
+  background: #fff;
+  color: #222;
+  border: 1px solid #e0e0e0;
   border-radius: 50%;
   width: 32px;
   height: 32px;
-  line-height: 28px;
-  padding: 0;
-  margin: 0 4px;
-  cursor: pointer;
-  transition: background 0.2s;
+  font-size: 1.2em;
+  font-weight: bold;
+  transition: background 0.2s, color 0.2s;
 }
 .toggle-details-btn:hover {
-  background: #e91e63;
+  background: #f06292;
+  color: #fff;
+}
+/* כפתורי תצוגה */
+.view-toggle-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  justify-content: flex-end;
+}
+.view-toggle-btn {
+  background: #fff;
+  color: #f06292;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 7px 18px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.view-toggle-btn.active,
+.view-toggle-btn:focus {
+  background: #f06292;
+  color: #fff;
+  border: 1.5px solid #e91e63;
+}
+
+/* טאבים עדינים לסינון טבלת נוסעים - שיפור חיבור לטבלה */
+.table-tabs {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 6px;
+  margin-bottom: 0; /* ביטול חפיפה שלילית, חיבור מושלם */
+  margin-right: 0;
+  margin-left: auto;
+  position: relative;
+  top: 0;
+  z-index: 10; /* טאבים מעל הטבלה */
+}
+
+.table-tab {
+  padding: 6px 14px 7px 14px;
+  background: #f7f7fa;
+  color: #444;
+  border: 1.5px solid #e0e0e0;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  font-size: 0.98em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border 0.18s, box-shadow 0.18s;
+  user-select: none;
+  outline: none;
+  display: inline-block;
+  letter-spacing: 0.2px;
+  box-shadow: 0 1px 4px rgba(236, 64, 122, 0.04);
+  position: relative;
+  margin-left: 0.5px;
+  margin-right: 0.5px;
+}
+
+.table-tab.active {
+  background: #fff;
+  color: #ec407a;
+  border-color: #ec407a #ec407a transparent #ec407a;
+  border-bottom: 2.5px solid #fff;
+  z-index: 12;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(236, 64, 122, 0.1);
+  transform: scale(1.04);
+}
+
+.table-tab:hover:not(.active) {
+  background: #f8bbd0;
+  color: #ad1457;
+  border-color: #f8bbd0 #f8bbd0 transparent #f8bbd0;
+}
+
+.table-tabs {
+  gap: 2px;
+  background: none;
+  box-shadow: none;
+}
+
+/* טבלה - עיצוב רשמי */
+.passenger-table {
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 10px rgba(236, 64, 122, 0.05);
+  background: #fff;
+  overflow: hidden;
+  border: 1.5px solid #ec407a;
+  border-top: none;
+  margin-top: 0;
+  position: relative;
+  z-index: 5;
+}
+
+.passenger-table th {
+  background: #f7f7fa;
+  color: #444;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  border-bottom: 1.5px solid #f8bbd0;
+  font-size: 1.04em;
+}
+
+@media (max-width: 600px) {
+  .table-tab {
+    font-size: 0.93em;
+    padding: 5px 8px 6px 8px;
+    border-radius: 7px 7px 0 0;
+  }
+  .passenger-table {
+    border-radius: 0 0 7px 7px;
+  }
+  .passenger-table thead {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 950px) {
+  .passenger-table {
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
+  }
+}
+
+/* שמירה על רוחב קבוע לטבלה */
+.passenger-table {
+  width: 900px;
+  min-width: 900px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ודא שגם שורות מידע נוסף לא משפיעות על הרוחב */
+.details-row,
+.extra-details-mobile {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inactive-row {
+  background: #ffeaea !important;
+  /* צבע אדום חלש, עדין */
+  color: #b71c1c !important;
+  opacity: 0.85;
+}
+tr.inactive-row,
+.inactive-row td {
+  background: #ffeaea !important;
+  color: #b71c1c !important;
+  opacity: 0.85;
+}
+tr.confirmed-row,
+.confirmed-row td {
+  background: #e6ffe6 !important;
+  color: #14532d !important;
 }

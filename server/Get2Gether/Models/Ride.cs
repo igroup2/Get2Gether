@@ -54,12 +54,13 @@ namespace Get2Gether.Models
             DBservices dbs = new DBservices();
             dbs.DeletePassengerByDriver(driverID,passengerID,eventID);
         }
-
-        public static bool ApproveRide(int rideID, string role)
+        public static bool ApproveRide(int rideID, int personID)
         {
             DBservices dbs = new DBservices();
-            return dbs.ApproveRide(rideID, role);
+            return dbs.ApproveRide(rideID, personID);
         }
+
+
     }
 
 }

@@ -12,10 +12,12 @@
     />
     <link rel="stylesheet" href="../css/headerFooter.css" />
     <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../css/invite.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../js/js.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <script src="../js/inviteSender.js"></script>
+    <script src="../css/inviteSender.css"></script>
   </head>
   <body>
     <header class="main-header">
@@ -35,127 +37,47 @@
         </nav>
       </div>
     </header>
+
     <main>
-      <section
-        class="hero"
-        style="
-          min-height: 30vh;
-          background-image: url('../images/sec1.png');
-          background-size: cover;
-          background-position: left center;
-        "
-      >
-        <div
-          class="hero-content"
-          style="
-            background: rgba(255, 255, 255, 0.92);
-            border-radius: 16px;
-            max-width: 500px;
-            margin: 60px auto 0 auto;
-            padding: 30px 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            position: relative;
-            z-index: 3;
-          "
-        >
-          <h1 style="color: #111">העלאת תמונת הזמנה ושליחת הודעה</h1>
+      <section class="hero">
+        <div class="hero-content">
+          <h1>העלאת תמונת הזמנה ושליחת הודעה</h1>
           <form
             id="inviteImageForm"
             enctype="multipart/form-data"
             onsubmit="return false;"
-            style="margin-bottom: 20px"
           >
             <label for="inviteImageInput">העלה תמונת הזמנה:</label>
-            <div
-              class="upload-area"
-              style="
-                border: 2px dashed #b3b3b3;
-                border-radius: 12px;
-                padding: 24px 10px;
-                margin: 15px 0;
-                background: #f8f8f8;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                min-height: 90px;
-              "
-            >
+            <div class="upload-area">
               <input
                 type="file"
                 id="inviteImageInput"
                 name="inviteImage"
                 accept="image/*"
-                style="
-                  margin-bottom: 0;
-                  display: block;
-                  margin-left: auto;
-                  margin-right: auto;
-                "
               />
             </div>
-            <div
-              class="button-row"
-              style="
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                align-items: stretch;
-                margin-top: 10px;
-              "
-            >
+            <div class="button-row">
               <button
                 type="button"
                 id="uploadInviteBtn"
                 class="btn"
-                style="background: #f06292; color: #fff; min-width: 100px"
                 onmouseenter="showTooltip(event, 'המערכת תאשר את התמונה שהעלתם ותוכלו לשלוח אותה במרוכז לכל האורחים')"
                 onmouseleave="hideTooltip()"
               >
                 העלה
               </button>
-              <button
-                type="button"
-                id="showInviteBtn"
-                class="btn"
-                style="
-                  display: none;
-                  background: #90caf9;
-                  color: #111;
-                  min-width: 100px;
-                "
-              >
+              <button type="button" id="showInviteBtn" class="btn hidden">
                 הצג הזמנת אירוע נוכחית
               </button>
-              <button
-                type="button"
-                id="previewExampleBtn"
-                class="btn"
-                style="background: #b3e6ff; color: #111; min-width: 100px"
-              >
+              <button type="button" id="previewExampleBtn" class="btn example">
                 הצג דוגמת הזמנה
               </button>
             </div>
           </form>
-          <div
-            id="inviteImagePreview"
-            style="
-              margin-top: 10px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            "
-          ></div>
+          <div id="inviteImagePreview" class="preview-container"></div>
           <button
             id="sendInviteBtn2"
-            class="btn"
-            style="
-              margin-top: 30px;
-              width: 80%;
-              font-size: 1.3rem;
-              background: #f06292;
-              color: #fff;
-            "
+            class="btn send"
             onmouseenter="showTooltip(event, 'שים לב ניתן יהיה לשלוח הזמנה לכל האורחים רק פעם אחת! לאחר מכן לא יהיה ניתן לשנות את התמונה! ')"
             onmouseleave="hideTooltip()"
           >
@@ -164,6 +86,7 @@
         </div>
       </section>
     </main>
+
     <footer class="main-footer">
       <div class="footer-container">
         <p>צור קשר:</p>
@@ -193,35 +116,21 @@
         </a>
       </div>
     </footer>
+
     <script>
-      // Example invitation preview button logic
       document
         .getElementById("previewExampleBtn")
         .addEventListener("click", function () {
-          const imageUrl = "../images/הזמנה לחתונה.jpg"; // הנתיב לתמונה
-          window.open(imageUrl, "_blank"); // פותח את התמונה בלשונית חדשה
+          const imageUrl = "../images/הזמנה לחתונה.jpg";
+          window.open(imageUrl, "_blank");
         });
+
       function showTooltip(e, text) {
         let tooltip = document.getElementById("custom-tooltip");
         if (!tooltip) {
           tooltip = document.createElement("div");
           tooltip.id = "custom-tooltip";
-          tooltip.style.position = "fixed";
-          tooltip.style.background = "#fff";
-          tooltip.style.color = "#222";
-          tooltip.style.padding = "18px 28px";
-          tooltip.style.borderRadius = "16px";
-          tooltip.style.fontSize = "1.15rem";
-          tooltip.style.zIndex = 9999;
-          tooltip.style.pointerEvents = "none";
-          tooltip.style.boxShadow = "0 4px 16px #0002";
-          tooltip.style.border = "2px solid #b3b3b3";
-          tooltip.style.minWidth = "260px";
-          tooltip.style.minHeight = "60px";
-          tooltip.style.textAlign = "center";
-          tooltip.style.display = "flex";
-          tooltip.style.alignItems = "center";
-          tooltip.style.justifyContent = "center";
+          tooltip.className = "tooltip";
           document.body.appendChild(tooltip);
         }
         tooltip.innerHTML = text;
@@ -229,6 +138,7 @@
         moveTooltip(e);
         document.addEventListener("mousemove", moveTooltip);
       }
+
       function moveTooltip(e) {
         let tooltip = document.getElementById("custom-tooltip");
         if (tooltip) {
@@ -237,6 +147,7 @@
           tooltip.style.left = "";
         }
       }
+
       function hideTooltip() {
         let tooltip = document.getElementById("custom-tooltip");
         if (tooltip) {
