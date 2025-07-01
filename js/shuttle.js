@@ -1,7 +1,10 @@
-const api = "https://localhost:7035/api/"; // ← הארדקוד לפי בקשה
+const api = "https://localhost:7035/api/";
+
 const eventID = localStorage.getItem("eventID");
 
 let selectedCoordinates = { latitude: 0, longitude: 0 };
+
+let eventdetails = null;
 
 window.initAutocomplete = function () {
   const input = document.getElementById("pickup");
@@ -33,6 +36,7 @@ $(document).ready(function () {
     dateFormat: "H:i",
     time_24hr: true,
   });
+
   $(".ride-form").on("submit", function (e) {
     e.preventDefault();
 
@@ -82,8 +86,10 @@ $(document).ready(function () {
       function (response) {
         console.log("✅ Shuttle created:", response);
 
-        notifyGuestsOnNewShuttle(eventID);
-        // Reload shuttles after successful creation
+        getEvevntDetails(function (eventdetails) {
+          notifyGuestsOnNewShuttle(eventID, eventdetails, capacity);
+        });
+
         Swal.fire({
           icon: "success",
           title: "הסעה נוצרה בהצלחה!",
@@ -107,23 +113,51 @@ $(document).ready(function () {
     );
   });
 });
+
+function getEvevntDetails(callback) {
+  ajaxCall(
+    "GET",
+    api + `Events/${eventID}`,
+    null,
+    function (response) {
+      {
+        console.log("✅ Event details fetched for event", eventID, response);
+        eventdetails = response[0].event;
+        callback(eventdetails);
+      }
+    },
+    function (err) {
+      console.error("❌ Error fetching event details:", err);
+      eventdetails = null;
+      if (callback) callback("פרטים נוספים על האירוע");
+    }
+  );
+}
+
 function toggleMenu() {
   const nav = document.querySelector(".main-nav");
   nav.classList.toggle("active");
 }
 
 // --- WhatsApp Notification on New Shuttle ---
-function sendShuttleWhatsAppMessage(phone, name) {
+function sendShuttleWhatsAppMessage(phone, name, eventdetails, capacity) {
   var instanceId = "instance125498";
   var token = "p0nh304uqoyrth5a";
   var url =
     "https://api.ultramsg.com/" + instanceId + "/messages/chat?token=" + token;
-  var message = `היי ${name}!\nנוספה הסעה חדשה לאירוע שלך:\n לפרטים נוספים היכנסו לאתר שלנו !`;
+  var dateOnly = eventdetails.eventDate.split("T")[0];
+  var message = `היי ${name}!\n
+  \n  נוספה הסעה חדשה לאירוע: ${eventdetails.eventDesc} 
+  שמתקיים בתאריך ${dateOnly}.\n
+  כמות המקומות המוגבלת היא ${capacity}.\n
+   לפרטים נוספים היכנסו לאתר שלנו!`;
+
   var data = {
     to: phone,
     body: message,
     priority: 10,
   };
+
   $.ajax({
     type: "POST",
     url: url,
@@ -132,6 +166,7 @@ function sendShuttleWhatsAppMessage(phone, name) {
     processData: true,
     success: function (result) {
       console.log("UltraMsg API response (shuttle):", result);
+      console.log(data);
     },
     error: function (xhr, status, error) {
       console.error("AJAX error (shuttle):", error, xhr.responseText);
@@ -139,7 +174,7 @@ function sendShuttleWhatsAppMessage(phone, name) {
   });
 }
 
-function notifyGuestsOnNewShuttle(eventID) {
+function notifyGuestsOnNewShuttle(eventID, eventdetails, capacity) {
   ajaxCall(
     "GET",
     api + `GuestInEvents/GetInviteDetails?eventId=${eventID}`,
@@ -147,7 +182,12 @@ function notifyGuestsOnNewShuttle(eventID) {
     function (guests) {
       if (guests && guests.length > 0) {
         guests.forEach((g) => {
-          sendShuttleWhatsAppMessage(g.phoneNumber, g.fullName);
+          sendShuttleWhatsAppMessage(
+            g.phoneNumber,
+            g.fullName,
+            eventdetails,
+            capacity
+          );
         });
         console.log("הודעות וואטסאפ נשלחו לכל האורחים על הסעה חדשה");
       } else {

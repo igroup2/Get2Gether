@@ -54,22 +54,14 @@
         </div>
       </header>
 
-    <div class="dashboard-map-wrapper">
-      <!-- צד שמאל: מפה -->
-      <div class="map-container">
-        <div id="map"></div>
-        <div class="marker-buttons">
-          <button class="green" onclick="selectMarkerType('rideRequest')">
-            פין ירוק (נוסע)
-          </button>
-          <button class="blue" onclick="selectMarkerType('giveRideRequest')">
-            פין כחול (נהג)
-          </button>
-          <button class="orange" onclick="selectMarkerType('eventLocation')">
-            פין כתום (אירוע)
-          </button>
-          <div class="algoButton" onclick="filterAlgo()">
-            <button>הפעלת אלגוריתם</button>
+      <div class="dashboard-map-wrapper">
+        <!-- צד שמאל: מפה -->
+        <div class="map-container">
+          <div id="map" style="width: 100%; height: 400px"></div>
+          <div class="marker-buttons">
+            <button class="green">פין ירוק (נוסע)</button>
+            <button class="blue">פין כחול (נהג)</button>
+            <button class="orange">פין כתום (אירוע)</button>
           </div>
         </div>
       </div>
@@ -90,7 +82,7 @@
           </div>
 
           <div class="status-box">
-            <div class="label">בקשות טרמפ</div>
+            <div class="label">הצעות טרמפ</div>
             <div class="count-circle" id="GiveRideRequestsCount">0</div>
           </div>
           <a href="homePage.html" class="back-home-btn">חזרה למסך הבית</a>
@@ -98,61 +90,24 @@
           <div class="chart-container">
             <canvas id="myPieChart"></canvas>
           </div>
-
-          <footer>
-            <p>צור קשר:</p>
-            <a href="https://www.instagram.com" target="_blank">
-              <img
-                src="../images/instagram-icon.png"
-                alt="Instagram"
-                width="24"
-                height="24"
-              />
-            </a>
-            <a href="https://www.facebook.com" target="_blank">
-              <img
-                src="../images/facebook-icon.png"
-                alt="Facebook"
-                width="24"
-                height="24"
-              />
-            </a>
-            <a href="mailto:igroup2project@gmail.com">
-              <img
-                src="../images/google-icon.png"
-                alt="Google"
-                width="24"
-                height="24"
-              />
-            </a>
-          </footer>
         </div>
       </div>
     </div>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
-      async
-      defer
-    ></script>
-        <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
+    <script src="../js/map.js"></script>
     <!-- Google Maps API -->
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places&callback=initMap"
       async
       defer
     ></script>
 
     <!-- Custom Map Logic -->
-    <script src="../js/map.js"></script>
     <script>
       function initMap() {
-        const center = { lat: 32.08, lng: 34.78 };
-        const map = new google.maps.Map(document.getElementById("map"), {
-          zoom: 11,
-          center: center,
+        var map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 32.0853, lng: 34.7818 },
+          zoom: 10,
         });
       }
     </script>
