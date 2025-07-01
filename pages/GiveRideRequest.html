@@ -5,23 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Enter Give Ride Request</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="../css/headerFooter.css" />
-    <link rel="stylesheet" href="../css/ride-request.css" />
-
-    <!-- JS -->
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="../js/GiveRideRequest.js"></script>
-    <script src="../js/ajaxcalls.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <!-- Google Maps API -->
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places&callback=initAutocomplete"
       async
       defer
     ></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/headerFooter.css" />
+    <link rel="stylesheet" href="../css/ride-request.css" />
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../js/ajaxcalls.js"></script>
   </head>
 
   <body>
@@ -81,76 +78,27 @@
             <h3>קצת עליך:</h3>
 
             <div class="radio-line">
-              <span class="required-label">המגדר שלי:</span><br />
-              <input
-                type="radio"
-                id="genderM"
-                name="gender"
-                value="M"
-                required
-              />
-              <label for="genderM">גבר</label>
-              <input type="radio" id="genderF" name="gender" value="F" />
-              <label for="genderF">אישה</label>
+              <label>המגדר שלי:</label>
+              <input type="radio" name="gender" value="M" required /> גבר
+              <input type="radio" name="gender" value="F" /> אישה
             </div>
 
             <div class="radio-line">
-              <span class="required-label">האם אתה מעשן?</span><br />
-              <input
-                type="radio"
-                id="smokeYes"
-                name="smoke"
-                value="1"
-                required
-              />
-              <label for="smokeYes">כן</label>
-              <input type="radio" id="smokeNo" name="smoke" value="0" />
-              <label for="smokeNo">לא</label>
+              <label>האם אתה מעשן?</label>
+              <input type="radio" name="smoke" value="1" required /> כן
+              <input type="radio" name="smoke" value="0" /> לא
             </div>
 
             <div class="radio-line">
-              <span class="required-label">מעדיף לנסוע עם:</span><br />
-              <input
-                type="radio"
-                id="prefMale"
-                name="preferredGender"
-                value="M"
-                required
-              />
-              <label for="prefMale">גבר</label>
-              <input
-                type="radio"
-                id="prefFemale"
-                name="preferredGender"
-                value="F"
-              />
-              <label for="prefFemale">אישה</label>
-              <input
-                type="radio"
-                id="prefOther"
-                name="preferredGender"
-                value="N"
-              />
-              <label for="prefOther">אין העדפה</label>
+              <label>מעדיף לנסוע עם:</label>
+              <input type="radio" name="preferredGender" value="M" required />
+              גבר <input type="radio" name="preferredGender" value="F" /> אישה
             </div>
 
             <div class="radio-line">
-              <span class="required-label">מפריע לי עישון:</span><br />
-              <input
-                type="radio"
-                id="noSmokeYes"
-                name="preferNoSmoking"
-                value="1"
-                required
-              />
-              <label for="noSmokeYes">כן</label>
-              <input
-                type="radio"
-                id="noSmokeNo"
-                name="preferNoSmoking"
-                value="0"
-              />
-              <label for="noSmokeNo">לא</label>
+              <label>מפריע לי עישון:</label>
+              <input type="radio" name="preferNoSmoking" value="1" required />
+              כן <input type="radio" name="preferNoSmoking" value="0" /> לא
             </div>
           </div>
 
@@ -189,5 +137,76 @@
         </div>
       </footer>
     </div>
+
+    <!-- SCRIPT: Google Autocomplete + Submit -->
+    <script>
+      let selectedCoordinates = { latitude: 0, longitude: 0 };
+
+      function initAutocomplete() {
+        const input = document.getElementById("rideExitPoint");
+        const autocomplete = new google.maps.places.Autocomplete(input, {
+          types: ["geocode"],
+          componentRestrictions: { country: "il" },
+        });
+
+        autocomplete.addListener("place_changed", function () {
+          const place = autocomplete.getPlace();
+          if (place.geometry && place.geometry.location) {
+            selectedCoordinates.latitude = place.geometry.location.lat();
+            selectedCoordinates.longitude = place.geometry.location.lng();
+            console.log("📍 Ride exit selected:", selectedCoordinates);
+          } else {
+            console.warn("⚠️ כתובת לא תקינה או לא נבחרה מרשימה");
+          }
+        });
+      }
+
+      $(document).ready(function () {
+        const api = "https://localhost:7035/api/";
+
+        $("form").on("submit", function (event) {
+          event.preventDefault();
+
+          if (
+            selectedCoordinates.latitude === 0 &&
+            selectedCoordinates.longitude === 0
+          ) {
+            alert("אנא בחר נקודת יציאה מתוך ההשלמה של גוגל");
+            return;
+          }
+
+          const giveRideRequest = {
+            EventID: 15,
+            PersonID: 10,
+            CarCapacity: parseInt($("#carCapacity").val()),
+            RideExitPoint: $("#rideExitPoint").val(),
+            PreferredGender: $("input[name='preferredGender']:checked").val(),
+            PreferredSmoker:
+              $("input[name='preferNoSmoking']:checked").val() === "0"
+                ? false
+                : true,
+            latitude: selectedCoordinates.latitude,
+            longitude: selectedCoordinates.longitude,
+            note: $("#notes").val(),
+          };
+
+          console.log("📩 Give ride request data:", giveRideRequest);
+
+          ajaxCall(
+            "POST",
+            api + "GiveRideRequests",
+            JSON.stringify(giveRideRequest),
+            (response) => {
+              console.log("✅ Success submitting give ride request", response);
+              alert("הבקשה נשלחה בהצלחה!");
+            },
+            (error) => {
+              console.log("❌ Error submitting give ride request", error);
+              alert("שגיאה בשליחת הבקשה.");
+            }
+          );
+        });
+      });
+    </script>
   </body>
 </html>

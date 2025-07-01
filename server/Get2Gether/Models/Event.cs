@@ -13,12 +13,11 @@ namespace Get2Gether.Models
 		string eventLocation; //שם האולם
         double eventLatitude;
         double eventLongitude;
-        
 
 
         public Event()
-        {
-        }
+		{
+		}
 
         public Event(int eventID, int partnerID1, int partnerID2, string eventDesc, int numOfGuest, DateTime eventDate, string eventLocation, double eventLatitude, double eventLongitude)
         {
@@ -43,12 +42,13 @@ namespace Get2Gether.Models
         public double EventLatitude { get => eventLatitude; set => eventLatitude = value; }
         public double EventLongitude { get => eventLongitude; set => eventLongitude = value; }
 
+
         public static void createNewEvent(Event NewEvent)
         {
             DBservices dbs = new DBservices();
              dbs.CreateNewEvent(NewEvent);
         }
-        public static List<dynamic> GetEvents(int PersonID)
+        public static  List<Event> GetEvents(int PersonID)
         {
             DBservices dbs = new DBservices();
             return dbs.GetEvents(PersonID);
@@ -58,12 +58,6 @@ namespace Get2Gether.Models
             DBservices dbs = new DBservices();
             dbs.updateEvent(NewEvent);
         }
-        public static Event GetEventDetails(int eventID)
-        {
-            DBservices db =new DBservices();
-            return db.GetEventDetails(eventID);
-        }
-
     }
 }
 

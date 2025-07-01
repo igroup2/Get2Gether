@@ -1,62 +1,118 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>התחברות</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="../js/js.js"></script>
     <script src="../js/ajaxcalls.js"></script>
-    <script src="../js/login.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/headerFooter.css" />
-    <link rel="stylesheet" href="../css/login.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+      const api = "https://localhost:7035/api/";
+
+      $(document).ready(function () {
+        $("#loginForm").submit((event) => {
+          event.preventDefault();
+
+          Login(); // קריאה לפונקציה
+        });
+      });
+
+      function Login() {
+        let user = {
+          phone: $("#phone").val(),
+          password: $("#password").val(),
+        };
+        console.log(user, "user loggin:");
+        if (user.phone == "" || user.password == "") {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Please fill in all fields",
+            showConfirmButton: true,
+          });
+          return;
+        }
+
+        ajaxCall(
+          "GET",
+          api + `Persons/login?phone=${user.phone}&password=${user.password}`,
+          null,
+          (response) => {
+            console.log("Login successful");
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Login successful",
+              showConfirmButton: false,
+              timer: 3000,
+            }).then(() => {
+              if (response == 1) {
+                window.location.href = "Admin.html"; // Redirect to Admin.html
+              } else {
+                window.location.href = "index.html"; // Redirect to index.html
+              }
+            });
+          },
+          (error) => {
+            console.error("Login failed", error);
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Login failed",
+              text: "Please check your credentials and try again.",
+              showConfirmButton: true,
+            });
+          }
+        );
+      }
+    </script>
   </head>
+
   <body>
-    <div class="page-wrapper">
-      <!-- HEADER -->
-      <header class="main-header">
-        <div class="header-container">
-          <div class="branding">
-            <img src="../images/logo.png" class="site-logo" alt="logo" />
-            <h1 class="site-title">Get2Gether</h1>
-          </div>
-          <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">☰</button>
-          <nav class="main-nav">
-            <ul>
-              <li><a href="../pages/index.html#hero">בית</a></li>
-              <li><a href="../pages/index.html#feature">המוצרים שלנו</a></li>
-              <li><a href="../pages/index.html#about">עלינו</a></li>
-              <li><a href="../pages/index.html#how">צור קשר</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-      <main>
-        <div class="container">
-          <h2>התחברות</h2>
-          <form id="loginForm">
-            <label for="phone">פלאפון:</label>
-            <input type="phone" id="phone" required />
+    <header>
+      <div class="logo">
+        <img src="../images/logo.png" alt="הלוגו שלך" id="myLogo" />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">בית</a></li>
+          <li><a href="login.html">התחברות</a></li>
+          <li><a href="register.html">הרשמה</a></li>
+          <li><a href="select.html">בחירה</a></li>
+          <li><a href="map.html"> מפה </a></li>
+          <li><a href="Events.html"> Events </a></li>
+        </ul>
+      </nav>
+    </header>
 
-            <label for="password">סיסמה:</label>
-            <input type="password" id="password" required />
+    <div class="container">
+      <h2>התחברות</h2>
+      <form id="loginForm">
+        <label for="phone">פלאפון:</label>
+        <input type="phone" id="phone" required />
 
-            <button type="submit">התחבר</button>
-          </form>
-          <p>אין לך חשבון? <a href="register.html">להרשמה</a></p>
-        </div>
-      </main>
-      <footer class="main-footer" id="how">
-        <div class="footer-container">
-          <p>צור קשר:</p>
-          <div class="footer-links">
-            <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
-            <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
-            <a href="mailto:igroup2project@gmail.com">אימייל</a>
-          </div>
-        </div>
-      </footer>
+        <label for="password">סיסמה:</label>
+        <input type="password" id="password" required />
+
+        <button type="submit">התחבר</button>
+        <button class="google-btn">התחברות עם גוגל</button>
+      </form>
+      <p>אין לך חשבון? <a href="register.html">להרשמה</a></p>
     </div>
+
+    <footer>
+      <p>צור קשר:</p>
+      <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
+      <a href="https://wa.me/" target="_blank">ווצטאפ</a> |
+      <a href="mailto:igroup2project@gmail.com">גוגל</a>
+    </footer>
   </body>
 </html>

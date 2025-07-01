@@ -103,15 +103,8 @@ namespace Get2Gether.Controllers
             return Ok(chartData);
         }
 
-        [HttpGet("GetInviteDetails")]
-        public IActionResult GetInviteDetails([FromQuery] int eventId)
-        {
-            var guestDetails = GuestInEvent.GetInviteDetails(eventId);
-            if (guestDetails == null || guestDetails.Count == 0)
-                return NotFound("לא נמצאו אורחים לאירוע");
-            // אין צורך לשנות, הפרמטרים החדשים ייכללו אוטומטית בתשובה
-            return Ok(guestDetails);
-        }
+
+
 
         // POST api/<GuestInEventsController>
         [HttpPost]
@@ -129,23 +122,6 @@ namespace Get2Gether.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-        }
-
-        [HttpPut("UpdateRSVPStatus")]
-        public IActionResult UpdateRSVPStatus([FromBody] GuestInEvent guest)
-        {
-            try
-            {
-                int res = GuestInEvent.UpdateRSVPStatus(guest.EventID, guest.PersonID, guest.RsvpStatus);
-                if (res > 0)
-                    return Ok(new { message = "RSVP status updated successfully" }); // החזרת אובייקט JSON
-                else
-                    return NotFound("אורח לא נמצא או שלא עודכן");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"שגיאה בעדכון סטטוס: {ex.Message}");
-            }
         }
     }
 }

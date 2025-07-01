@@ -20,10 +20,7 @@ if (!eventId || !personId) {
     `guestPhoneNumber_${personId}`,
     "fullName",
     "phoneNumber",
-    "Role"
   ];
-  // שמור תמיד Role=Guest כשנכנסים לעמוד זה (לפני מחיקת מפתחות אחרים)
-  localStorage.setItem("Role", "Guest");
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
     if (!allowedKeys.includes(key)) {
@@ -106,15 +103,11 @@ function updateRSVPStatus(status) {
     Swal.fire({
       icon: "success",
       title: "איזה כיף!",
-      html: "נתראה באירוע בשמחה גדולה 🎉 מחכים לראותך!<br><br><span style='color:#b85b8b;font-weight:bold;'>רוצה לקחת חלק במערך הטרמפים? תוכל להציע או לבקש טרמפ בעמוד הבא!</span>",
-      showCancelButton: true,
-      confirmButtonText: "כן אני אשמח",
-      cancelButtonText: "לא כרגע",
+      text: "נתראה באירוע בשמחה גדולה 🎉 מחכים לראותך!",
+      confirmButtonText: "מחכה כבר!",
     }).then((result) => {
       if (result.isConfirmed) {
         window.location.href = "select.html";
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        window.location.href = "Events.html";
       }
     });
   } else if (status === "לא מגיעה") {
@@ -123,8 +116,6 @@ function updateRSVPStatus(status) {
       title: "חבל שלא תוכל/י להגיע",
       text: "נשמח לראותך בשמחות הבאות!",
       confirmButtonText: "תודה",
-    }).then((result) => {
-      window.location.href = "Events.html";
     });
   } else if (status === "מתלבטת") {
     Swal.fire({
@@ -132,17 +123,14 @@ function updateRSVPStatus(status) {
       title: "נשמח לעדכון בהמשך!",
       text: "האירוע מחכה גם למתלבטים ולמתלבטות 😉",
       confirmButtonText: "אעדכן בקרוב",
-    }).then((result) => {
-      window.location.href = "Events.html";
     });
   }
 
   const data = JSON.stringify({
     eventID: parseInt(eventId),
     personID: parseInt(personId),
-    rsvpStatus: status,
+    RsvpStatus: status,
   });
-console.log("RSVP Payload:", JSON.parse(data));
 
   ajaxCall(
     "PUT",

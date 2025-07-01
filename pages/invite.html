@@ -4,65 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>הזמנה לאירוע</title>
-    <link rel="stylesheet" href="../css/headerFooter.css">
-    <link rel="stylesheet" href="../css/select.css">
-    <link rel="stylesheet" href="../css/invite.css">
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .invite-container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .invite-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        }
+        .invite-title {
+            font-size: 2rem;
+            margin-bottom: 18px;
+            color: #5c2e1f;
+        }
+        .invite-btn {
+            padding: 12px 32px;
+            margin: 8px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            background: #e9e5e0;
+            color: #333;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .invite-btn:hover {
+            background: #d3cfc9;
+        }
+        .invite-btn.yes { background: #4caf50; color: #fff; }
+        .invite-btn.no { background: #f44336; color: #fff; }
+        .invite-btn.maybe { background: #ff9800; color: #fff; }
+    </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        <header class="main-header">
-            <div class="header-container">
-                <div class="branding">
-                    <img src="../images/logo.png" class="site-logo" alt="logo" />
-                    <h1 class="site-title">Get2Gether</h1>
-                </div>
-                <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">☰</button>
-                <nav class="main-nav">
-                    <ul>
-                        <li><a href="../pages/index.html#hero">בית</a></li>
-                        <li><a href="../pages/index.html#feature">המוצרים שלנו</a></li>
-                        <li><a href="../pages/index.html#about">עלינו</a></li>
-                        <li><a href="../pages/index.html#how">צור קשר</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-        <div class="invite-container" style="margin-top:120px;">
-            <div class="invite-title">הזמנה לאירוע</div>
-            <div id="inviteMessage" style="margin-bottom:18px;font-size:1.2rem;color:#5c2e1f;"></div>
-            <img class="invite-image" src="" alt="הזמנה לאירוע" id="inviteImg" style="display:none;">
-            <div class="option-buttons" style="margin: 24px 0;">
-                <button class="invite-btn yes">מגיע</button>
-                <button class="invite-btn no">לא מגיע</button>
-                <button class="invite-btn maybe">מתלבט</button>
-            </div>
+    <div class="invite-container">
+        <div class="invite-title">הזמנה לאירוע</div>
+        <img class="invite-image" src="/invites/invite_1079.jpg" alt="הזמנה לאירוע" id="inviteImg">
+        <div style="margin: 24px 0;">
+            <button class="invite-btn yes">מגיע</button>
+            <button class="invite-btn no">לא מגיע</button>
+            <button class="invite-btn maybe">מתלבט</button>
         </div>
-        <footer class="main-footer" id="how">
-            <div class="footer-container">
-                <p>צור קשר:</p>
-                <div class="footer-links">
-                    <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
-                    <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
-                    <a href="mailto:igroup2project@gmail.com">אימייל</a>
-                </div>
-            </div>
-        </footer>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../js/ajaxcalls.js"></script>
-    <script src="../js/invite.js"></script>
     <script>
+        // משתנים קבועים לדוגמה
+        const EVENTID = 1079;
+        const PERSONID = 1194;
         // בעתיד תוכל לטעון את התמונה והפרטים לפי EVENTID/PERSONID
-
-        // הצגת תמונה רק אם inviteImageUrl קיים ב-localStorage
-        const inviteImageUrl = localStorage.getItem('inviteImageUrl');
-        if (inviteImageUrl) {
-          const img = document.getElementById('inviteImg');
-          img.src = inviteImageUrl;
-          img.style.display = 'block';
-        }
     </script>
 </body>
 </html>

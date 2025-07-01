@@ -45,18 +45,18 @@
 }
 
 .invite-btn.yes {
-    background: #f8bbd0; /* ורוד פסטל בהיר */
-    color: #a7265b;
+    background: #4caf50;
+    color: #fff;
 }
 
 .invite-btn.no {
-    background: #ffe0e9; /* ורוד פסטל מאוד בהיר */
-    color: #b71c1c;
+    background: #f44336;
+    color: #fff;
 }
 
 .invite-btn.maybe {
-    background: #f6c1e2; /* ורוד פסטל סגלגל */
-    color: #7b1fa2;
+    background: #ff9800;
+    color: #fff;
 }
 
 .invite-buttons {
