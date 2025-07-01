@@ -1,4 +1,3 @@
-const api = "https://localhost:7035/api/"; // API URL
 //const api = "https://proj.ruppin.ac.il/igroup2/test2/tar1/api/";
 //const eventID = 1077; // הארדקוד לפי בקשה
 const eventID = localStorage.getItem("eventID");
