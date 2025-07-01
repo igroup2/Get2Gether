@@ -31,6 +31,9 @@ function loadAllShuttles() {
         title: "הסעות נטענו בהצלחה!",
         timer: 1000,
         showConfirmButton: false,
+        confirmButtonColor: "#f06292",
+        cancelButtonColor: "#e0e0e0",
+        reverseButtons: true,
       });
       renderShuttleCards(response);
     },
@@ -95,6 +98,9 @@ function deleteShuttle(ShuttleID) {
     showCancelButton: true,
     confirmButtonText: "מחק",
     cancelButtonText: "ביטול",
+    confirmButtonColor: "#f06292",
+    cancelButtonColor: "#e0e0e0",
+    reverseButtons: true,
   }).then((result) => {
     if (result.isConfirmed) {
       ajaxCall(
@@ -102,11 +108,17 @@ function deleteShuttle(ShuttleID) {
         api + `Shuttles/${ShuttleID}`,
         null,
         function () {
-          Swal.fire("נמחק!", "ההסעה נמחקה בהצלחה", "success");
+          Swal.fire("נמחק!", "ההסעה נמחקה בהצלחה", "success", {
+            confirmButtonColor: "#f06292",
+            reverseButtons: true,
+          });
           loadAllShuttles();
         },
         function (err) {
-          Swal.fire("שגיאה", "מחיקת ההסעה נכשלה", "error");
+          Swal.fire("שגיאה", "מחיקת ההסעה נכשלה", "error", {
+            confirmButtonColor: "#f06292",
+            reverseButtons: true,
+          });
         }
       );
     }

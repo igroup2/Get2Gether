@@ -127,10 +127,16 @@ function saveSettings(eventID) {
     api + `EventSettings/UpdateEventSettings`,
     JSON.stringify(updatedSettings),
     (data) => {
-      Swal.fire("בוצע!", "הגדרות האירוע עודכנו בהצלחה.", "success");
+      Swal.fire("בוצע!", "הגדרות האירוע עודכנו בהצלחה.", "success", {
+        confirmButtonColor: "#f06292",
+        reverseButtons: true,
+      });
     },
     (err) => {
-      Swal.fire("שגיאה!", "לא הצלחנו לעדכן את הגדרות האירוע.", "error");
+      Swal.fire("שגיאה!", "לא הצלחנו לעדכן את הגדרות האירוע.", "error", {
+        confirmButtonColor: "#f06292",
+        reverseButtons: true,
+      });
     }
   );
 }

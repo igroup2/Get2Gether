@@ -61,6 +61,9 @@ $(document).ready(function () {
         icon: "error",
         title: "שגיאה",
         text: "אנא מלא את כל השדות וודא שנבחרה תחנת איסוף מהרשימה.",
+        confirmButtonColor: "#f06292",
+        cancelButtonColor: "#e0e0e0",
+        reverseButtons: true,
       });
       return;
     }
@@ -90,6 +93,9 @@ $(document).ready(function () {
         Swal.fire({
           icon: "success",
           title: "הסעה נוצרה בהצלחה!",
+          confirmButtonColor: "#f06292",
+          cancelButtonColor: "#e0e0e0",
+          reverseButtons: true,
         });
         $(".ride-form")[0].reset();
       },
@@ -99,6 +105,9 @@ $(document).ready(function () {
           icon: "error",
           title: "שגיאה בשרת",
           text: "אירעה תקלה ביצירת ההסעה.",
+          confirmButtonColor: "#f06292",
+          cancelButtonColor: "#e0e0e0",
+          reverseButtons: true,
         });
       }
     );
