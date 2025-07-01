@@ -995,21 +995,24 @@ public int logInUser(string phone, string password)
             }
         }
     }
-
-    public bool ApproveRide(int rideID, string role)
+    public bool ApproveRide(int rideID, int personID)
     {
         using (SqlConnection con = connect("myProjDB"))
         {
             var paramDic = new Dictionary<string, object>
-            {
-                {"RideID", rideID},
-                {"Role", role}
-            };
+        {
+            { "RideID", rideID },
+            { "PersonID", personID }
+        };
+
             using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_ApproveRide", con, paramDic))
             {
-                int rows = cmd.ExecuteNonQuery();
-                return rows > 0;
+                cmd.ExecuteNonQuery();
+                return true; // ✅ מחזיר הצלחה תמיד – גם אם rows == 0
             }
         }
     }
+
+
+
 }

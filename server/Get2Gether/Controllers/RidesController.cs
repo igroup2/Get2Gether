@@ -43,21 +43,25 @@ namespace Get2Gether.Controllers
 
         // PUT api/<RidesController>/ApproveRide/5
         [HttpPut("ApproveRide/{rideID}")]
-        public IActionResult ApproveRide(int rideID, [FromBody] string role)
+        public IActionResult ApproveRide(int rideID, [FromBody] int personID)
         {
             try
             {
-                bool result = Ride.ApproveRide(rideID, role);
+                bool result = Ride.ApproveRide(rideID, personID);
+
+                // גם אם לא שונתה שורה במסד – עדיין החזיר הצלחה
                 if (result)
                     return Ok(new { message = "Ride status updated" });
                 else
-                    return BadRequest("Ride not found or not active");
+                    return Ok(new { message = "Ride status unchanged (possibly already approved)" }); // ✅ שורה חדשה במקום שגיאה
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
         }
+
+
 
         // DELETE api/<RidesController>/5
         [HttpDelete("{driverID}/{passengerID}/{eventID}")]
