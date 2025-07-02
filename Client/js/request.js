@@ -1,5 +1,3 @@
-const api = "https://localhost:7035/api/"; // API URL
-
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 
 window.initAutocomplete = function () {
@@ -20,8 +18,9 @@ window.initAutocomplete = function () {
     }
   });
 };
-
 $(document).ready(function () {
+  const api = "https://localhost:7035/api/";
+
   $("form").on("submit", function (event) {
     event.preventDefault();
 
@@ -33,9 +32,13 @@ $(document).ready(function () {
       return;
     }
 
+    // שליפת ערכי מגדר ועישון מהטופס
+    const gender = $("input[name='gender']:checked").val();
+    const smoke = $("input[name='smoke']:checked").val() === "1" ? true : false;
+
     const rideRequest = {
-      EventID: 15,
-      PersonID: 10,
+      EventID: parseInt(localStorage.getItem("eventID")),
+      PersonID: parseInt(localStorage.getItem("personID")),
       NumOfGuest: parseInt($("#guestNumber").val()),
       PickUpLocation: $("#location").val(),
       PreferredGender: $("input[name='preferredGender']:checked").val(),
@@ -43,17 +46,28 @@ $(document).ready(function () {
         $("input[name='preferNoSmoking']:checked").val() === "0" ? false : true,
       latitude: selectedCoordinates.latitude,
       longitude: selectedCoordinates.longitude,
-      note: $("#notes").val(), // הוספת הערות נוספות
+      note: $("#notes").val(),
     };
 
     console.log("📩 Ride request data:", rideRequest);
+
+    // שליחה עם פרמטרים ב-URL
     ajaxCall(
       "POST",
-      api + "RideRequests",
+      api + `RideRequests?gender=${encodeURIComponent(gender)}&smoke=${smoke}`,
       JSON.stringify(rideRequest),
       (response) => {
         console.log("✅ Success submitting ride request", response);
-        alert("הבקשה נשלחה בהצלחה!");
+        Swal.fire({
+          icon: "success",
+          title: "הבקשה נשלחה בהצלחה!",
+          text: "תוכל לצפות בכל האירועים שלך בעמוד האירועים.",
+          confirmButtonText: "לעמוד האירועים",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "Events.html";
+          }
+        });
       },
       (error) => {
         console.log("❌ Error submitting ride request", error);
@@ -62,6 +76,7 @@ $(document).ready(function () {
     );
   });
 });
+
 function toggleMenu() {
   const nav = document.querySelector(".main-nav");
   nav.classList.toggle("active");
