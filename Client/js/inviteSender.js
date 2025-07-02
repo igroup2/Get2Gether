@@ -84,7 +84,7 @@ $("#uploadInviteBtn")
   $("#sendInviteBtn2")
     .off("click")
     .on("click", function () {
-      let eventId = localStorage.getItem("eventID") || 6;
+      let eventID = localStorage.getItem("eventID");
       var imgUrl = localStorage.getItem("inviteImageUrl");
       if (!imgUrl) {
         alert("לא קיימת תמונה ציבורית לשליחה. העלה תמונה קודם.");
@@ -92,7 +92,7 @@ $("#uploadInviteBtn")
       }
       ajaxCall(
         "GET",
-        api + `GuestInEvents/GetInviteDetails?eventId=${eventId}`,
+        api + `GuestInEvents/GetInviteDetails?eventId=${eventID}`,
         null,
         function (guests) {
           if (guests && guests.length > 0) {
@@ -135,7 +135,7 @@ function sendWhatsAppMessage(phone, name, link, imageUrl) {
   var message = `היי ${name} ! 🎉\n\nאת/ה מוזמנ/ת לאירוע שלנו – וזה קורה ממש בקרוב!\nכדי שנדע להתארגן כמו שצריך, נשמח אם תאשר/י הגעה דרך הקישור:\n\n👉 ${link}\n\nבמערכת שלנו תוכל לבחור את הדרך שלך להגיע לאירוע, והכל בכמה לחיצות 🙌\nמחכים לראות אותך! 🥳`;
   var data = {
     to: phone,
-    image: imageUrl,
+    image: "http://paperboutique.co.il/wp-content/uploads/2013/03/wording1.jpg",
     caption: message,
     priority: 10,
   };
@@ -154,42 +154,6 @@ function sendWhatsAppMessage(phone, name, link, imageUrl) {
   });
 }
 
-// --- Send to all guests example ---
-$(document).ready(function () {
-  $("#sendInviteBtn2").on("click", function () {
-    let eventId = 6;
-    if (!eventId) {
-      alert("לא נמצא eventID ב-localStorage");
-      return;
-    }
-    ajaxCall(
-      "GET",
-      api + `GuestInEvents/GetInviteDetails?eventId=${eventId}`,
-      null,
-      function (guests) {
-        if (guests && guests.length > 0) {
-          guests.forEach((g) => {
-            console.log(g);
-            const link = `http://127.0.0.1:5500/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
-            sendWhatsAppMessage(
-              g.phoneNumber,
-              g.fullName,
-              link,
-              "https://proj.ruppin.ac.il/igroup2/test2/tar5/הזמנה לחתונה.jpg"
-            );
-          });
-          alert("ההודעות נשלחו לכל האורחים!");
-        } else {
-          alert("לא נמצאו אורחים לאירוע");
-        }
-      },
-      function (err) {
-        console.error("Invite details (ERROR):", err);
-        alert("שגיאה בשליפת פרטי ההזמנה");
-      }
-    );
-  });
-});
 
 // --- Helper for AJAX ---
 function ajaxCall(
