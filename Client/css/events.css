@@ -103,18 +103,18 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #b85b8b;
+  color: #ffffff;
 }
 .event-modal-content h2 {
-  color: #b85b8b;
+  color: #000000;
   margin-bottom: 18px;
 }
 .event-modal-link {
   display: inline-block;
   margin: 12px 0 0 0;
   padding: 12px 32px;
-  background: #f8bbd0;
-  color: #b85b8b;
+  background: #f06292;
+  color: #ffffff;
   font-weight: bold;
   border-radius: 8px;
   text-decoration: none;
@@ -122,5 +122,5 @@
   transition: background 0.2s;
 }
 .event-modal-link:hover {
-  background: #f48fb1;
+  background: #e91e63;
 }
