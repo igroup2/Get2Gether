@@ -11,10 +11,9 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/headerFooter.css" />
-    <link rel="stylesheet" href="../css/index.css" />
-    <link rel="stylesheet" href="../css/invite.css" />
+    <link rel="stylesheet" href="../css/inviteSender.css" />
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="../js/js.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <script src="../js/api.js"></script>
     <script src="../js/inviteSender.js"></script>
@@ -63,7 +62,14 @@
               />
             </div>
             <div class="button-row">
-              <button
+      
+              <button type="button" id="showInviteBtn" class="btn hidden">
+                הצג הזמנת אירוע נוכחית
+              </button>
+              <button type="button" id="previewExampleBtn" class="btn example">
+                הצג דוגמת הזמנה
+              </button>
+                      <button
                 type="button"
                 id="uploadInviteBtn"
                 class="btn"
@@ -71,12 +77,6 @@
                 onmouseleave="hideTooltip()"
               >
                 העלה
-              </button>
-              <button type="button" id="showInviteBtn" class="btn hidden">
-                הצג הזמנת אירוע נוכחית
-              </button>
-              <button type="button" id="previewExampleBtn" class="btn example">
-                הצג דוגמת הזמנה
               </button>
             </div>
           </form>
@@ -92,36 +92,16 @@
         </div>
       </section>
     </main>
-
-    <footer class="main-footer">
-      <div class="footer-container">
-        <p>צור קשר:</p>
-        <a href="https://www.instagram.com" target="_blank">
-          <img
-            src="../images/instagram-icon.png"
-            alt="Instagram"
-            width="24"
-            height="24"
-          />
-        </a>
-        <a href="https://www.facebook.com" target="_blank">
-          <img
-            src="../images/facebook-icon.png"
-            alt="Facebook"
-            width="24"
-            height="24"
-          />
-        </a>
-        <a href="mailto:igroup2project@gmail.com">
-          <img
-            src="../images/google-icon.png"
-            alt="Google"
-            width="24"
-            height="24"
-          />
-        </a>
-      </div>
-    </footer>
+ <footer class="main-footer">
+        <div class="footer-container">
+          <p>צור קשר:</p>
+          <div class="footer-links">
+            <a href="https://www.instagram.com" target="_blank">אינסטגרם</a> |
+            <a href="https://wa.me/" target="_blank">וואטסאפ</a> |
+            <a href="mailto:igroup2project@gmail.com">אימייל</a>
+          </div>
+        </div>
+      </footer>
 
     <script>
       document
