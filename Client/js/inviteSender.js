@@ -97,7 +97,7 @@ $(function () {
         function (guests) {
           if (guests && guests.length > 0) {
             guests.forEach((g) => {
-              const link = `http://localhost:5500/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
+              const link = `http://localhost:5500/Client/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
               sendWhatsAppMessage(g.phoneNumber, g.fullName, link, imgUrl);
             });
             alert("ההודעות נשלחו לכל האורחים!");
