@@ -1,6 +1,5 @@
 console.log("🚀 MyShuttles.js loaded");
 let isEditMode = false;
-window.api = window.api || "https://localhost:7035/api/"; // API URL
 
 $(document).ready(function () {
   $(document).on("click", ".create-shuttle-btn", function () {

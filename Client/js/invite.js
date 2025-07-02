@@ -70,7 +70,7 @@ if (!eventId || !personId) {
   if (inviteImageUrl) {
     setImage(inviteImageUrl);
   } else {
-    const baseUrl = `https://localhost:7035/invites/invite_${eventId}`;
+    const baseUrl =  `https://proj.ruppin.ac.il/igroup2/test2/tar1/invites/event_${eventId}`;
     tryImageWithExtensions(
       baseUrl,
       [".jpg", ".png", ".jpeg", ".webp"],
@@ -101,7 +101,7 @@ function updateRSVPStatus(status) {
     return;
   }
 
-  if (status === "מגיעה") {
+  if (status === "מגיע/ה") {
     Swal.fire({
       icon: "success",
       title: "איזה כיף!",

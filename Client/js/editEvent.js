@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-$(function () {
+/*$(function () {
   // ודא שהקוד רץ רק פעם אחת
   console.log("homePage.js loaded");
   // שמור את מצב הכפתור ב-localStorage (האם יש תמונה אחרונה)
@@ -175,4 +175,4 @@ $(function () {
       // פתח תמיד בכתובת של השרת
       window.open(imgUrl, "_blank");
     });
-});
+/*});

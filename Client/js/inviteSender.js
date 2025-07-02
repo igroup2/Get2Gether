@@ -17,12 +17,12 @@ $(function () {
   var lastImg = localStorage.getItem("inviteImageUrl");
   if (lastImg) {
     if (!lastImg.startsWith("http")) {
-      lastImg = "https://localhost:7035" + lastImg;
-    } else if (lastImg.startsWith("http://127.0.0.1:5500")) {
-      lastImg = lastImg.replace(
-        "http://127.0.0.1:5500",
-        "https://localhost:7035"
-      );
+      lastImg = "https://proj.ruppin.ac.il/igroup2/test2/tar1/api/" + lastImg;
+  //  } else if (lastImg.startsWith("http://127.0.0.1:5500")) {
+  //    lastImg = lastImg.replace(
+   //     "http://127.0.0.1:5500",
+   //     "https://localhost:7035"
+   //   );
     }
     $("#showInviteBtn").show().data("img", lastImg);
   } else {
@@ -60,7 +60,7 @@ $(function () {
         contentType: false,
         success: function (response) {
           if (response && response.inviteImageUrl) {
-            var imgUrl = "https://localhost:7035" + response.inviteImageUrl;
+            var imgUrl = "https://proj.ruppin.ac.il/igroup2/test2/tar1/" + response.inviteImageUrl;
             console.log("Image URL:", imgUrl);
 
             $("#inviteImagePreview").html(
@@ -96,7 +96,7 @@ $(function () {
         function (guests) {
           if (guests && guests.length > 0) {
             guests.forEach((g) => {
-              const link = `http://localhost:5500/Client/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
+              const link = `https://proj.ruppin.ac.il/igroup2/test2/tar1/api/Client/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
               sendWhatsAppMessage(g.phoneNumber, g.fullName, link, imgUrl);
             });
             alert("ההודעות נשלחו לכל האורחים!");
