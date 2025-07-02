@@ -1,5 +1,3 @@
-const api = "https://localhost:7035/api/"; // API URL
-
 document.addEventListener("DOMContentLoaded", function () {
   const loginForm = document.getElementById("loginForm");
   const registerForm = document.getElementById("registerForm");

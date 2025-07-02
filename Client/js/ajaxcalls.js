@@ -1,5 +1,3 @@
-const api = "https://localhost:7035/api/"; // API URL
-
 function ajaxCall(method, api, data, successCB, errorCB) {
   $.ajax({
     type: method,
