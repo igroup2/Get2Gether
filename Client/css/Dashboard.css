@@ -107,8 +107,6 @@ body {
 /* צד ימין – טופס / תוכן */
 .dashboard-content {
   flex: 1;
-  max-width: 650px;
-  background: linear-gradient(to bottom, #ffffff, #f7f7f7);
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
