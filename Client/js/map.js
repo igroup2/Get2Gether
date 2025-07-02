@@ -1,4 +1,3 @@
-const api = "https://localhost:7035/api/";
 let loadedData = null;
 let map; // משתנה גלובלי למפת Google
 let markers = []; // נשמור את כל הפינים שהוספנו כדי לנקות אם נרצה

@@ -19,7 +19,6 @@ window.initAutocomplete = function () {
   });
 };
 $(document).ready(function () {
-  const api = "https://localhost:7035/api/";
 
   $("form").on("submit", function (event) {
     event.preventDefault();

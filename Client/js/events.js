@@ -7,7 +7,6 @@ $(document).ready(function () {
     $("#eventsContainer").html("<p>לא נמצא מזהה משתמש במערכת</p>");
     return;
   }
-  const api = "https://localhost:7035/api/"; // API URL
 
   if (localStorage.getItem("Role") === "Host") {
     const style = document.createElement("style");
