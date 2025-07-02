@@ -10,6 +10,9 @@
     <script src="../js/api.js"></script>
     <link rel="stylesheet" href="../css/headerFooter.css" />
     <link rel="stylesheet" href="../css/up.css" />
+      <link rel="stylesheet" href="../css/SideBar.css" />
+        <script src="../js/SideBar.js"></script>
+
     <script>
       function logout() {
         localStorage.clear();
@@ -27,21 +30,33 @@
             <h1 class="site-title">Get2Gether</h1>
           </div>
           <!-- כפתור המבורגר -->
-          <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">
+            <button class="menu-toggle" aria-label="תפריט" onclick="toggleMenu()">
             ☰
           </button>
-
-          <!-- תפריט ניווט -->
-              <nav class="main-nav">
+          <nav class="main-nav">
             <ul>
               <li><a href="#" id="actionsToggle">הפעולות שלי</a></li>
-              <li><a href="homePage.html">תפריט</a></li>
+               <li><a href="homePage.html">תפריט</a></li>
               <li><a href="dashboard.html">דשבורד</a></li>
               <li><a href="Events.html">האירועים שלי</a></li>
-              <li><a href="map.html">מפת האורחים</a></li>
+              <li><a href="Activities.html">הפעולות שלי</a></li>
+              <li><a href="homePage.html">תפריט</a></li>
               <li><a href="#" onclick="logout()">התנתקות</a></li>
             </ul>
           </nav>
+
+          <!-- תפריט צדדי -->
+          <div id="actionsSidebar">
+            <span class="close-sidebar" onclick="toggleSidebar()">×</span>
+            <ul>
+              <li><a href="editEvent.html">✏️ עריכת פרטי אירוע</a></li>
+              <li><a href="UpPage.html">😊 קובץ מוזמנים</a></li>
+              <li><a href="shuttle.html">🚌 הקמת הסעה</a></li>
+              <li><a href="MyShuttle.html">👁️ צפייה בהסעה קיימת</a></li>
+              <li><a href="inviteSender.html">📧 שליחת הזמנה לאורחים</a></li>
+              <li><a href="#" onclick="logout()">🔴 התנתקות</a></li>
+            </ul>
+          </div>
         </div>
       </header>
       <!-- MAIN CARD -->
