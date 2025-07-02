@@ -72,7 +72,7 @@ button[type="submit"]:hover, .google-btn:hover {
 
 .google-btn {
   background: #f8bbd0;
-  color: #b85b8b;
+  color: #000000;
   font-weight: bold;
 }
 
@@ -81,17 +81,29 @@ button[type="submit"]:hover, .google-btn:hover {
   font-size: 1rem;
 }
 
+
 footer.main-footer {
   flex-shrink: 0;
-  background: #fff;
-  padding: 18px 0;
+  background: #1a1a1a;
+  color: #cccccc;
+  padding: 2.5rem 0;
   text-align: center;
-  border-top: 1px solid #eee;
-  margin-top: 40px;
+  border-top: 2px solid #c0c0c0;
+  margin-top: 100px;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .footer-links a {
-  color: #b85b8b;
+  color: #fff;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-links a {
+  color: #ffffff;
   text-decoration: none;
   margin: 0 8px;
 }

@@ -12,6 +12,7 @@
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../js/sideBar.js"></script>
+    \<script src="../js/api.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
@@ -31,6 +32,7 @@
           <nav class="main-nav">
             <ul>
               <li><a href="#" id="actionsToggle">הפעולות שלי</a></li>
+              <li><a href="homePage.html">תפריט</a></li>
               <li><a href="dashboard.html">דשבורד</a></li>
               <li><a href="Events.html">האירועים שלי</a></li>
               <li><a href="map.html">מפת האורחים</a></li>
@@ -46,6 +48,7 @@
               <li><a href="UpPage.html">😊 קובץ מוזמנים</a></li>
               <li><a href="shuttle.html">🚌 הקמת הסעה</a></li>
               <li><a href="MyShuttle.html">👁️ צפייה בהסעה קיימת</a></li>
+              <li><a href="inviteSender.html">📧 שליחת הזמנה לאורחים</a></li>
               <li><a href="login.html">🔴 התנתקות</a></li>
             </ul>
           </div>
@@ -62,13 +65,11 @@
         <!-- LEFT PANEL -->
         <div class="left-panel">
           <div class="map-legend">
-            <h3>מקרא</h3>
-            <div class="legend-buttons">
-              <button class="green">סמן ירוק – נוסע</button>
-              <button class="blue">סמן כחול – נהג</button>
-              <button class="orange">סמן כתום – מיקום האירוע</button>
-            </div>
+            
           </div>
+            <div class="algoButton">
+            <button onclick="filterAlgo()">הפעלת אלגוריתם</button>
+          </div>
 
           <div class="table-tabs">
             <button onclick="showTab('initial')" class="table-tab active">

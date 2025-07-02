@@ -16,6 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../js/js.js"></script>
     <script src="../js/ajaxcalls.js"></script>
+    <script src="../js/api.js"></script>
     <script src="../js/inviteSender.js"></script>
     <script src="../css/inviteSender.css"></script>
   </head>
@@ -31,8 +32,12 @@
         </button>
         <nav class="main-nav">
           <ul>
-            <li><a href="index.html">בית</a></li>
-            <li><a href="homePage.html">חזרה לדף הבית</a></li>
+             <li><a href="#" id="actionsToggle">הפעולות שלי</a></li>
+              <li><a href="homePage.html">תפריט</a></li>
+              <li><a href="dashboard.html">דשבורד</a></li>
+              <li><a href="Events.html">האירועים שלי</a></li>
+              <li><a href="map.html">מפת האורחים</a></li>
+              <li><a href="#" onclick="logout()">התנתקות</a></li>
           </ul>
         </nav>
       </div>

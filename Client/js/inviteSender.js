@@ -1,7 +1,6 @@
 // inviteSender.js
 // Handles uploading invite image and sending WhatsApp messages
 //const api = "https://proj.ruppin.ac.il/igroup2/test2/tar1/api/";
-const api = "https://localhost:7035/api/"; // API URL
 // --- Upload Invite Image ---
 function setInviteImageUrl(url) {
   if (url) {
@@ -31,54 +30,55 @@ $(function () {
   }
 
   // --- Upload Invite Image and Send WhatsApp Message ---
-  $("#uploadInviteBtn")
-    .off("click")
-    .on("click", function (e) {
-      e.preventDefault();
-      var fileInput = document.getElementById("inviteImageInput");
-      if (!fileInput.files || fileInput.files.length === 0) {
-        alert("אנא בחר תמונה להעלאה");
-        return;
-      }
-      var file = fileInput.files[0];
-      var eventID = localStorage.getItem("eventID");
-      if (!eventID) {
-        alert("לא נמצא EventID");
-        return;
-      }
-      var formData = new FormData();
-      formData.append("inviteImage", file);
-      formData.append("fileName", file.name);
-      formData.append("eventID", eventID);
-      // Upload image to college server
-      $.ajax({
-        url: "https://proj.ruppin.ac.il/igroup2/test2/tar5/",
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-          if (response && response.inviteImageUrl) {
-            //https://proj.ruppin.ac.il/igroup2/test1/pages/map.html
-            var imgUrl =
-              "https://proj.ruppin.ac.il/igroup2/test2/tar5" +
-              response.inviteImageUrl;
-            console.log("Image URL:", imgUrl);
-            $("#inviteImagePreview").html(
-              '<img src="' +
-                imgUrl +
-                '" alt="הזמנה" style="max-width:300px;max-height:300px;border-radius:12px;box-shadow:0 2px 8px #0002;" />'
-            );
-            // Save the URL for later use
-            localStorage.setItem("inviteImageUrl", imgUrl);
-            alert("התמונה הועלתה בהצלחה! כעת תוכל לשלוח אותה בוואטסאפ.");
-          }
-        },
-        error: function (xhr, status, error) {
-          alert("שגיאה בהעלאת התמונה: " + (xhr.responseText || error));
-        },
-      });
+$("#uploadInviteBtn")
+  .off("click")
+  .on("click", function (e) {
+    e.preventDefault();
+
+    var fileInput = document.getElementById("inviteImageInput");
+    if (!fileInput.files || fileInput.files.length === 0) {
+      alert("אנא בחר תמונה להעלאה");
+      return;
+    }
+
+    var file = fileInput.files[0];
+    var eventID = localStorage.getItem("eventID");
+    if (!eventID) {
+      alert("לא נמצא EventID");
+      return;
+    }
+
+    var formData = new FormData();
+    formData.append("inviteImage", file);   // ← שם הפרמטר חייב להתאים ל־IFormFile
+    formData.append("eventID", eventID);    // ← מזהה האירוע בצורת int
+
+    $.ajax({
+      url: api + "Upload/InviteImage", // ← שימוש ב־localhost שלך!
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (response) {
+        if (response && response.inviteImageUrl) {
+          var imgUrl = "https://localhost:7035" + response.inviteImageUrl;
+          console.log("Image URL:", imgUrl);
+
+          $("#inviteImagePreview").html(
+            '<img src="' +
+              imgUrl +
+              '" alt="הזמנה" style="max-width:300px;max-height:300px;border-radius:12px;box-shadow:0 2px 8px #0002;" />'
+          );
+
+          localStorage.setItem("inviteImageUrl", imgUrl);
+          alert("התמונה הועלתה בהצלחה! כעת תוכל לשלוח אותה בוואטסאפ.");
+        }
+      },
+      error: function (xhr, status, error) {
+        alert("שגיאה בהעלאת התמונה: " + (xhr.responseText || error));
+      },
     });
+  });
+
 
   // Send WhatsApp message to all guests with the uploaded image
   $("#sendInviteBtn2")
@@ -97,7 +97,7 @@ $(function () {
         function (guests) {
           if (guests && guests.length > 0) {
             guests.forEach((g) => {
-              const link = `http://localhost:5500/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
+              const link = `http://localhost:5500/Client/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
               sendWhatsAppMessage(g.phoneNumber, g.fullName, link, imgUrl);
             });
             alert("ההודעות נשלחו לכל האורחים!");

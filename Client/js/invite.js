@@ -3,7 +3,6 @@ function getQueryParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
 }
-const api = "https://localhost:7035/api/"; // API URL
 // שליפת eventID ו-personID מה-URL
 const eventId = getQueryParam("eventID");
 const personId = getQueryParam("personID");
