@@ -1,77 +1,49 @@
+const api = "https://localhost:7035/api/";
+//const eventID = 1077; // הארדקוד לפי בקשה
+const eventID = localStorage.getItem("eventID");
+
 let loadedData = null;
-let map; // משתנה גלובלי למפת Google
-let markers = []; // נשמור את כל הפינים שהוספנו כדי לנקות אם נרצה
 
-// אתחול Google Maps
-window.initMap = function () {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 32.0853, lng: 34.7818 },
-    zoom: 10,
-  });
+const map = L.map("map", {
+  center: [31.0461, 34.8516],
+  zoom: 7,
+});
 
-  const eventID = localStorage.getItem("eventID");
-  if (eventID) {
-    loadRideData(eventID);
-  } else {
-    console.error("❌ eventID לא נמצא בלוקאל סטורג'");
-  }
-};
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: "",
+}).addTo(map);
 
-// אייקונים מותאמים לפי סוג
+const markersCluster = L.markerClusterGroup();
+
 const icons = {
-  rideRequest: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
-  giveRideRequest: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-  eventLocation: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+  rideRequest: new L.Icon({
+    iconUrl: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -30],
+  }),
+  giveRideRequest: new L.Icon({
+    iconUrl: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -30],
+  }),
+  eventLocation: new L.Icon({
+    iconUrl: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -30],
+  }),
 };
 
-// הוספת פין למפה
 function addMarker(lat, lng, label, type) {
-  const marker = new google.maps.Marker({
-    position: { lat, lng },
-    map: map,
-    icon: icons[type],
-    title: label.replace(/<br>/g, "\n"),
-  });
-
-  const infowindow = new google.maps.InfoWindow({
-    content: `<div style="direction: rtl;">${label}</div>`,
-  });
-
-  marker.addListener("click", () => {
-    infowindow.open(map, marker);
-  });
-
-  markers.push(marker);
+  const marker = L.marker([lat, lng], { icon: icons[type] }).bindPopup(label);
+  markersCluster.addLayer(marker);
 }
-
-// גיאוקוד לפי כתובת
-function geocodeAndAddMarker(address, label, type) {
-  const geocoder = new google.maps.Geocoder();
-  geocoder.geocode({ address }, function (results, status) {
-    if (status === "OK") {
-      const location = results[0].geometry.location;
-      addMarker(location.lat(), location.lng(), label, type);
-    } else {
-      console.warn(`⚠️ לא ניתן למקם כתובת: ${address}`, status);
-    }
-  });
-}
-
-// יצירת הפינים
-function addRideRequestMarkers(rideRequests) {
-  rideRequests.forEach((ride) => {
-    const label = `🧑 נוסע<br>📄 Request ID: ${ride.id}<br>🧍 Person ID: ${ride.personID}`;
-    if (ride.Latitude && ride.Longitude) {
-      addMarker(ride.Latitude, ride.Longitude, label, "rideRequest");
-    } else {
-      geocodeAndAddMarker(ride.pickUpLocation, label, "rideRequest");
-    }
-  });
-}
-
 function addGiveRideMarkers(giveRideRequests) {
   giveRideRequests.forEach((giveRide) => {
-    const label = ` 🚙 נהג<br>📄 Request ID: ${giveRide.id}<br>🧍 Person ID: ${giveRide.personID}`;
+    const label = `🚙 נהג<br>📄 Request ID: ${giveRide.id}<br>🧍 Person ID: ${giveRide.personID}`;
+
     if (giveRide.Latitude && giveRide.Longitude) {
       addMarker(
         giveRide.Latitude,
@@ -84,9 +56,35 @@ function addGiveRideMarkers(giveRideRequests) {
     }
   });
 }
+function addRideRequestMarkers(rideRequests) {
+  rideRequests.forEach((ride) => {
+    const label = `🧑 נוסע<br>📄 Request ID: ${ride.id}<br>🧍 Person ID: ${ride.personID}`;
+
+    if (ride.Latitude && ride.Longitude) {
+      addMarker(ride.Latitude, ride.Longitude, label, "rideRequest");
+    } else {
+      geocodeAndAddMarker(ride.pickUpLocation, label, "rideRequest");
+    }
+  });
+}
+
+function geocodeAndAddMarker(address, label, type) {
+  const geocoder = new google.maps.Geocoder();
+
+  geocoder.geocode({ address: address }, function (results, status) {
+    if (status === "OK") {
+      const location = results[0].geometry.location;
+      addMarker(location.lat(), location.lng(), label, type);
+    } else {
+      console.warn(`⚠️ לא ניתן למקם כתובת: ${address}`, status);
+    }
+  });
+}
 
 function addEventMarker(eventCoordinates, eventLocation) {
   const label = `🎉 אירוע<br>📍 מיקום: ${eventLocation}`;
+
+  // בדיקה לפי eventLatitude / eventLongitude שהגיעו מ־loadedData
   if (loadedData.eventLatitude && loadedData.eventLongitude) {
     addMarker(
       loadedData.eventLatitude,
@@ -99,7 +97,6 @@ function addEventMarker(eventCoordinates, eventLocation) {
   }
 }
 
-// שליפת מידע מהשרת
 function loadRideData(eventID) {
   $("#loading").show();
   $("#c").hide();
@@ -112,6 +109,7 @@ function loadRideData(eventID) {
       console.log("✅ Success loading data", data);
       loadedData = data;
 
+      // הוספת קואורדינטות ישירות ל-loadedData עבור שימוש נוח בהמשך
       if (data.eventCoordinates) {
         loadedData.eventLatitude = data.eventCoordinates.y;
         loadedData.eventLongitude = data.eventCoordinates.x;
@@ -129,6 +127,7 @@ function loadRideData(eventID) {
       addRideRequestMarkers(data.rideRequests);
       addEventMarker(data.eventCoordinates, data.eventLocation);
 
+      map.addLayer(markersCluster);
       $("#loading").hide();
       $("#c").show();
     },
@@ -138,6 +137,7 @@ function loadRideData(eventID) {
     }
   );
 }
+
 // אלגוריתם:
 function filterAlgo() {
   sendToServer();
