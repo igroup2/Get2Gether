@@ -116,7 +116,7 @@ function updateRSVPStatus(status) {
         window.location.href = "Events.html";
       }
     });
-  } else if (status === "לא מגיעה") {
+  } else if (status === "לא מגיע/ה") {
     Swal.fire({
       icon: "info",
       title: "חבל שלא תוכל/י להגיע",
@@ -125,7 +125,7 @@ function updateRSVPStatus(status) {
     }).then((result) => {
       window.location.href = "Events.html";
     });
-  } else if (status === "מתלבטת") {
+  } else if (status === "מתלבט/ת") {
     Swal.fire({
       icon: "question",
       title: "נשמח לעדכון בהמשך!",
@@ -164,11 +164,11 @@ function updateRSVPStatus(status) {
 }
 
 document.querySelector(".invite-btn.yes").onclick = function () {
-  updateRSVPStatus("מגיעה");
+  updateRSVPStatus("מגיע/ה");
 };
 document.querySelector(".invite-btn.no").onclick = function () {
-  updateRSVPStatus("לא מגיעה");
+  updateRSVPStatus("לא מגיע/ה");
 };
 document.querySelector(".invite-btn.maybe").onclick = function () {
-  updateRSVPStatus("מתלבטת");
+  updateRSVPStatus("מתלבט/ת");
 };

@@ -96,7 +96,7 @@ $(function () {
         function (guests) {
           if (guests && guests.length > 0) {
             guests.forEach((g) => {
-              const link = `https://proj.ruppin.ac.il/igroup2/test2/tar1/api/Client/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
+              const link = `https://proj.ruppin.ac.il/igroup2/test2/tar2/Client/pages/invite.html?eventID=${g.eventID}&personID=${g.personID}`;
               sendWhatsAppMessage(g.phoneNumber, g.fullName, link, imgUrl);
             });
             alert("ההודעות נשלחו לכל האורחים!");

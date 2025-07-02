@@ -60,9 +60,9 @@ function updateImage(selectId, imgId) {
 
   imgElement.src =
     gender === "M"
-      ? "../images/groom.webp"
+      ? "Client/images/groom.webp"
       : gender === "F"
-      ? "../images/bride.webp"
+      ? "Client/images/bride.webp"
       : "";
 }
 
