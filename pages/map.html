@@ -9,30 +9,6 @@
     <link rel="stylesheet" href="../css/mapStyle.css" />
     <link rel="stylesheet" href="../css/headerFooter.css" />
     <link rel="stylesheet" href="../css/SideBar.css" />
-
-    <!-- Leaflet CSS -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
-
-    <!-- Marker Cluster CSS -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
-    />
-    <!-- Leaflet CSS -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../js/sideBar.js"></script>
@@ -90,18 +66,8 @@
               <button class="green" onclick="selectMarkerType('rideRequest')">
                 סמן ירוק – נוסע
               </button>
-              <button
-                class="blue"
-                onclick="selectMarkerType('giveRideRequest')"
-              >
-                סמן כחול – נהג
-              </button>
-              <button
-                class="orange"
-                onclick="selectMarkerType('eventLocation')"
-              >
-                סמן כתום – מיקום האירוע
-              </button>
+              <button class="blue">סמן כחול – נהג</button>
+              <button class="orange">סמן כתום – מיקום האירוע</button>
             </div>
           </div>
 
@@ -141,13 +107,9 @@
       </footer>
     </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
     <!-- Google Maps API -->
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places&callback=initMap"
       async
       defer
     ></script>
