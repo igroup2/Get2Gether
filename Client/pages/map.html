@@ -9,20 +9,11 @@
     <link rel="stylesheet" href="../css/mapStyle.css" />
     <link rel="stylesheet" href="../css/headerFooter.css" />
     <link rel="stylesheet" href="../css/SideBar.css" />
-
-    <!-- Leaflet -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
-    />
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../js/sideBar.js"></script>
+    <script src="../js/ajaxcalls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
   <body>
@@ -70,8 +61,15 @@
       <section class="map-page">
         <!-- LEFT PANEL -->
         <div class="left-panel">
-          <div class="algoButton">
-            <button onclick="filterAlgo()">הפעלת אלגוריתם</button>
+          <div class="map-legend">
+            <h3>מקרא</h3>
+            <div class="legend-buttons">
+              <button class="green" onclick="selectMarkerType('rideRequest')">
+                סמן ירוק – נוסע
+              </button>
+              <button class="blue">סמן כחול – נהג</button>
+              <button class="orange">סמן כתום – מיקום האירוע</button>
+            </div>
           </div>
 
           <div class="table-tabs">
@@ -125,14 +123,9 @@
       </footer>
     </div>
 
-    <!-- JS + MAP -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
     <!-- Google Maps API -->
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places&callback=initMap"
       async
       defer
     ></script>
