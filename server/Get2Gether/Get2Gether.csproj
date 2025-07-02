@@ -18,7 +18,6 @@
     <None Remove="DAL\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="DAL\" />
   </ItemGroup>
   <ItemGroup>

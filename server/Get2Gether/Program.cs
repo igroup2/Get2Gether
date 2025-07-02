@@ -1,6 +1,8 @@
 ﻿using System;
 using Get2Gether;
 using OfficeOpenXml;
+using Microsoft.Extensions.FileProviders;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,12 @@ if (true)
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "invites")),
+    RequestPath = "/invites"
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles(); // מאפשר גישה ל-wwwroot ולתמונות
