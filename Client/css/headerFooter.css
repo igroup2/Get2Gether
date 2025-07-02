@@ -223,6 +223,42 @@ main {
   }
 }
 
+@media (max-width: 900px) {
+  .main-nav {
+    display: none;
+    flex-direction: column;
+    background-color: #1a1a1a;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    width: 100vw;
+    text-align: right;
+    padding: 1rem;
+    z-index: 2000;
+  }
+  .main-nav.active {
+    display: flex;
+  }
+  .menu-toggle {
+    display: block;
+  }
+}
+
+@media (min-width: 901px) {
+  .main-nav {
+    display: flex !important;
+    flex-direction: row;
+    position: static;
+    background: none;
+    width: auto;
+    padding: 0;
+    z-index: 1000;
+  }
+  .menu-toggle {
+    display: none !important;
+  }
+}
+
 main {
   flex: 1;
   padding-top: 120px; /* או לפחות בגובה ההדר */
