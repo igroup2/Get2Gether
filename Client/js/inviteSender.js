@@ -30,55 +30,54 @@ $(function () {
   }
 
   // --- Upload Invite Image and Send WhatsApp Message ---
-$("#uploadInviteBtn")
-  .off("click")
-  .on("click", function (e) {
-    e.preventDefault();
+  $("#uploadInviteBtn")
+    .off("click")
+    .on("click", function (e) {
+      e.preventDefault();
 
-    var fileInput = document.getElementById("inviteImageInput");
-    if (!fileInput.files || fileInput.files.length === 0) {
-      alert("אנא בחר תמונה להעלאה");
-      return;
-    }
+      var fileInput = document.getElementById("inviteImageInput");
+      if (!fileInput.files || fileInput.files.length === 0) {
+        alert("אנא בחר תמונה להעלאה");
+        return;
+      }
 
-    var file = fileInput.files[0];
-    var eventID = localStorage.getItem("eventID");
-    if (!eventID) {
-      alert("לא נמצא EventID");
-      return;
-    }
+      var file = fileInput.files[0];
+      var eventID = localStorage.getItem("eventID");
+      if (!eventID) {
+        alert("לא נמצא EventID");
+        return;
+      }
 
-    var formData = new FormData();
-    formData.append("inviteImage", file);   // ← שם הפרמטר חייב להתאים ל־IFormFile
-    formData.append("eventID", eventID);    // ← מזהה האירוע בצורת int
+      var formData = new FormData();
+      formData.append("inviteImage", file); // ← שם הפרמטר חייב להתאים ל־IFormFile
+      formData.append("eventID", eventID); // ← מזהה האירוע בצורת int
 
-    $.ajax({
-      url: api + "Upload/InviteImage", // ← שימוש ב־localhost שלך!
-      type: "POST",
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function (response) {
-        if (response && response.inviteImageUrl) {
-          var imgUrl = "https://localhost:7035" + response.inviteImageUrl;
-          console.log("Image URL:", imgUrl);
+      $.ajax({
+        url: api + "Upload/InviteImage", // ← שימוש ב־localhost שלך!
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          if (response && response.inviteImageUrl) {
+            var imgUrl = "https://localhost:7035" + response.inviteImageUrl;
+            console.log("Image URL:", imgUrl);
 
-          $("#inviteImagePreview").html(
-            '<img src="' +
-              imgUrl +
-              '" alt="הזמנה" style="max-width:300px;max-height:300px;border-radius:12px;box-shadow:0 2px 8px #0002;" />'
-          );
+            $("#inviteImagePreview").html(
+              '<img src="' +
+                imgUrl +
+                '" alt="הזמנה" style="max-width:300px;max-height:300px;border-radius:12px;box-shadow:0 2px 8px #0002;" />'
+            );
 
-          localStorage.setItem("inviteImageUrl", imgUrl);
-          alert("התמונה הועלתה בהצלחה! כעת תוכל לשלוח אותה בוואטסאפ.");
-        }
-      },
-      error: function (xhr, status, error) {
-        alert("שגיאה בהעלאת התמונה: " + (xhr.responseText || error));
-      },
+            localStorage.setItem("inviteImageUrl", imgUrl);
+            alert("התמונה הועלתה בהצלחה! כעת תוכל לשלוח אותה בוואטסאפ.");
+          }
+        },
+        error: function (xhr, status, error) {
+          alert("שגיאה בהעלאת התמונה: " + (xhr.responseText || error));
+        },
+      });
     });
-  });
-
 
   // Send WhatsApp message to all guests with the uploaded image
   $("#sendInviteBtn2")
@@ -139,6 +138,7 @@ function sendWhatsAppMessage(phone, name, link, imageUrl) {
     caption: message,
     priority: 10,
   };
+  console.log(data);
   $.ajax({
     type: "POST",
     url: url,
@@ -153,7 +153,6 @@ function sendWhatsAppMessage(phone, name, link, imageUrl) {
     },
   });
 }
-
 
 // --- Helper for AJAX ---
 function ajaxCall(
