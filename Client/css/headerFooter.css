@@ -121,7 +121,6 @@ body {
   margin: 0;
   overflow-x: hidden;
 }
-}
 
 .page-wrapper {
   min-height: 100%;
@@ -156,7 +155,12 @@ main {
   font-size: 2rem;
   color: #ffffff;
   cursor: pointer;
-  margin-right: auto;
+  margin-right: 0;
+  margin-left: 0;
+  position: absolute;
+  right: 1rem;
+  top: 15px;
+  z-index: 2001;
 }
 
 .branding {
@@ -176,8 +180,6 @@ main {
   font-weight: bold;
   color: #ffffff;
 }
-
-
 
 .header-container {
   display: flex;
@@ -231,4 +233,16 @@ main {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+.menu-toggle {
+  all: unset; /* איפוס מוחלט */
+  font-size: 2rem;
+  color: #ffffff;
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+  top: 15px;
+  z-index: 2001;
+  background: none;
+  border: none;
 }

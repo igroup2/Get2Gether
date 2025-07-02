@@ -25,13 +25,12 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-     <script src="../js/api.js"></script>
+    <script src="../js/api.js"></script>
     <script src="../js/js.js"></script>
     <script src="../js/sideBar.js"></script>
     <script src="../js/ajaxcalls.js"></script>
     <script src="../js/shuttle.js"></script>
     <script src="../js/MyShuttles.js"></script>
-    
 
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places&callback=initAutocomplete"
@@ -43,6 +42,10 @@
       function logout() {
         localStorage.clear();
         window.location.href = "index.html";
+      }
+      function toggleMenu() {
+        const nav = document.querySelector(".main-nav");
+        nav.classList.toggle("active");
       }
     </script>
   </head>
