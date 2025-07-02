@@ -1,4 +1,3 @@
-
 const eventID = localStorage.getItem("eventID");
 
 let selectedCoordinates = { latitude: 0, longitude: 0 };
@@ -107,12 +106,12 @@ $(document).ready(function () {
 function getEvevntDetails(callback) {
   ajaxCall(
     "GET",
-    api + `Events/${eventID}`,
+    api + `Events?eventID=${eventID}`,
     null,
     function (response) {
       {
         console.log("✅ Event details fetched for event", eventID, response);
-        eventdetails = response[0].event;
+        eventdetails = response;
         callback(eventdetails);
       }
     },
@@ -135,10 +134,12 @@ function sendShuttleWhatsAppMessage(phone, name, eventdetails, capacity) {
   var token = "p0nh304uqoyrth5a";
   var url =
     "https://api.ultramsg.com/" + instanceId + "/messages/chat?token=" + token;
-  var dateOnly = eventdetails.eventDate.split("T")[0];
+  var dateOnly = eventdetails.eventDate.split("T")[0]; // מתקבל yyyy-mm-dd
+  var parts = dateOnly.split("-"); // ["2025", "09", "01"]
+  var formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`; // "01/09/2025"
   var message = `היי ${name}!\n
   \n  נוספה הסעה חדשה לאירוע: ${eventdetails.eventDesc} 
-  שמתקיים בתאריך ${dateOnly}.\n
+  שמתקיים בתאריך ${formattedDate}.\n
   כמות המקומות המוגבלת היא ${capacity}.\n
    לפרטים נוספים היכנסו לאתר שלנו!`;
 

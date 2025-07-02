@@ -26,7 +26,7 @@
   </head>
 
   <body>
-    <div class="page-wrapper">
+    <div class="bi-dashboard-wrapper">
       <!-- HEADER -->
       <header class="main-header">
         <div class="header-container">
@@ -63,42 +63,34 @@
         </div>
       </header>
 
-   
-      <!-- צד ימין: הדשבורד -->
-      <div class="dashboard-content">
-        <!-- כל התוכן הקיים של הדשבורד -->
-        <div class="container">
-          <h1>מצב האירוע שלנו</h1>
-
-          <div class="status-box">
-            <div class="label">סה"כ בקשות:</div>
-            <div class="count-circle" id="totalRequests">0</div>
+      <main class="bi-main-content">
+        <h1 class="bi-title main">מצב האירוע שלנו</h1>
+        <div class="bi-data-container">
+          <div class="bi-cards-col">
+            <div class="bi-kpi-title">נתוני הבקשות</div>
+            <div class="bi-info-card pink">
+              <div class="bi-card-value" id="totalRequests">0</div>
+              <div class="bi-card-label">סה"כ בקשות</div>
+            </div>
+            <div class="bi-info-card blue">
+              <div class="bi-card-value" id="rideRequestsCount">0</div>
+              <div class="bi-card-label">בקשות טרמפ</div>
+            </div>
+            <div class="bi-info-card green">
+              <div class="bi-card-value" id="GiveRideRequestsCount">0</div>
+              <div class="bi-card-label">הצעות טרמפ</div>
+            </div>
           </div>
-
-          <div class="status-box">
-            <div class="label">בקשות טרמפ</div>
-            <div class="count-circle" id="rideRequestsCount">0</div>
-          </div>
-
-          <div class="status-box">
-            <div class="label">הצעות טרמפ</div>
-            <div class="count-circle" id="GiveRideRequestsCount">0</div>
-          </div>
-          <a href="homePage.html" class="back-home-btn">חזרה למסך הבית</a>
-
-          <div class="chart-container">
+          <div class="bi-pie-card">
+            <div class="bi-kpi-title">סטטוס אישורי הגעה</div>
             <canvas id="myPieChart"></canvas>
           </div>
         </div>
-      </div>
+        <div class="bi-actions-row">
+          <a href="map.html" class="bi-btn pink">מעבר למפת האירוע</a>
+          <a href="homePage.html" class="bi-btn outline">חזרה למסך הבית</a>
+        </div>
+      </main>
     </div>
-
-    <script src="../js/map.js"></script>
-    <!-- Google Maps API -->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnfvRjG9qW5CiFnh9XUNw43_H4UTls-xg&libraries=places&callback=initMap"
-      async
-      defer
-    ></script>
   </body>
 </html>
