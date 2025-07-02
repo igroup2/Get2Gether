@@ -10,6 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;500;700&display=swap"
       rel="stylesheet"
     />
+         <link rel="stylesheet" href="../css/SideBar.css" />
     <link rel="stylesheet" href="../css/headerFooter.css" />
     <link rel="stylesheet" href="../css/index.css" />
     <link rel="stylesheet" href="../css/invite.css" />
@@ -18,6 +19,7 @@
     <script src="../js/ajaxcalls.js"></script>
     <script src="../js/api.js"></script>
     <script src="../js/inviteSender.js"></script>
+    <script src="../js/SideBar.js"></script>
     <script src="../css/inviteSender.css"></script>
   </head>
   <body>
@@ -40,6 +42,17 @@
               <li><a href="#" onclick="logout()">התנתקות</a></li>
           </ul>
         </nav>
+             <div id="actionsSidebar">
+            <span class="close-sidebar" onclick="toggleSidebar()">×</span>
+            <ul>
+              <li><a href="editEvent.html">✏️ עריכת פרטי אירוע</a></li>
+              <li><a href="UpPage.html">😊 קובץ מוזמנים</a></li>
+              <li><a href="shuttle.html">🚌 הקמת הסעה</a></li>
+              <li><a href="MyShuttle.html">👁️ צפייה בהסעה קיימת</a></li>
+              <li><a href="inviteSender.html">📧 שליחת הזמנה לאורחים</a></li>
+              <li><a href="#" onclick="logout()">🔴 התנתקות</a></li>
+            </ul>
+          </div>
       </div>
     </header>
 
