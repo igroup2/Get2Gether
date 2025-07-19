@@ -181,7 +181,6 @@ body {
   padding: 40px 16px 0 16px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
 }
 
 .bi-title {
@@ -269,6 +268,101 @@ body {
   #myPieChart {
     width: 140px !important;
     height: 140px !important;
+  }
+}
+
+/* Mobile/iPhone specific styles */
+@media (max-width: 600px) {
+  .main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+  }
+  .bi-main-content {
+    padding-top: 80px; /* מרווח קטן יותר מתחת להאדר */
+  }
+  .bi-title.main {
+    margin-top: 0;
+    margin-bottom: 10px; /* קרוב יותר לנתונים */
+  }
+  .bi-title,
+  .bi-title.main {
+    font-size: 1.5rem;
+    margin-top: 38px; /* העלאת הכותרת הראשית למטה */
+    margin-bottom: 18px;
+  }
+  .bi-data-container {
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px 2px;
+    border-radius: 12px;
+    box-shadow: none;
+  }
+  .bi-cards-col {
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+    max-width: 100%;
+    align-items: stretch;
+    margin: 0 auto;
+  }
+  .bi-info-card {
+    min-width: 0;
+    max-width: 100%;
+    padding: 10px 2px 8px 2px;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(40, 40, 40, 0.07);
+  }
+  .bi-card-value {
+    font-size: 1.3rem;
+    margin-bottom: 2px;
+  }
+  .bi-card-label {
+    font-size: 0.95rem;
+  }
+  .bi-pie-card {
+    min-width: 220px;
+    min-height: 220px;
+    padding: 4px 0;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(33, 150, 243, 0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  #myPieChart {
+    width: 180px !important;
+    height: 180px !important;
+    display: block;
+    margin: 0 auto;
+  }
+  .bi-actions-row {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .bi-btn {
+    padding: 10px 0;
+    font-size: 1rem;
+    border-radius: 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .bi-kpi-title {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  .map-container,
+  .dashboard-content {
+    width: 100%;
+    max-width: 95%;
+  }
+  #map {
+    min-height: 200px;
   }
 }
 
@@ -486,5 +580,100 @@ body {
 
   #map {
     min-height: 300px;
+  }
+}
+
+/* Mobile/iPhone specific styles */
+@media (max-width: 600px) {
+  .main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+  }
+  .bi-main-content {
+    padding-top: 80px; /* מרווח קטן יותר מתחת להאדר */
+  }
+  .bi-title.main {
+    margin-top: 0;
+    margin-bottom: 10px; /* קרוב יותר לנתונים */
+  }
+  .bi-title,
+  .bi-title.main {
+    font-size: 1.5rem;
+    margin-top: 38px; /* העלאת הכותרת הראשית למטה */
+    margin-bottom: 18px;
+  }
+  .bi-data-container {
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px 2px;
+    border-radius: 12px;
+    box-shadow: none;
+  }
+  .bi-cards-col {
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+    max-width: 100%;
+    align-items: stretch;
+    margin: 0 auto;
+  }
+  .bi-info-card {
+    min-width: 0;
+    max-width: 100%;
+    padding: 10px 2px 8px 2px;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(40, 40, 40, 0.07);
+  }
+  .bi-card-value {
+    font-size: 1.3rem;
+    margin-bottom: 2px;
+  }
+  .bi-card-label {
+    font-size: 0.95rem;
+  }
+  .bi-pie-card {
+    min-width: 220px;
+    min-height: 220px;
+    padding: 4px 0;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(33, 150, 243, 0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  #myPieChart {
+    width: 180px !important;
+    height: 180px !important;
+    display: block;
+    margin: 0 auto;
+  }
+  .bi-actions-row {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .bi-btn {
+    padding: 10px 0;
+    font-size: 1rem;
+    border-radius: 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .bi-kpi-title {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  .map-container,
+  .dashboard-content {
+    width: 100%;
+    max-width: 95%;
+  }
+  #map {
+    min-height: 200px;
   }
 }
