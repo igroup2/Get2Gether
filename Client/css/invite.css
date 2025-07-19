@@ -83,7 +83,11 @@
 }
 
 .invite-btn.yes {
-  background: linear-gradient(135deg, #f06292 80%, #e91e63 100%); /* ורוד עיקרי */
+  background: linear-gradient(
+    135deg,
+    #f06292 80%,
+    #e91e63 100%
+  ); /* ורוד עיקרי */
   color: #fff;
   font-weight: 700;
 }
