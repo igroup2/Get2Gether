@@ -1,4 +1,3 @@
-
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 document.addEventListener("DOMContentLoaded", function () {
   const currentPage = window.location.pathname;
@@ -236,6 +235,7 @@ function submitFinalStep() {
     function (response) {
       localStorage.setItem("eventID", response);
       alert("🎉 שמחה רבה שמחה רבה אביב הגיע חתונה נוצרה!");
+      localStorage.setItem("Role", "Host");
       window.location.href = "homePage.html";
     },
     function (error) {
