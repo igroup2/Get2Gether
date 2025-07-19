@@ -47,6 +47,7 @@
 
             <label for="password">סיסמה:</label>
             <input type="password" id="password" required />
+            <div id="passwordMessage" style="color:red; font-size:0.9em; margin-bottom:10px;"></div>
 
             <button type="submit" id="firstSubmit">המשך</button>
           </form>
@@ -74,6 +75,39 @@
         const nav = document.querySelector(".main-nav");
         nav.classList.toggle("active");
       }
+    </script>
+    <script>
+      $(document).ready(function() {
+  function validatePassword(password) {
+    const regex = /^(?=.*[A-Za-z]).{8,}$/;
+    return regex.test(password);
+  }
+
+  $('#password').on('input', function() {
+    const password = $(this).val();
+    if (!validatePassword(password)) {
+      $('#passwordMessage').text('הסיסמה חייבת להיות לפחות 8 תווים ולכלול אות באנגלית.');
+      $('#firstSubmit').prop('disabled', true);
+    } else {
+      $('#passwordMessage').text('');
+      $('#firstSubmit').prop('disabled', false);
+    }
+  });
+
+  // בדיקה ראשונית אם יש ערך כבר בטופס
+  if (!validatePassword($('#password').val())) {
+    $('#firstSubmit').prop('disabled', true);
+  }
+
+  $('#step1Form').on('submit', function(e) {
+    const password = $('#password').val();
+    if (!validatePassword(password)) {
+      $('#passwordMessage').text('הסיסמה חייבת להיות לפחות 8 תווים ולכלול אות באנגלית.');
+      $('#firstSubmit').prop('disabled', true);
+      e.preventDefault();
+    }
+  });
+});
     </script>
   </body>
 </html>
