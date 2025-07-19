@@ -13,6 +13,7 @@
     <script src="../js/api.js"></script>
     <script src="../js/events.js"></script>
     <script src="../js/SideBar.js"></script>
+    <script src="../js/guestNav.js"></script>
   </head>
 
   <body>
@@ -95,14 +96,6 @@
         const nav = document.querySelector(".main-nav");
         nav.classList.toggle("active");
       }
-      document.addEventListener("DOMContentLoaded", function () {
-        if (localStorage.getItem("Role") === "Guest") {
-          document.getElementById("mainNavLinks").innerHTML = `
-            <li><a href="index.html#hero">בית</a></li>
-            <li><a href="index.html#feature">המוצרים שלנו</a></li>
-            <li><a href="index.html#about">עלינו</a></li>
-            <li><a href="index.html#how">צור קשר</a></li>
-          `;
           // הסתרת תפריט צדדי אם קיים
           var sidebar = document.getElementById("actionsSidebar");
           if (sidebar) sidebar.style.display = "none";
