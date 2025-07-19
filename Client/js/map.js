@@ -57,7 +57,9 @@ function addGiveRideMarkers(giveRideRequests) {
 }
 function addRideRequestMarkers(rideRequests) {
   rideRequests.forEach((ride) => {
-    const label = `🧑 נוסע<br>📄 Request ID: ${ride.id}<br>🧍 Person ID: ${ride.personID}`;
+    const name = ride.FullName || ride.fullName || ride.fullname || "—";
+    const label = `🧑 נוסע<br>📄 Request ID: ${ride.id}<br>🧍 Person ID: ${ride.personID}
+    <br>🧍 Name : ${name}`;
 
     if (ride.Latitude && ride.Longitude) {
       addMarker(ride.Latitude, ride.Longitude, label, "rideRequest");

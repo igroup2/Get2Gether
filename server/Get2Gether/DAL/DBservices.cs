@@ -520,6 +520,7 @@ public int logInUser(string phone, string password)
                     while (reader.Read())
                     {
                         var rideExitPoint = reader["RideExitPoint"].ToString();
+                      
                         giveRideRequests.Add(new GiveRideRequest(
                             Convert.ToInt32(reader["ID"]),
                             EventID,
@@ -528,12 +529,11 @@ public int logInUser(string phone, string password)
                             rideExitPoint,
                             reader["PreferredGender"].ToString(),
                             Convert.ToBoolean(reader["PreferredSmoker"]),
-                               Convert.ToDouble(reader["Latitude"]),
+                            Convert.ToDouble(reader["Latitude"]),
                             Convert.ToDouble(reader["Longitude"])
-                         
                         )
                             );
-
+                        var fullName = reader["FullName"].ToString();
 
                     }
 
