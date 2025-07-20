@@ -1,8 +1,10 @@
+// אתחול עמוד, טיפול בטפסי התחברות/הרשמה והפעלת זיקוקים
 document.addEventListener("DOMContentLoaded", function () {
   const loginForm = document.getElementById("loginForm");
   const registerForm = document.getElementById("registerForm");
 
   if (loginForm) {
+    // מאזין לטופס התחברות ומציג הודעה
     loginForm.addEventListener("submit", function (event) {
       event.preventDefault();
       alert("נכנסת בהצלחה!");
@@ -10,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (registerForm) {
+    // מאזין לטופס הרשמה ומציג הודעה
     registerForm.addEventListener("submit", function (event) {
       event.preventDefault();
       alert("נרשמת בהצלחה!");
@@ -21,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const registerForm = document.getElementById("registerForm");
 
     if (loginForm) {
+      // מאזין לטופס התחברות ומפעיל זיקוקים
       loginForm.addEventListener("submit", function (event) {
         event.preventDefault();
         createFireworks();
@@ -29,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (registerForm) {
+      // מאזין לטופס הרשמה ומפעיל זיקוקים
       registerForm.addEventListener("submit", function (event) {
         event.preventDefault();
         createFireworks();
@@ -38,6 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// אתחול קנבס זיקוקים והפעלת אנימציה
 document.addEventListener("DOMContentLoaded", function () {
   const canvas = document.createElement("canvas");
   document.body.appendChild(canvas);
@@ -51,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     canvas.height = window.innerHeight;
   });
 
+  // מחלקה ליצירת זיקוק
   class Firework {
     constructor(x, y) {
       this.x = x;
@@ -59,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
       this.createParticles();
     }
 
+    // יוצר חלקיקים לזיקוק
     createParticles() {
       const numParticles = 30;
       for (let i = 0; i < numParticles; i++) {
@@ -66,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
+    // מעדכן מצב כל חלקיק בזיקוק
     update() {
       this.particles.forEach((particle, index) => {
         particle.update();
@@ -75,11 +84,13 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
+    // מצייר את כל החלקיקים בזיקוק
     draw() {
       this.particles.forEach((particle) => particle.draw());
     }
   }
 
+  // מחלקה ליצירת חלקיק של זיקוק
   class Particle {
     constructor(x, y) {
       this.x = x;
@@ -92,6 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
       this.color = `rgba(192,192,192,${this.opacity})`; // צבע כסוף מנצנץ
     }
 
+    // מעדכן מיקום, מהירות ושקיפות של חלקיק
     update() {
       this.x += this.speedX;
       this.y += this.speedY;
@@ -99,6 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
       this.opacity -= 0.02;
     }
 
+    // מצייר חלקיק על הקנבס
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -111,13 +124,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let fireworks = [];
 
-  function createFirework() {
+// יוצר זיקוק חדש במיקום אקראי
+function createFirework() {
     const x = Math.random() * canvas.width;
     const y = Math.random() * canvas.height * 0.5; // מופיעים בחצי העליון
     fireworks.push(new Firework(x, y));
   }
 
-  function animate() {
+// מפעיל את אנימציית הזיקוקים בלולאה
+function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     fireworks.forEach((firework, index) => {
       firework.update();

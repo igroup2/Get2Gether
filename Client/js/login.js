@@ -1,4 +1,5 @@
 
+// אתחול עמוד התחברות והאזנה לטופס
 $(document).ready(function () {
   $("#loginForm").submit((event) => {
     event.preventDefault();
@@ -6,6 +7,7 @@ $(document).ready(function () {
   });
 });
 
+// מבצע התחברות לפי טופס ושולח נתונים לשרת
 function Login() {
   let user = {
     phone: $("#phone").val(),
@@ -22,6 +24,7 @@ function Login() {
     return;
   }
 
+  // קריאת AJAX: שולחת נתוני התחברות לשרת ומקבלת תשובה
   ajaxCall(
     "GET",
     api + `Persons/login?phone=${user.phone}&password=${user.password}`,

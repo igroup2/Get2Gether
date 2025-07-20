@@ -1,5 +1,6 @@
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 
+// אתחול שדה אוטוקומפליט לכתובת ושמירת קואורדינטות
 window.initAutocomplete = function () {
   const input = document.getElementById("location");
   const autocomplete = new google.maps.places.Autocomplete(input, {
@@ -18,6 +19,7 @@ window.initAutocomplete = function () {
     }
   });
 };
+// אתחול עמוד בקשת טרמפ, טיפול בטופס ושליחת נתונים לשרת
 $(document).ready(function () {
 
   $("form").on("submit", function (event) {
@@ -51,6 +53,7 @@ $(document).ready(function () {
     console.log("📩 Ride request data:", rideRequest);
 
     // שליחה עם פרמטרים ב-URL
+    // קריאת AJAX: שולחת בקשת טרמפ חדשה לשרת
     ajaxCall(
       "POST",
       api + `RideRequests?gender=${encodeURIComponent(gender)}&smoke=${smoke}`,
@@ -76,6 +79,7 @@ $(document).ready(function () {
   });
 });
 
+// פותח/סוגר את תפריט הניווט הראשי
 function toggleMenu() {
   const nav = document.querySelector(".main-nav");
   nav.classList.toggle("active");

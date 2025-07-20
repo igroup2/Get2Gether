@@ -2,8 +2,8 @@
 
 // REMOVED to avoid duplicate declaration. Use the global one from js.js
 
+// אתחול עמוד הדשבורד וטעינת נתונים מהשרת
 $(document).ready(function () {
-  // אם יש צורך, ניתן להוסיף כאן קוד שירוץ כשדף ה־HTML נטען
   const eventID = localStorage.getItem("eventID");
   if (!eventID) {
     console.error("❌ לא נמצא eventID בלוקאל סטורג'");
@@ -11,8 +11,10 @@ $(document).ready(function () {
     getRequestData();
   }
 
+  // מביא את נתוני הבקשות לאירוע מהשרת ומעדכן ב-HTML
   function getRequestData() {
     // קריאה ראשונה: כמות RideRequests
+    // קריאת AJAX: מביאה את כמות הבקשות לנסיעה מהשרת
     ajaxCall(
       "GET",
       api + `GuestInEvents/RideRequestsCount?eventID=${eventID}`,
@@ -21,6 +23,7 @@ $(document).ready(function () {
         const totalRideRequests = parseInt(RideRequestCount);
 
         // קריאה שנייה: כמות GiveRideRequests
+        // קריאת AJAX: מביאה את כמות הבקשות לתת טרמפ מהשרת
         ajaxCall(
           "GET",
           api + `GuestInEvents/GiveRideRequestsCount?eventID=${eventID}`,

@@ -1,6 +1,7 @@
 // guestNav.js
 // This script updates the navigation for guests on all pages
 
+// אתחול תפריט ניווט לאורח כאשר הדף נטען
 document.addEventListener("DOMContentLoaded", function () {
   if (localStorage.getItem("Role") === "Guest") {
     var navLinks = document.getElementById("mainNavLinks");

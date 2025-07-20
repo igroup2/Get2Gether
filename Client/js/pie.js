@@ -1,7 +1,9 @@
 //const eventID = 15
 const eventID = localStorage.getItem("eventID");
 
+// אתחול עמוד תרשים פאי וטעינת נתונים מהשרת
 $(document).ready(function () {
+  // קריאת AJAX: מביאה נתוני RSVP מהשרת עבור תרשים פאי
   ajaxCall(
     "GET",
     api + `GuestInEvents/RSVPChartData?eventID=${eventID}`,
@@ -27,6 +29,7 @@ $(document).ready(function () {
     }
   );
 
+  // מצייר תרשים פאי עם נתוני RSVP
   function drawPieChart(labels, counts) {
     const ctx = document.getElementById("myPieChart").getContext("2d");
     new Chart(ctx, {

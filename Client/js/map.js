@@ -35,10 +35,12 @@ const icons = {
   }),
 };
 
+// מוסיף מרקר למפה לפי קואורדינטות וסוג
 function addMarker(lat, lng, label, type) {
   const marker = L.marker([lat, lng], { icon: icons[type] }).bindPopup(label);
   markersCluster.addLayer(marker);
 }
+// מוסיף מרקרים של נהגים (GiveRide) למפה
 function addGiveRideMarkers(giveRideRequests) {
   giveRideRequests.forEach((giveRide) => {
     const label = `🚙 נהג<br>📄 Request ID: ${giveRide.id}<br>🧍 Person ID: ${giveRide.personID}`;
@@ -55,11 +57,11 @@ function addGiveRideMarkers(giveRideRequests) {
     }
   });
 }
+// מוסיף מרקרים של נוסעים (RideRequest) למפה
 function addRideRequestMarkers(rideRequests) {
   rideRequests.forEach((ride) => {
     const name = ride.FullName || ride.fullName || ride.fullname || "—";
-    const label = `🧑 נוסע<br>📄 Request ID: ${ride.id}<br>🧍 Person ID: ${ride.personID}
-    <br>🧍 Name : ${name}`;
+    const label = `🧑 נוסע<br>📄 Request ID: ${ride.id}<br>🧍 Person ID: ${ride.personID}`;
 
     if (ride.Latitude && ride.Longitude) {
       addMarker(ride.Latitude, ride.Longitude, label, "rideRequest");
@@ -69,6 +71,7 @@ function addRideRequestMarkers(rideRequests) {
   });
 }
 
+// ממיר כתובת לקואורדינטות ומוסיף מרקר למפה
 function geocodeAndAddMarker(address, label, type) {
   const geocoder = new google.maps.Geocoder();
 
@@ -82,6 +85,7 @@ function geocodeAndAddMarker(address, label, type) {
   });
 }
 
+// מוסיף מרקר של מיקום האירוע למפה
 function addEventMarker(eventCoordinates, eventLocation) {
   const label = `🎉 אירוע<br>📍 מיקום: ${eventLocation}`;
 
@@ -98,10 +102,12 @@ function addEventMarker(eventCoordinates, eventLocation) {
   }
 }
 
+// טוען נתוני נסיעות מהשרת ומציג אותם במפה
 function loadRideData(eventID) {
   $("#loading").show();
   $("#c").hide();
 
+  // קריאת AJAX: מביאה נתוני נסיעות מהשרת עבור האירוע
   ajaxCall(
     "POST",
     api + `RideMatchers?id=${eventID}`,
@@ -140,10 +146,12 @@ function loadRideData(eventID) {
 }
 
 // אלגוריתם:
+// מפעיל את אלגוריתם הסינון הראשוני
 function filterAlgo() {
   sendToServer();
 }
 
+// שולח נתוני נסיעות לשרת לסינון ראשוני
 function sendToServer() {
   const rideMatcher = {
     giveRideRequests: loadedData.giveRideRequests,
@@ -153,6 +161,7 @@ function sendToServer() {
     EventLatitude: loadedData.eventLatitude,
   };
 
+  // קריאת AJAX: שולחת נתוני נסיעות לשרת לסינון ראשוני ומקבלת תוצאות סינון
   ajaxCall(
     "POST",
     api + "RideMatchers/Filter",
@@ -167,6 +176,7 @@ function sendToServer() {
   );
 }
 
+// מפעיל אלגוריתם חישוב סטיות עבור כל צמד נהג-נוסע
 function runAlgorithm(data) {
   console.log("🚀 הפעלת אלגוריתם חישוב סטייה...");
 
@@ -264,6 +274,7 @@ function runAlgorithm(data) {
   });
 }
 
+// מחשב זמן נסיעה רגיל בין נהג לאירוע
 function calculateBaseRouteTime(origin, destination, callback) {
   const service = new google.maps.DirectionsService();
   service.route(
@@ -285,6 +296,7 @@ function calculateBaseRouteTime(origin, destination, callback) {
   );
 }
 
+// מחשב זמן נסיעה עם עצירה אצל נוסע בדרך לאירוע
 function calculateRouteWithWaypoint(origin, waypoint, destination, callback) {
   const service = new google.maps.DirectionsService();
   service.route(
@@ -310,10 +322,12 @@ function calculateRouteWithWaypoint(origin, waypoint, destination, callback) {
   );
 }
 
+// שולח תוצאות סטיות לשרת ומציג טבלאות
 function sendDetourResultsToServer(results) {
   renderInitialResultsTable(results);
   console.log("📦 שולחים סטיות לשרת:", results);
 
+  // קריאת AJAX: שולחת תוצאות סטיות לשרת ומקבלת שיבוץ סופי
   ajaxCall(
     "POST",
     api + `Algos/RunAlgo?Eventid=${eventID}`,
@@ -329,6 +343,7 @@ function sendDetourResultsToServer(results) {
   );
 }
 
+// שומר את השיבוצים הסופיים של נהגים ונוסעים במסד הנתונים
 function insertPassengersToDataBase(data) {
   const passengersInRideList = [];
 
@@ -345,6 +360,7 @@ function insertPassengersToDataBase(data) {
 
   console.log("📤 שולח לשמירה ב-DB:", passengersInRideList);
 
+  // קריאת AJAX: שומר את השיבוצים הסופיים של נהגים ונוסעים במסד הנתונים
   ajaxCall(
     "POST",
     api + "Rides",
@@ -372,6 +388,7 @@ function insertPassengersToDataBase(data) {
   );
 }
 
+// מציג טבלת תוצאות ראשוניות של סטיות
 function renderInitialResultsTable(results) {
   const container = document.getElementById("initialResultsContainer");
   container.innerHTML = "";
@@ -392,6 +409,7 @@ function renderInitialResultsTable(results) {
   container.appendChild(table);
 }
 
+// מציג טבלת שיבוצים סופיים של נהגים ונוסעים
 function renderMatchResultsTable(results) {
   const container = document.getElementById("matchResultsContainer");
   container.innerHTML = "";
@@ -412,6 +430,7 @@ function renderMatchResultsTable(results) {
   container.appendChild(table);
 }
 
+// יוצר אלמנט טבלה דינמית עם כותרות
 function createTable(headers) {
   const table = document.createElement("table");
   table.style.borderCollapse = "collapse";
@@ -432,6 +451,7 @@ function createTable(headers) {
   return table;
 }
 
+// מוסיף שורה לטבלה דינמית
 function addRowToTable(table, rowData) {
   const row = document.createElement("tr");
   rowData.forEach((cellData) => {
@@ -445,6 +465,7 @@ function addRowToTable(table, rowData) {
 }
 
 // טעינה עם מפת ישראל בלבד + Google Maps
+// ממתין לטעינת Google Maps לפני המשך פעולה
 function waitForGoogleMapsReady(callback) {
   if (typeof google !== "undefined" && typeof google.maps !== "undefined") {
     callback();
@@ -454,6 +475,7 @@ function waitForGoogleMapsReady(callback) {
   }
 }
 
+// אתחול עמוד המפה וטעינת נתונים כאשר הכל מוכן
 $(document).ready(function () {
   map.whenReady(function () {
     waitForGoogleMapsReady(() => {
@@ -463,6 +485,7 @@ $(document).ready(function () {
   });
 });
 
+// מציג טאב (טבלה) נבחר ומדגיש את הכפתור המתאים
 function showTab(tabName) {
   const initialTab = document.getElementById("initialTab");
   const finalTab = document.getElementById("finalTab");

@@ -1,4 +1,5 @@
 // שליפת פרמטרים מה-URL
+// מחזירה ערך של פרמטר מה-URL
 function getQueryParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
@@ -49,11 +50,13 @@ if (!eventId || !personId) {
   let inviteImageUrl = localStorage.getItem("inviteImageUrl");
   const timestamp = Date.now();
 
+  // מציגה תמונת הזמנה בעמוד
   function setImage(src) {
     document.getElementById("inviteImg").src = src + "?v=" + timestamp;
     console.log("invite.html | inviteImg src:", src + "?v=" + timestamp);
   }
 
+  // מנסה לטעון תמונה עם סיומות שונות עד שמוצא
   function tryImageWithExtensions(baseUrl, exts, cb) {
     if (!exts.length) {
       cb(null);
@@ -88,6 +91,7 @@ if (!eventId || !personId) {
   }
 }
 
+// מעדכן סטטוס הגעה לאירוע ושולח לשרת
 function updateRSVPStatus(status) {
   console.log("נלחץ כפתור אישור הגעה:", status);
   const eventId = localStorage.getItem("eventID");
@@ -143,6 +147,7 @@ function updateRSVPStatus(status) {
   });
   console.log("RSVP Payload:", JSON.parse(data));
 
+  // קריאת AJAX: שולחת סטטוס הגעה מעודכן לשרת
   ajaxCall(
     "PUT",
     api + "GuestInEvents/UpdateRSVPStatus",
@@ -163,12 +168,15 @@ function updateRSVPStatus(status) {
   );
 }
 
+// מאזין לכפתור "מגיע/ה" ומעדכן סטטוס
 document.querySelector(".invite-btn.yes").onclick = function () {
   updateRSVPStatus("מגיע/ה");
 };
+// מאזין לכפתור "לא מגיע/ה" ומעדכן סטטוס
 document.querySelector(".invite-btn.no").onclick = function () {
   updateRSVPStatus("לא מגיע/ה");
 };
+// מאזין לכפתור "מתלבט/ת" ומעדכן סטטוס
 document.querySelector(".invite-btn.maybe").onclick = function () {
   updateRSVPStatus("מתלבט/ת");
 };

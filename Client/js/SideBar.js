@@ -1,3 +1,4 @@
+// פונקציה שמטפלת בפתיחה וסגירה של הסיידבר לפי לחיצות
 $(document).ready(function () {
   $("#actionsToggle").on("click", function (e) {
     e.preventDefault();
@@ -11,6 +12,7 @@ $(document).ready(function () {
   });
 });
 
+// פונקציה שמבצעת פתיחה/סגירה של הסיידבר בלחיצה
 function toggleSidebar() {
   document.getElementById("actionsSidebar").classList.toggle("open");
 }
