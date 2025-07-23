@@ -1,10 +1,11 @@
 // inviteSender.js
 // Handles uploading invite image and sending WhatsApp messages
-//const api = "https://proj.ruppin.ac.il/igroup2/test2/tar1/api/";
-// שמירת כתובת תמונת ההזמנה והצגת כפתור הצגה
+
+// --- Save or clear invite image URL ---
 function setInviteImageUrl(url) {
   if (url) {
     localStorage.setItem("inviteImageUrl", url);
+    console.log("Saved invite image URL:", url);
     $("#showInviteBtn").show().data("img", url);
   } else {
     localStorage.removeItem("inviteImageUrl");
@@ -12,65 +13,58 @@ function setInviteImageUrl(url) {
   }
 }
 
-// אתחול עמוד ההזמנה, טיפול באירועים וכפתורים
 $(function () {
   // On page load, show last invite image if exists
-  var lastImg = localStorage.getItem("inviteImageUrl");
+  let lastImg = localStorage.getItem("inviteImageUrl");
   if (lastImg) {
     if (!lastImg.startsWith("http")) {
-      lastImg = "https://proj.ruppin.ac.il/igroup2/test2/tar1/api/" + lastImg;
-  //  } else if (lastImg.startsWith("http://127.0.0.1:5500")) {
-  //    lastImg = lastImg.replace(
-   //     "http://127.0.0.1:5500",
-   //     "https://localhost:7035"
-   //   );
+      lastImg = "https://proj.ruppin.ac.il/igroup2/test2/tar1/" + lastImg;
     }
     $("#showInviteBtn").show().data("img", lastImg);
   } else {
     $("#showInviteBtn").hide().data("img", null);
   }
 
-  // --- Upload Invite Image and Send WhatsApp Message ---
+  // --- Upload Invite Image ---
   $("#uploadInviteBtn")
     .off("click")
     .on("click", function (e) {
       e.preventDefault();
 
-      var fileInput = document.getElementById("inviteImageInput");
+      const fileInput = document.getElementById("inviteImageInput");
       if (!fileInput.files || fileInput.files.length === 0) {
         alert("אנא בחר תמונה להעלאה");
         return;
       }
 
-      var file = fileInput.files[0];
-      var eventID = localStorage.getItem("eventID");
+      const file = fileInput.files[0];
+      const eventID = localStorage.getItem("eventID");
       if (!eventID) {
         alert("לא נמצא EventID");
         return;
       }
 
-      var formData = new FormData();
-      formData.append("inviteImage", file); // ← שם הפרמטר חייב להתאים ל־IFormFile
-      formData.append("eventID", eventID); // ← מזהה האירוע בצורת int
+      const formData = new FormData();
+      formData.append("inviteImage", file); // ← חייב להתאים ל־IFormFile בצד שרת
+      formData.append("eventID", eventID); // ← מזהה האירוע
 
       $.ajax({
-        url: api + "Upload/InviteImage", // ← שימוש ב־localhost שלך!
+        url: api + "Upload/InviteImage",
         type: "POST",
         data: formData,
         processData: false,
         contentType: false,
         success: function (response) {
           if (response && response.inviteImageUrl) {
-            var imgUrl = "https://proj.ruppin.ac.il/igroup2/test2/tar1/" + response.inviteImageUrl;
-            console.log("Image URL:", imgUrl);
+            const imgUrl =
+              "https://proj.ruppin.ac.il/igroup2/test2/tar1" +
+              response.inviteImageUrl;
 
             $("#inviteImagePreview").html(
-              '<img src="' +
-                imgUrl +
-                '" alt="הזמנה" style="max-width:300px;max-height:300px;border-radius:12px;box-shadow:0 2px 8px #0002;" />'
+              `<img src="${imgUrl}" alt="הזמנה" style="max-width:300px;max-height:300px;border-radius:12px;box-shadow:0 2px 8px #0002;" />`
             );
 
-            localStorage.setItem("inviteImageUrl", imgUrl);
+            setInviteImageUrl(imgUrl);
             alert("התמונה הועלתה בהצלחה! כעת תוכל לשלוח אותה בוואטסאפ.");
           }
         },
@@ -80,17 +74,18 @@ $(function () {
       });
     });
 
-  // Send WhatsApp message to all guests with the uploaded image
+  // --- Send WhatsApp message to all guests with image ---
   $("#sendInviteBtn2")
     .off("click")
     .on("click", function () {
-      let eventID = localStorage.getItem("eventID");
-      var imgUrl = localStorage.getItem("inviteImageUrl");
+      const eventID = localStorage.getItem("eventID");
+      const imgUrl = localStorage.getItem("inviteImageUrl");
+
       if (!imgUrl) {
         alert("לא קיימת תמונה ציבורית לשליחה. העלה תמונה קודם.");
         return;
       }
-      // קריאת AJAX: מביאה את רשימת האורחים לאירוע מהשרת
+
       ajaxCall(
         "GET",
         api + `GuestInEvents/GetInviteDetails?eventId=${eventID}`,
@@ -113,10 +108,11 @@ $(function () {
       );
     });
 
+  // --- Show uploaded image in new tab ---
   $("#showInviteBtn")
     .off("click")
     .on("click", function () {
-      var imgUrl = $(this).data("img");
+      const imgUrl = $(this).data("img");
       if (!imgUrl) {
         alert("לא קיימת תמונה להצגה");
         return;
@@ -127,22 +123,23 @@ $(function () {
     });
 });
 
-// --- WhatsApp Message Sending ---
-// שליחת הודעת וואטסאפ עם תמונה והודעה מותאמת אישית
+// --- WhatsApp Message Sending via UltraMsg ---
 function sendWhatsAppMessage(phone, name, link, imageUrl) {
-  var instanceId = "instance125498";
-  var token = "p0nh304uqoyrth5a";
-  var url =
-    "https://api.ultramsg.com/" + instanceId + "/messages/image?token=" + token;
-  var message = `היי ${name} ! 🎉\n\nאת/ה מוזמנ/ת לאירוע שלנו – וזה קורה ממש בקרוב!\nכדי שנדע להתארגן כמו שצריך, נשמח אם תאשר/י הגעה דרך הקישור:\n\n👉 ${link}\n\nבמערכת שלנו תוכל לבחור את הדרך שלך להגיע לאירוע, והכל בכמה לחיצות 🙌\nמחכים לראות אותך! 🥳`;
-  var data = {
+  const instanceId = "instance125498";
+  const token = "p0nh304uqoyrth5a";
+  const url = `https://api.ultramsg.com/${instanceId}/messages/image?token=${token}`;
+
+  const message = `היי ${name} ! 🎉\n\nאת/ה מוזמנ/ת לאירוע שלנו – וזה קורה ממש בקרוב!\nכדי שנדע להתארגן כמו שצריך, נשמח אם תאשר/י הגעה דרך הקישור:\n\n👉 ${link}\n\nבמערכת שלנו תוכל לבחור את הדרך שלך להגיע לאירוע, והכל בכמה לחיצות 🙌\nמחכים לראות אותך! 🥳`;
+  const imageToSend = imageUrl + "?v=" + Date.now();
+  const data = {
     to: phone,
-    image: "http://paperboutique.co.il/wp-content/uploads/2013/03/wording1.jpg",
+    image: imageToSend, // ✅ קישור דינמי
     caption: message,
     priority: 10,
   };
-  console.log(data);
-  // קריאת AJAX: שולחת הודעת וואטסאפ עם תמונה לאורח
+
+  console.log("Sending WhatsApp message with data:", data);
+
   $.ajax({
     type: "POST",
     url: url,
@@ -158,8 +155,7 @@ function sendWhatsAppMessage(phone, name, link, imageUrl) {
   });
 }
 
-// --- Helper for AJAX ---
-// פונקציית עזר לביצוע קריאות AJAX לשרת
+// --- Helper function for general AJAX calls ---
 function ajaxCall(
   method,
   api,
