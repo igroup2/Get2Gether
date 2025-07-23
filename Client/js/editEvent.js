@@ -39,6 +39,14 @@ document.addEventListener("DOMContentLoaded", function () {
         // שמירת קואורדינטות
         selectedCoordinates.latitude = data.eventLatitude || 0;
         selectedCoordinates.longitude = data.eventLongitude || 0;
+        if (data.partnerID1) {
+          localStorage.setItem("partner1ID", data.partnerID1);
+          console.log("Partner 1 ID:", data.partnerID1);
+        }
+        if (data.partnerID2) {
+          localStorage.setItem("partner2ID", data.partnerID2);
+          console.log("Partner 2 ID:", data.partnerID2);
+        }
       },
       function (err) {
         console.error("❌ Error loading event data:", err);
@@ -80,11 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
           alert("✅ האירוע עודכן בהצלחה!");
           //window.location.href = "homePage.html";
         },
-        function (err) {
-          console.error("❌ Error Response:", err);
-          alert("שגיאה בעדכון האירוע");
-        }
+        function (err) {}
       );
     });
 });
-

@@ -96,18 +96,17 @@
         const nav = document.querySelector(".main-nav");
         nav.classList.toggle("active");
       }
-          // הסתרת תפריט צדדי אם קיים
-          var sidebar = document.getElementById("actionsSidebar");
-          if (sidebar) sidebar.style.display = "none";
-        }
-        // ניווט לכפתור "הבקשות וההסעות שלי"
-        var myRidesBtn = document.getElementById("myRidesBtn");
-        if (myRidesBtn) {
-          myRidesBtn.addEventListener("click", function () {
-            window.location.href = "PassengerList.html";
-          });
-        }
-      });
+      // הסתרת תפריט צדדי אם קיים
+      var sidebar = document.getElementById("actionsSidebar");
+      if (sidebar) sidebar.style.display = "none";
+
+      // ניווט לכפתור "הבקשות וההסעות שלי"
+      var myRidesBtn = document.getElementById("myRidesBtn");
+      if (myRidesBtn) {
+        myRidesBtn.addEventListener("click", function () {
+          window.location.href = "PassengerList.html";
+        });
+      }
     </script>
   </body>
 </html>
