@@ -57,7 +57,7 @@ namespace Get2Gether.Models
         public static List<dynamic> GuestGetEvents(int PersonID)
         {
             DBservices dbs = new DBservices();
-            return dbs.GetEvents(PersonID);
+            return dbs.GuestGetEvents(PersonID);
         }
         //
         public static void updateEvent(Event NewEvent)
