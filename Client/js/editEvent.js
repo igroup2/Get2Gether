@@ -1,5 +1,6 @@
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 
+// אתחול שדה אוטוקומפליט לכתובת ושמירת קואורדינטות
 function initAutocomplete() {
   const input = document.getElementById("location");
   if (!input) return;
@@ -20,9 +21,11 @@ function initAutocomplete() {
     }
   });
 }
+// אתחול עמוד עריכת אירוע, טעינת נתוני אירוע וטיפול בשמירה
 document.addEventListener("DOMContentLoaded", function () {
   const eventID = localStorage.getItem("eventID");
   if (eventID) {
+    // קריאת AJAX: מביאה את נתוני האירוע מהשרת
     ajaxCall(
       "GET",
       api + `Events?eventID=${eventID}`,
@@ -79,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
       };
       console.log("📋 New Event Data:", newEvent);
 
+      // קריאת AJAX: שולחת את נתוני האירוע המעודכנים לשרת
       ajaxCall(
         "PUT",
         api + "Events",

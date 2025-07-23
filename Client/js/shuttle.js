@@ -1,9 +1,13 @@
+// משתנה שמכיל את מזהה האירוע מה-localStorage
 const eventID = localStorage.getItem("eventID");
 
+// משתנה שמכיל את הקואורדינטות שנבחרו לאיסוף
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 
+// משתנה שמכיל את פרטי האירוע
 let eventdetails = null;
 
+// אתחול שדה אוטוקומפליט לכתובת ושמירת קואורדינטות
 window.initAutocomplete = function () {
   const input = document.getElementById("pickup");
   if (!input) return;
@@ -27,6 +31,7 @@ window.initAutocomplete = function () {
   console.log("✅ Autocomplete initialized");
 };
 
+// פונקציה שמאתחלת את הפלאטפיקר ומטפלת בשליחת הטופס ליצירת הסעה
 $(document).ready(function () {
   flatpickr("#departure", {
     enableTime: true,
@@ -74,6 +79,7 @@ $(document).ready(function () {
       contactPhone: contactPhone,
     };
 
+    // קריאת AJAX: שולחת בקשת יצירת הסעה חדשה לשרת
     ajaxCall(
       "POST",
       api + "Shuttles",
@@ -103,7 +109,9 @@ $(document).ready(function () {
   });
 });
 
+// פונקציה שמביאה את פרטי האירוע מהשרת
 function getEvevntDetails(callback) {
+  // קריאת AJAX: מביאה את פרטי האירוע מהשרת
   ajaxCall(
     "GET",
     api + `Events?eventID=${eventID}`,
@@ -123,12 +131,14 @@ function getEvevntDetails(callback) {
   );
 }
 
+// פונקציה שמציגה או מסתירה את התפריט הראשי
 function toggleMenu() {
   const nav = document.querySelector(".main-nav");
   nav.classList.toggle("active");
 }
 
 // --- WhatsApp Notification on New Shuttle ---
+// פונקציה ששולחת הודעת וואטסאפ על הסעה חדשה לאורח
 function sendShuttleWhatsAppMessage(phone, name, eventdetails, capacity) {
   var instanceId = "instance125498";
   var token = "p0nh304uqoyrth5a";
@@ -149,6 +159,7 @@ function sendShuttleWhatsAppMessage(phone, name, eventdetails, capacity) {
     priority: 10,
   };
 
+  // קריאת AJAX: שליחת הודעת וואטסאפ דרך UltraMsg API
   $.ajax({
     type: "POST",
     url: url,
@@ -165,7 +176,9 @@ function sendShuttleWhatsAppMessage(phone, name, eventdetails, capacity) {
   });
 }
 
+// פונקציה שמעדכנת את כל האורחים על הסעה חדשה
 function notifyGuestsOnNewShuttle(eventID, eventdetails, capacity) {
+  // קריאת AJAX: מביאה את רשימת האורחים לאירוע ומעדכנת אותם על הסעה חדשה
   ajaxCall(
     "GET",
     api + `GuestInEvents/GetInviteDetails?eventId=${eventID}`,

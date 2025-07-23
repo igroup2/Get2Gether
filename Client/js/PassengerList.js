@@ -1,9 +1,11 @@
+// אתחול עמוד רשימת נוסעים, טעינת נתונים והאזנה לפעולות
 $(document).ready(function () {
   console.log("📦 Passenger List Document ready");
   const personID = localStorage.getItem("personID");
   const eventID = localStorage.getItem("eventID");
   console.log("🚀 personID ID:", personID);
   console.log("🚀 Event ID:", eventID);
+  // קריאת AJAX: מביאה את רשימת הנוסעים/נהגים מהשרת
   ajaxCall(
     "GET",
     api + `Rides/${personID}`,
@@ -291,6 +293,7 @@ $(document).ready(function () {
           }
 
           if (result.isConfirmed) {
+            // קריאת AJAX: מוחקת צימוד נסיעה מהשרת
             ajaxCall(
               "DELETE",
               api + `Rides/${driverID}/${passengerID}/${eventID}`,
@@ -345,6 +348,7 @@ $(document).ready(function () {
           if (result.isConfirmed) {
             console.log("📤 Sending personID:", personID);
 
+            // קריאת AJAX: מאשרת נסיעה עבור משתמש
             ajaxCall(
               "PUT",
               api + `Rides/ApproveRide/${rideID}`,

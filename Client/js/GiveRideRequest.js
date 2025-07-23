@@ -1,6 +1,7 @@
 
 let selectedCoordinates = { latitude: 0, longitude: 0 };
 
+// אתחול שדה אוטוקומפליט לכתובת ושמירת קואורדינטות
 window.initAutocomplete = function () {
   const input = document.getElementById("rideExitPoint");
   const autocomplete = new google.maps.places.Autocomplete(input, {
@@ -20,6 +21,7 @@ window.initAutocomplete = function () {
   });
 };
 
+// אתחול עמוד הבקשה לטרמפ, טיפול בטופס ושליחת נתונים לשרת
 $(document).ready(function () {
   $("form").on("submit", function (event) {
     event.preventDefault();
@@ -56,6 +58,7 @@ $(document).ready(function () {
     console.log("📩 Give ride request data:", giveRideRequest);
 
     // שליחה עם פרמטרים ב-URL
+    // קריאת AJAX: שולחת בקשת טרמפ חדשה לשרת
     ajaxCall(
       "POST",
       api +

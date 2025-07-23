@@ -6,8 +6,10 @@ document
     GetEventSettings(eventId);
   });
 
+// מביא את הגדרות האירוע מהשרת לפי מזהה אירוע
 function GetEventSettings(eventId) {
   console.log("GetEventSettings called with eventId:", eventId);
+  // קריאת AJAX: מביאה את הגדרות האירוע מהשרת
   ajaxCall(
     "GET",
     api + `EventSettings/${eventId}`,
@@ -22,6 +24,7 @@ function GetEventSettings(eventId) {
   );
 }
 
+// מציג את הגדרות האירוע בטבלה דינמית
 function renderEventSettings(data) {
   const container = document.getElementById("eventSettingsContainer");
   if (!container) {
@@ -88,6 +91,7 @@ function renderEventSettings(data) {
 }
 
 // פונקציה ליצירת שורה בטבלה
+// יוצר שורה בטבלת הגדרות האירוע
 function renderSettingRow(label, key, value) {
   return `
       <tr>
@@ -100,6 +104,7 @@ function renderSettingRow(label, key, value) {
 }
 
 // פונקציה לשמירת השינויים
+// שולח את הגדרות האירוע המעודכנות לשרת
 function saveSettings(eventID) {
   const updatedSettings = {
     eventID: eventID,
@@ -122,6 +127,7 @@ function saveSettings(eventID) {
 
   console.log("🚀 שולח עדכון:", updatedSettings);
 
+  // קריאת AJAX: שולחת את הגדרות האירוע המעודכנות לשרת
   ajaxCall(
     "PUT", // נניח שיש לך בשרת API עדכון ב- PUT
     api + `EventSettings/UpdateEventSettings`,

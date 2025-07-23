@@ -1,4 +1,6 @@
+
 let selectedCoordinates = { latitude: 0, longitude: 0 };
+// אתחול עמוד הרשמה, טיפול בטפסים והאזנה לכפתורים
 document.addEventListener("DOMContentLoaded", function () {
   const currentPage = window.location.pathname;
 
@@ -52,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// מעדכן תמונת בן/בת זוג לפי מגדר
 function updateImage(selectId, imgId) {
   const gender = document.getElementById(selectId)?.value;
   const imgElement = document.getElementById(imgId);
@@ -59,13 +62,14 @@ function updateImage(selectId, imgId) {
 
   imgElement.src =
     gender === "M"
-      ? "/igroup2/test2/tar1/invites/groom.webp"
+      ? "Client/images/groom.webp"
       : gender === "F"
-      ? "/igroup2/test2/tar1/invites/bride.webp"
+      ? "Client/images/bride.webp"
       : "";
 }
 
 // 👤 שלב 2: רישום partner1
+// רושם את בן/בת זוג 1 ושולח נתונים לשרת
 function registerPartner1() {
   const fullName = document.getElementById("partner1")?.value.trim();
   const gender = document.getElementById("gender1")?.value;
@@ -91,6 +95,7 @@ function registerPartner1() {
     gender,
   };
 
+  // קריאת AJAX: רושמת בן/בת זוג 1 בשרת
   ajaxCall(
     "POST",
     api + "Persons/register",
@@ -106,6 +111,7 @@ function registerPartner1() {
   );
 }
 
+// רושם את בן/בת זוג 2 ושולח נתונים לשרת
 function registerPartner2() {
   const fullNameInput = document.getElementById("partner2");
   const phoneInput = document.getElementById("phone2");
@@ -165,6 +171,7 @@ function registerPartner2() {
     gender,
   };
 
+  // קריאת AJAX: רושמת בן/בת זוג 2 בשרת
   ajaxCall(
     "POST",
     api + "Persons/register",
@@ -182,6 +189,7 @@ function registerPartner2() {
 }
 
 // 🎉 שלב 3: יצירת אירוע
+// יוצר אירוע חדש ושולח נתונים לשרת
 function submitFinalStep() {
   const partner1ID = parseInt(localStorage.getItem("partner1ID"));
   const partner2ID = parseInt(localStorage.getItem("partner2ID"));
@@ -228,6 +236,7 @@ function submitFinalStep() {
     eventLongitude: longitude,
   };
 
+  // קריאת AJAX: יוצרת אירוע חדש בשרת
   ajaxCall(
     "POST",
     api + "Events",
@@ -235,7 +244,6 @@ function submitFinalStep() {
     function (response) {
       localStorage.setItem("eventID", response);
       alert("🎉 שמחה רבה שמחה רבה אביב הגיע חתונה נוצרה!");
-      localStorage.setItem("Role", "Host");
       window.location.href = "homePage.html";
     },
     function (error) {
@@ -246,6 +254,7 @@ function submitFinalStep() {
 }
 
 // Google Maps Autocomplete
+// אתחול שדה אוטוקומפליט לכתובת ושמירת קואורדינטות
 function initAutocomplete() {
   const input = document.getElementById("location");
   if (!input) return;
@@ -266,6 +275,7 @@ function initAutocomplete() {
     }
   });
 }
+// פותח/סוגר את תפריט הניווט הראשי
 function toggleMenu() {
   const nav = document.querySelector(".main-nav");
   nav.classList.toggle("active");

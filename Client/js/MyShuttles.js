@@ -1,6 +1,7 @@
 console.log("🚀 MyShuttles.js loaded");
 let isEditMode = false;
 
+// אתחול עמוד ההסעות, האזנה לכפתורים וטעינת הסעות
 $(document).ready(function () {
   $(document).on("click", ".create-shuttle-btn", function () {
     openShuttleModal();
@@ -19,7 +20,9 @@ $(document).ready(function () {
   });
 });
 
+// טוען את כל ההסעות מהשרת ומציג אותן
 function loadAllShuttles() {
+  // קריאת AJAX: מביאה את כל ההסעות לאירוע מהשרת
   ajaxCall(
     "GET",
     api + `Shuttles?EventID=${eventID}`,
@@ -40,6 +43,7 @@ function loadAllShuttles() {
   );
 }
 
+// מציג כרטיסי הסעות בדף
 function renderShuttleCards(shuttles) {
   const container = $("#shuttleContainer");
   container.empty();
@@ -78,16 +82,19 @@ function renderShuttleCards(shuttles) {
   });
 }
 
+// פותח מודאל יצירת הסעה חדשה
 function openShuttleModal() {
   initAutocomplete(); // ← כאן מוסיפים את הקריאה
   $("#shuttleModal").fadeIn();
   $("#shuttleForm")[0].reset(); // איפוס הטופס
 }
 
+// סוגר את מודאל ההסעות
 function closeShuttleModal() {
   $("#shuttleModal").fadeOut();
 }
 
+// מוחק הסעה מהשרת לפי מזהה ומעדכן את הרשימה
 function deleteShuttle(ShuttleID) {
   Swal.fire({
     title: "האם למחוק את ההסעה?",
@@ -97,6 +104,7 @@ function deleteShuttle(ShuttleID) {
     cancelButtonText: "ביטול",
   }).then((result) => {
     if (result.isConfirmed) {
+      // קריאת AJAX: מוחקת הסעה מהשרת לפי מזהה
       ajaxCall(
         "DELETE",
         api + `Shuttles/${ShuttleID}`,

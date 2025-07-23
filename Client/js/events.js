@@ -1,3 +1,4 @@
+// אתחול עמוד האירועים, טעינת אירועים והצגת מודאלים
 $(document).ready(function () {
   // שליפת personID ו-Role מה-localStorage
   const personID = localStorage.getItem("personID");
@@ -15,6 +16,7 @@ $(document).ready(function () {
   }
   // הסתרת כפתור "הבקשות וההסעות שלי" אם Role=Host (אות גדולה) מיד בטעינת הדף
 
+  // קריאת AJAX: מביאה את רשימת האירועים של המשתמש מהשרת
   ajaxCall(
     "GET",
     api + `Events/${personID}`,
@@ -63,6 +65,7 @@ $(document).ready(function () {
         }
       });
 
+      // מציג מודאל אפשרויות לאורח באירוע
       function showGuestEventModal(eventID, personID) {
         // אם כבר קיים מודאל – הסר אותו
         $("#eventModal").remove();
@@ -80,6 +83,7 @@ $(document).ready(function () {
         $("body").append(modalHtml);
       }
 
+      // מציג מודאל אפשרויות למארח באירוע
       function showHostEventModal(eventID) {
         $("#eventModal").remove();
         const modalHtml = `

@@ -1,7 +1,7 @@
 // inviteSender.js
 // Handles uploading invite image and sending WhatsApp messages
 //const api = "https://proj.ruppin.ac.il/igroup2/test2/tar1/api/";
-// --- Upload Invite Image ---
+// שמירת כתובת תמונת ההזמנה והצגת כפתור הצגה
 function setInviteImageUrl(url) {
   if (url) {
     localStorage.setItem("inviteImageUrl", url);
@@ -12,6 +12,7 @@ function setInviteImageUrl(url) {
   }
 }
 
+// אתחול עמוד ההזמנה, טיפול באירועים וכפתורים
 $(function () {
   // On page load, show last invite image if exists
   var lastImg = localStorage.getItem("inviteImageUrl");
@@ -89,6 +90,7 @@ $(function () {
         alert("לא קיימת תמונה ציבורית לשליחה. העלה תמונה קודם.");
         return;
       }
+      // קריאת AJAX: מביאה את רשימת האורחים לאירוע מהשרת
       ajaxCall(
         "GET",
         api + `GuestInEvents/GetInviteDetails?eventId=${eventID}`,
@@ -126,6 +128,7 @@ $(function () {
 });
 
 // --- WhatsApp Message Sending ---
+// שליחת הודעת וואטסאפ עם תמונה והודעה מותאמת אישית
 function sendWhatsAppMessage(phone, name, link, imageUrl) {
   var instanceId = "instance125498";
   var token = "p0nh304uqoyrth5a";
@@ -139,6 +142,7 @@ function sendWhatsAppMessage(phone, name, link, imageUrl) {
     priority: 10,
   };
   console.log(data);
+  // קריאת AJAX: שולחת הודעת וואטסאפ עם תמונה לאורח
   $.ajax({
     type: "POST",
     url: url,
@@ -155,6 +159,7 @@ function sendWhatsAppMessage(phone, name, link, imageUrl) {
 }
 
 // --- Helper for AJAX ---
+// פונקציית עזר לביצוע קריאות AJAX לשרת
 function ajaxCall(
   method,
   api,
