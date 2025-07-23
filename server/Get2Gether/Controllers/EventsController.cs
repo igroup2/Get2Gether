@@ -12,12 +12,19 @@ namespace Get2Gether.Controllers
     public class EventsController : ControllerBase
     {
         // GET: api/<EventsController>
-        [HttpGet("{PersonID}")]
+        [HttpGet("Host/{PersonID}")]
         public List<dynamic> GetEvents(int PersonID)
         {
-
             return Event.GetEvents(PersonID);
         }
+
+        // GET: api/<EventsController>
+        [HttpGet("Guest/{PersonID}")]
+        public List<dynamic> GuestGetEvents(int PersonID)
+        {
+            return Event.GuestGetEvents(PersonID);
+        }
+
         [HttpGet]
         public Event GetEventDetails(int eventID)
         {

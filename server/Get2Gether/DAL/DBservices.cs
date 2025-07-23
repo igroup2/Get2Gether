@@ -772,6 +772,47 @@ public int logInUser(string phone, string password)
     }
 
 
+
+    public List<dynamic> GuestGetEvents(int PersonID)
+    {
+        using (SqlConnection con = connect("myProjDB"))
+        {
+            Dictionary<string, object> paramDic = new Dictionary<string, object>
+        {
+            { "@PersonID", PersonID }
+        };
+
+            using (SqlCommand cmd = CreateCommandWithStoredProcedureGENERAL("SP_GuestGetEvents", con, paramDic))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    List<dynamic> results = new List<dynamic>();
+                    while (reader.Read())
+                    {
+                        var evt = new Event
+                        {
+                            EventID = Convert.ToInt32(reader["EventID"]),
+                            EventDesc = reader["EventDesc"].ToString(),
+                            EventDate = Convert.ToDateTime(reader["EventDate"]),
+                            EventLocation = reader["EventLocation"].ToString(),
+                            EventLatitude = Convert.ToDouble(reader["EventLatitude"]),
+                            EventLongitude = Convert.ToDouble(reader["EventLongitude"])
+                        };
+
+                        results.Add(new
+                        {
+                            Event = evt,
+                            RsvpStatus = reader["RsvpStatus"].ToString()
+                        });
+                    }
+                    return results;
+                }
+            }
+        }
+    }
+
+
+
     public Person GetPerson(int personID)
     {
         using (SqlConnection con = connect("myProjDB"))

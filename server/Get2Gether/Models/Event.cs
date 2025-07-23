@@ -53,6 +53,13 @@ namespace Get2Gether.Models
             DBservices dbs = new DBservices();
             return dbs.GetEvents(PersonID);
         }
+        //
+        public static List<dynamic> GuestGetEvents(int PersonID)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.GetEvents(PersonID);
+        }
+        //
         public static void updateEvent(Event NewEvent)
         {
             DBservices dbs = new DBservices();

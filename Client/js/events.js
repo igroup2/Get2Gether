@@ -17,9 +17,13 @@ $(document).ready(function () {
   // הסתרת כפתור "הבקשות וההסעות שלי" אם Role=Host (אות גדולה) מיד בטעינת הדף
 
   // קריאת AJAX: מביאה את רשימת האירועים של המשתמש מהשרת
+  const eventsUrl =
+    localStorage.getItem("Role") === "Host"
+      ? api + `Events/Host/${personID}`
+      : api + `Events/Guest/${personID}`;
   ajaxCall(
     "GET",
-    api + `Events/${personID}`,
+    eventsUrl,
     null,
     function (events) {
       console.log("✅ Events loaded");
